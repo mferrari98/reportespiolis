@@ -3,20 +3,36 @@ lo podes probar con
   curl -Uri "http://10.10.4.125:3000/sitios" -Method POST -ContentType "application/json" -Body '{"descriptor":"ee3"}'
 */
 const express = require('express');
-const SitioDAO = require('./sitioDAO');
-const { openDatabase, closeDatabase } = require('./db');
-require('./crear_tablas');
+const path = require('path');
+
+const SitioDAO = require('./persistencia/sitioDAO');
+const { openDatabase, closeDatabase } = require('./persistencia/db');
+require('./persistencia/crear_tablas');
+require('./etl/etl')
 
 const app = express();
 app.use(express.json());
 
 // Middleware para configurar Content-Security-Policy
 app.use((req, res, next) => {
-    res.setHeader("Content-Security-Policy", "default-src 'none' http://localhost:300/; script-src 'self' 'unsafe-inline' http://localhost:3000; style-src 'self' 'unsafe-inline' http://localhost:3000; img-src 'self' http://localhost:3000; connect-src 'self' http://localhost:3000");
+    res.setHeader("Content-Security-Policy", "default-src 'none' http://localhost:3000/; script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:3000; style-src 'self' 'unsafe-inline' http://localhost:3000; img-src 'self' http://localhost:3000; connect-src 'self' http://localhost:3000");
     next();
 });
 
 openDatabase();
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/reporte', async (req, res) => {
+  try {
+    const filePath = path.join(__dirname, 'public', 'index.html');
+    res.sendFile(filePath);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 app.get('/sitios', async (req, res) => {
   try {
