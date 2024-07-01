@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Datos y Gráfico</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            width: auto;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .axis {
+            stroke: black;
+            stroke-width: 1;
+        }
+        .line {
+            fill: none;
+            stroke: blue;
+            stroke-width: 2;
+        }
+        .point {
+            fill: red;
+            stroke: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Datos de Nivel, Cloro y Turbiedad</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Sitio</th>
+                <th>Nivel [m]</th>
+                <th>Cloro [mg/l]</th>
+                <th>Turbiedad [UTN]</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Toma (Río)</td>
+                <td>3.03</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Toma (Des.)</td>
+                <td>2.29</td>
+                <td></td>
+                <td>10.63</td>
+            </tr>
+            <tr>
+                <td>P. Pot</td>
+                <td>2.29</td>
+                <td>1.28</td>
+                <td>0.13</td>
+            </tr>
+            <tr>
+                <td>L. Maria</td>
+                <td>3.13</td>
+                <td>1.22</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>KM11</td>
+                <td>3.73</td>
+                <td>0.69</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>R6000</td>
+                <td>3.16</td>
+                <td>0.56</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>B. PUJOL</td>
+                <td>2.38</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>B. OESTE (1K)</td>
+                <td>3.24</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>B. SAN MIGUEL</td>
+                <td>2.36</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>NUEVA CHUBUT</td>
+                <td>3.12</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <svg width="600" height="400" viewBox="0 0 600 400">
+        <!-- Ejes -->
+        <line x1="50" y1="350" x2="550" y2="350" class="axis" />
+        <line x1="50" y1="350" x2="50" y2="50" class="axis" />
+
+        <!-- Etiquetas de los ejes -->
+        <text x="300" y="380" text-anchor="middle">Índice</text>
+        <text x="20" y="200" text-anchor="middle" transform="rotate(-90, 20, 200)">Valor</text>
+
+        <!-- Escala -->
+        <text x="45" y="355" text-anchor="end">0</text>
+        <text x="45" y="300" text-anchor="end">1</text>
+        <text x="45" y="250" text-anchor="end">2</text>
+        <text x="45" y="200" text-anchor="end">3</text>
+        <text x="45" y="150" text-anchor="end">4</text>
+
+        <!-- Gráfico de Líneas -->
+        <polyline class="line" points="
+                50,275 
+                100,325 
+                150,325 
+                200,250 
+                250,200 
+                300,240 
+                350,300 
+                400,235 
+                450,295 
+                500,250
+            " />
+
+        <!-- Puntos -->
+        <circle cx="50" cy="275" r="4" class="point" />
+        <circle cx="100" cy="325" r="4" class="point" />
+        <circle cx="150" cy="325" r="4" class="point" />
+        <circle cx="200" cy="250" r="4" class="point" />
+        <circle cx="250" cy="200" r="4" class="point" />
+        <circle cx="300" cy="240" r="4" class="point" />
+        <circle cx="350" cy="300" r="4" class="point" />
+        <circle cx="400" cy="235" r="4" class="point" />
+        <circle cx="450" cy="295" r="4" class="point" />
+        <circle cx="500" cy="250" r="4" class="point" />
+    </svg>
+</body>
+
+</html>
