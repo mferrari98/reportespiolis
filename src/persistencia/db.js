@@ -11,7 +11,7 @@ function openDatabase() {
       if (err) {
         console.error('Error al abrir la base de datos:', err.message);
       } else {
-        console.log('Conectado a la base de datos SQLite.');
+        console.log('DB - Conectado a la base de datos SQLite\n');
       }
     });
   }
