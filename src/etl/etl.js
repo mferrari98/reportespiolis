@@ -2,9 +2,10 @@ const fs = require('fs');
 const readline = require('readline');
 
 const { getHeaders, getFirstWords, getDatos } = require('./parser-reporte');
+const { lecturaExitosa } = require('./transpilador');
 
 let filePath = process.argv[2];
-const lines = [];
+let lines = [];
 
 let lastModifiedTime = null;
 const checkInterval = 4 * 1000; // tiempo verificacion de cambios
@@ -57,10 +58,8 @@ function readAndProcessFile() {
         rl.on('close', () => {
             firstWords = getFirstWords(lines);
             const secondColumnData = getDatos(lines, 0); // Obtiene los datos de la segunda columna (índice 0)
-
-            console.log(`Encabezados: ${headers.join(', ')}`);
-            console.log(`Primera palabra por fila: ${firstWords.join(', ')}`);
-            console.log(`Datos de la segunda columna: ${secondColumnData.join(', ')}`);
+            lecturaExitosa(headers, firstWords, secondColumnData);
+            lines = [];
         });
     } catch (error) {
         console.error(`Error al leer el archivo: ${error.message}`);

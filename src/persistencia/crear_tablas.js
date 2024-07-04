@@ -7,7 +7,8 @@ const db = getDatabase();
 db.run(
   `CREATE TABLE IF NOT EXISTS sitios (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      descriptor TEXT NOT NULL
+      descriptor TEXT NOT NULL,
+      rebalse FLOAT
   )`,
   (err) => {
     if (err) {

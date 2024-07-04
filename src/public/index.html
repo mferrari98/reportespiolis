@@ -1,101 +1,130 @@
+
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tabla de Datos y Gráfico</title>
-        <link rel="stylesheet" href="css/styles.css">
-        <script src="js/plotly-latest.min.js"></script>
-    </head>
-    <body>
-        <h1>Datos de Nivel, Cloro y Turbiedad</h1>
-        <div name="marco">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Sitio</th>
-                        <th>Nivel [m]</th>
-                        <th>Cloro [mg/l]</th>
-                        <th>Turbiedad [UTN]</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Toma (Río)</td>
-                        <td>3.03</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Toma (Des.)</td>
-                        <td>2.29</td>
-                        <td></td>
-                        <td>10.63</td>
-                    </tr>
-                    <tr>
-                        <td>P. Pot</td>
-                        <td>2.29</td>
-                        <td>1.28</td>
-                        <td>0.13</td>
-                    </tr>
-                    <tr>
-                        <td>L. Maria</td>
-                        <td>3.13</td>
-                        <td>1.22</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>KM11</td>
-                        <td>3.73</td>
-                        <td>0.69</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>R6000</td>
-                        <td>3.16</td>
-                        <td>0.56</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>B. PUJOL</td>
-                        <td>2.38</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>B. OESTE (1K)</td>
-                        <td>3.24</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>B. SAN MIGUEL</td>
-                        <td>2.36</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>NUEVA CHUBUT</td>
-                        <td>3.12</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Datos y Gráfico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: auto;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+            text-transform: uppercase;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+    </style>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Datos de Nivel, Cloro y Turbiedad</h1>
+    <div name="marco">
+        <table>
+            <thead>
+                <tr>
+                    <th>Sitio</th>
+                    <th>Nivel[m]</th>
+                    <th>Cloro[mlg/l]</th>
+                    <th>Turbiedad[UTN]</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Toma(Rio)</td>
+                    <td>3.03</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Toma(Des.)</td>
+                    <td>2.29</td>
+                    <td></td>
+                    <td>10.63</td>
+                </tr>
+                <tr>
+                    <td>P.Pot</td>
+                    <td>2.29</td>
+                    <td>1.28</td>
+                    <td>0.13</td>
+                </tr>
+                <tr>
+                    <td>L.Maria</td>
+                    <td>3.13</td>
+                    <td>1.22</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>KM11</td>
+                    <td>3.73</td>
+                    <td>0.69</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>R6000</td>
+                    <td>3.16</td>
+                    <td>0.56</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>B.PUJOL</td>
+                    <td>2.38</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>B.OESTE(1K)</td>
+                    <td>3.24 </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>B.SAN MIGUEL</td>
+                    <td>2.36</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>NUEVA CHUBUT</td>
+                    <td>3.12</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-        <!-- Div donde se renderizará el gráfico -->
-        <div id="myDiv" style="width: 100%; height: 500px;"></div>
+    <!-- Div donde se renderizará el gráfico -->
+    <div id="myDiv" style="width: 100%; height: 500px;"></div>
 
-        <script>
+    <script>
         // Datos de la tabla
-        var sitios = ['Toma (Río)', 'Toma (Des.)', 'P. Pot', 'L. Maria', 'KM11', 'R6000', 'B. PUJOL', 'B. OESTE (1K)', 'B. SAN MIGUEL', 'NUEVA CHUBUT'];
-        var niveles = [3.03, 2.29, 2.29, 3.13, 3.73, 3.16, 2.38, 3.24, 2.36, 3.12];
+        var sitios = ['Toma(Rio)', 'Toma(Des.)', 'P.Pot', 'L.Maria', 'KM11', 'R6000', 'B.PUJOL', 'B.OESTE(1K)', 'B.SAN MIGUEL', 'NUEVA CHUBUT'];
+        var niveles = [3.03, 2.29, 2.29, 3.13, 3.73, 3.16, 2.38, 3.24 , 2.36, 3.12];
 
         var trace1 = {
             x: sitios,
             y: niveles,
-            name: 'SF Zoo',
+            name: 'Nivel',
             type: 'bar',
             marker: {
                 color: '#2E3A8B',
@@ -104,12 +133,12 @@
 
         var trace2 = {
             x: sitios,
-            y: [5-niveles[0], 5-niveles[1], 5-niveles[2], 5-niveles[3], 5-niveles[4], 5-niveles[5], 5-niveles[6], 5-niveles[7], 5-niveles[8], 5-niveles[9]],
-            name: 'LA Zoo',
+            y: [0.9700000000000002, 0.71, 0.71, 1.87, 1.27, 0.8399999999999999, 0.6200000000000001, 1.7599999999999998, 1.44, 0.8799999999999999],
+            name: 'Rebalse',
             type: 'bar',
             marker: {
                 color: '#2E3A8B',
-                opacity: 0.5
+                opacity: 0.3
             }
         };
 
@@ -130,5 +159,7 @@
         // Renderizar el gráfico en el div con id 'myDiv'
         Plotly.newPlot('myDiv', data, layout);
     </script>
-    </body>
+</body>
 </html>
+
+        
