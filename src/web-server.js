@@ -15,7 +15,14 @@ app.use(express.json());
 
 // Middleware para configurar Content-Security-Policy
 app.use((req, res, next) => {
-  res.setHeader("Content-Security-Policy", "default-src 'none' http://localhost:3000/; script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:3000; style-src 'self' 'unsafe-inline' http://localhost:3000; img-src 'self' http://localhost:3000; connect-src 'self' http://localhost:3000");  
+  res.setHeader("Content-Security-Policy","\
+    default-src 'none' http://localhost:3000/;\
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:3000;\
+    style-src 'self' 'unsafe-inline' http://localhost:3000;\
+    img-src 'self' data: http://localhost:3000;\
+    connect-src 'self' http://localhost:3000"
+  );  
+
   next();
 });
 

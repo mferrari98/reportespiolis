@@ -1,8 +1,8 @@
 const fs = require('fs');
 const readline = require('readline');
 
-const { getHeaders, getFirstWords, getDatos } = require('./parser-reporte');
-const { lecturaExitosa } = require('./transpilador');
+const { getTipoVariable, getSitiosNombre, getSitiosNiveles } = require('./parser-reporte');
+const { transpilar } = require('./transpilador');
 
 let filePath = process.argv[2];
 let lines = [];
@@ -42,23 +42,21 @@ function readAndProcessFile() {
 
         let isFirstLine = true;
         let headers = [];
-        let firstWords = [];
 
         // Escucha cada línea del archivo
         rl.on('line', (line) => {
             if (isFirstLine) {
-                headers = getHeaders(line);
+                headers = getTipoVariable(line);
                 isFirstLine = false;
             } else {
                 lines.push(line);
             }
         });
 
-        // Cuando termina de leer el archivo, muestra los resultados
         rl.on('close', () => {
-            firstWords = getFirstWords(lines);
-            const secondColumnData = getDatos(lines, 0); // Obtiene los datos de la segunda columna (índice 0)
-            lecturaExitosa(headers, firstWords, secondColumnData);
+            let sitios = getSitiosNombre(lines);
+            const niveles = getSitiosNiveles(lines, 0); // Obtiene los datos de la segunda columna (índice 0)
+            transpilar(headers, sitios, niveles);
             lines = [];
         });
     } catch (error) {
