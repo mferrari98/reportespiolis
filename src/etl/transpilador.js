@@ -44,7 +44,7 @@ function transpilar(headers, sitios, niveles) {
             .replace('<!-- REBALSE -->', complementoNivel.join(', '));
         
         // Escribir en el archivo
-        fs.writeFile("public/index.html", contenido, (err) => {
+        fs.writeFile("web/public/index.html", contenido, (err) => {
             if (err) {
                 console.error('Error al escribir archivo:', err);
                 return;

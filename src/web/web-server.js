@@ -5,28 +5,23 @@ lo podes probar con
 const express = require('express');
 const path = require('path');
 
-const SitioDAO = require('./persistencia/sitioDAO');
-const { openDatabase, closeDatabase } = require('./persistencia/db');
-require('./persistencia/crear_tablas');
-require('./etl/etl')
+const SitioDAO = require('../persistencia/sitioDAO');
 
 const app = express();
 app.use(express.json());
 
 // Middleware para configurar Content-Security-Policy
 app.use((req, res, next) => {
-  res.setHeader("Content-Security-Policy","\
+  res.setHeader("Content-Security-Policy", "\
     default-src 'none' http://localhost:3000/;\
     script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:3000;\
     style-src 'self' 'unsafe-inline' http://localhost:3000;\
     img-src 'self' data: http://localhost:3000;\
     connect-src 'self' http://localhost:3000"
-  );  
+  );
 
   next();
 });
-
-openDatabase();
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -40,15 +35,8 @@ app.get('/reporte', async (req, res) => {
   }
 });
 
-
 app.get('/sitios', async (req, res) => {
-  try {
-    const sitios = await SitioDAO.getAllSitios();
-    res.json(sitios);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
+  console.log(`WEBSERV - ${req.query}`)
 });
 
 app.get('/sitios/:id', async (req, res) => {
@@ -66,13 +54,7 @@ app.get('/sitios/:id', async (req, res) => {
 });
 
 app.post('/sitios', async (req, res) => {
-  try {    
-    const newSitio = await SitioDAO.createSitio(req.body);
-    res.status(201).json(newSitio);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
+  console.log(`WEBSERV - ${req.body}`)
 });
 
 app.put('/sitios/:id', async (req, res) => {
@@ -96,13 +78,29 @@ app.delete('/sitios/:id', async (req, res) => {
 });
 
 const server = app.listen(3000, () => {
-  console.log("WEB-SERVER - Escuchando p=3000\n");
+  console.log("WEBSERV - Escuchando p=3000\n");
 });
 
-process.on('SIGINT', () => {
-  closeDatabase();
-  server.close(() => {
-    console.log('Server closed');
-    process.exit(0);
+const connections = new Set();
+
+server.on('connection', (conn) => {
+  connections.add(conn);
+  conn.on('close', () => {
+    connections.delete(conn);
   });
 });
+
+function closeServer(cb) {
+
+  console.log(`WEBSERV - destruyendo ${connections.size} conexion`);
+  for (const conn of connections) {
+    conn.destroy();
+  }
+
+  server.close(() => {
+    console.log('Server closed');
+    cb();
+  });
+}
+
+module.exports = { closeServer };

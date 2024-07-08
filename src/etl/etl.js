@@ -87,8 +87,6 @@ function checkFileModification() {
     });
 }
 
-setInterval(checkFileModification, checkInterval);
-
 // Función para formatear la fecha
 function formatoFecha(fechaOriginal) {
     const fecha = new Date(fechaOriginal);
@@ -103,3 +101,12 @@ function formatoFecha(fechaOriginal) {
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+
+const intervalId = setInterval(checkFileModification, checkInterval);
+
+function pararETL() {
+    clearInterval(intervalId);
+    console.log('ETL - deteniendo observador');
+}
+
+module.exports = { pararETL };

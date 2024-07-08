@@ -17,17 +17,16 @@ function openDatabase() {
   }
 }
 
-function closeDatabase() {
-  if (db) {
-    db.close((err) => {
-      if (err) {
-        console.error('Error al cerrar la base de datos:', err.message);
-      } else {
-        console.log('Base de datos SQLite cerrada.');
-      }
-    });
-    db = null;
-  }
+function closeDatabase(cb) {
+
+  db.close((err) => {
+    if (err) {
+      console.error('Error cerrando SQLite:', err.message);
+    } else {
+      console.log('SQLite cerrada.');
+    }
+    cb()
+  });
 }
 
 function getDatabase() {

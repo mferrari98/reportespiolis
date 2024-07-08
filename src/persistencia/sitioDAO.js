@@ -1,71 +1,75 @@
 const { getDatabase } = require('./db');
 
+const sql_create = `INSERT INTO sitio (descriptor) VALUES (?)`;
+const sql_getById = `SELECT * FROM sitio WHERE id = ?`;
+const sql_getAll = `SELECT * FROM sitio`;
+const sql_update = `UPDATE sitio SET descriptor = ? WHERE id = ?`;
+const sql_delete = `DELETE FROM sitio WHERE id = ?`;
+
 class SitioDAO {
-  static getAllSitios() {
+
+ create(descriptor, callback) {
     const db = getDatabase();
-    return new Promise((resolve, reject) => {
-      db.all('SELECT * FROM sitios', [], (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows);
-        }
-      });
+
+    db.run(sql_create, [descriptor], function (err) {
+      if (err) {
+        console.error('Error inserting into Sitio:', err.message);
+        callback(err);
+      } else {
+        callback(null, { id: this.lastID, descriptor });
+      }
     });
   }
 
-  static getSitioById(sitioId) {
+  getById(id, callback) {
     const db = getDatabase();
-    return new Promise((resolve, reject) => {
-      db.get('SELECT * FROM sitios WHERE id = ?', [sitioId], (err, row) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(row);
-        }
-      });
+
+    db.get(sql_getById, [id], (err, row) => {
+      if (err) {
+        console.error('Error fetching from Sitio:', err.message);
+        callback(err);
+      } else {
+        callback(null, row);
+      }
     });
   }
 
-  static createSitio(sitio) {
+  getAll(callback) {
     const db = getDatabase();
-    return new Promise((resolve, reject) => {
-      
-      const { descriptor } = sitio;
-      db.run('INSERT INTO sitios (descriptor) VALUES (?)', [descriptor], function (err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({ id: this.lastID, ...sitio });
-        }
-      });
+
+    db.all(sql_getAll, [], (err, rows) => {
+      if (err) {
+        console.error('Error fetching from Sitio:', err.message);
+        callback(err);
+      } else {
+        callback(null, rows);
+      }
     });
   }
 
-  static updateSitio(sitioId, sitio) {
+  update(id, descriptor, callback) {
     const db = getDatabase();
-    return new Promise((resolve, reject) => {
-      const { descriptor } = sitio;
-      db.run('UPDATE sitios SET descriptor = ? WHERE id = ?', [descriptor, sitioId], function (err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({ id: sitioId, ...sitio });
-        }
-      });
+
+    db.run(sql_update, [descriptor, id], function (err) {
+      if (err) {
+        console.error('Error updating Sitio:', err.message);
+        callback(err);
+      } else {
+        callback(null, { id, descriptor });
+      }
     });
   }
 
-  static deleteSitio(sitioId) {
+  delete(id, callback) {
     const db = getDatabase();
-    return new Promise((resolve, reject) => {
-      db.run('DELETE FROM sitios WHERE id = ?', [sitioId], function (err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({ id: sitioId });
-        }
-      });
+
+    db.run(sql_delete, [id], function (err) {
+      if (err) {
+        console.error('Error deleting from Sitio:', err.message);
+        callback(err);
+      } else {
+        callback(null, { id });
+      }
     });
   }
 }
