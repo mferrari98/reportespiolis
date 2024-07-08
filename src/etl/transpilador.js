@@ -3,7 +3,7 @@ const fs = require('fs');
 // Función para preparar el contenido a escribir
 function transpilar(headers, sitios, niveles) {
 
-    const nivelRebalse = [4, 3, 3, 5, 5, 4, 3, 5, 3.8, 4]   
+    const nivelRebalse = [4, 3, 3, 5, 5, 4, 3, 5, 3.8, 4]
     const complementoNivel = nivelRebalse.map(
         (nivel, index) => nivel - niveles[index]
     );
@@ -42,14 +42,14 @@ function transpilar(headers, sitios, niveles) {
             .replace('<!-- SITIOS -->', sitios.join("', '"))
             .replace('<!-- NIVELES -->', niveles.join("', '"))
             .replace('<!-- REBALSE -->', complementoNivel.join(', '));
-        
+
         // Escribir en el archivo
         fs.writeFile("web/public/index.html", contenido, (err) => {
             if (err) {
                 console.error('Error al escribir archivo:', err);
                 return;
             }
-            console.log('Archivo escrito correctamente.');
+            console.log('TRANS - Archivo escrito correctamente.');
         });
     });
 }

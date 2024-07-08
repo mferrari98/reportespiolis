@@ -5,12 +5,12 @@ lo podes probar con
 const express = require('express');
 const path = require('path');
 
-const SitioDAO = require('../persistencia/sitioDAO');
-
 const app = express();
 app.use(express.json());
 
-// Middleware para configurar Content-Security-Policy
+/*
+Middleware para configurar Content-Security-Policy
+*/
 app.use((req, res, next) => {
   res.setHeader("Content-Security-Policy", "\
     default-src 'none' http://localhost:3000/;\
@@ -25,62 +25,28 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/reporte', async (req, res) => {
-  try {
-    const filePath = path.join(__dirname, 'public', 'index.html');
-    res.sendFile(filePath);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-});
+/*
+alta de rutas para organizar mejor el codigo
+*/
+const sitioRoutes = require('./routes/sitio');
+const tipoVarRoutes = require('./routes/tipovar');
+const otherRoutes = require('./routes/general');
 
-app.get('/sitios', async (req, res) => {
-  console.log(`WEBSERV - ${req.query}`)
-});
+app.use('/sitios', sitioRoutes);
+app.use('/tipovar', tipoVarRoutes);
+app.use('/', otherRoutes);
 
-app.get('/sitios/:id', async (req, res) => {
-  try {
-    const sitio = await SitioDAO.getSitioById(req.params.id);
-    if (sitio) {
-      res.json(sitio);
-    } else {
-      res.status(404).send('Sitio not found');
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
-app.post('/sitios', async (req, res) => {
-  console.log(`WEBSERV - ${req.body}`)
-});
-
-app.put('/sitios/:id', async (req, res) => {
-  try {
-    const updatedSitio = await SitioDAO.updateSitio(req.params.id, req.body);
-    res.json(updatedSitio);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
-app.delete('/sitios/:id', async (req, res) => {
-  try {
-    await SitioDAO.deleteSitio(req.params.id);
-    res.status(204).send();
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
+/*
+levantar server
+*/
 const server = app.listen(3000, () => {
   console.log("WEBSERV - Escuchando p=3000\n");
 });
 
+/*
+gestionar conexiones abiertas
+para poder hacer un cierre autoritario cuando sea necesario
+*/
 const connections = new Set();
 
 server.on('connection', (conn) => {
@@ -98,7 +64,7 @@ function closeServer(cb) {
   }
 
   server.close(() => {
-    console.log('Server closed');
+    console.log('WEBSERV - Server closed');
     cb();
   });
 }

@@ -12,8 +12,8 @@ const checkInterval = 4 * 1000; // tiempo verificacion de cambios
 
 // Verifica que se haya proporcionado el archivo como argumento
 if (process.argv.length < 3) {
-    console.error('\nETL - Parece que la ubicacion del achivo no llega como argumento de la linea de comandos');
-    console.error("ETL - Se utilizara la direccion definida en config.json\n");
+    console.error('ETL - Parece que la ubicacion del achivo no llega como argumento de la linea de comandos');
+    console.error("ETL - Se utilizara la direccion definida en config.json");
 
     fs.readFile('./etl/config.json', 'utf8', (err, jsonString) => {
         if (err) {
@@ -40,22 +40,18 @@ function readAndProcessFile() {
             terminal: false
         });
 
-        let isFirstLine = true;
-        let headers = [];
-
         // Escucha cada línea del archivo
         rl.on('line', (line) => {
-            if (isFirstLine) {
-                headers = getTipoVariable(line);
-                isFirstLine = false;
-            } else {
-                lines.push(line);
-            }
+            lines.push(line);
         });
 
         rl.on('close', () => {
-            let sitios = getSitiosNombre(lines);
+            const headers = getTipoVariable(lines[0]);
+
+            lines.splice(0, 1)
+            const sitios = getSitiosNombre(lines);
             const niveles = getSitiosNiveles(lines, 0); // Obtiene los datos de la segunda columna (índice 0)
+
             transpilar(headers, sitios, niveles);
             lines = [];
         });

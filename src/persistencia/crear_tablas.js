@@ -52,7 +52,7 @@ tablaHistoricosLectura = () => {
       if (err) {
         console.error('Error creando tabla historicos_lectura', err.message);
       } else {
-        console.log('CREAR-TABLA - Esquema de tablas creado correctamente\n');
+        console.log('CREAR-TABLA - Esquema de tablas creado correctamente');
       }
     }
   );
