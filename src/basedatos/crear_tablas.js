@@ -3,9 +3,9 @@ const { getDatabase, openDatabase } = require('./db');
 openDatabase();
 const db = getDatabase();
 
-// tabla sitios
+// tabla sitio
 db.run(
-  `CREATE TABLE IF NOT EXISTS sitios (
+  `CREATE TABLE IF NOT EXISTS sitio (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       descriptor TEXT NOT NULL,
       rebalse FLOAT
@@ -36,16 +36,16 @@ tablaTipoVariable = () => {
   );
 }
 
-// tabla 'historicos_lectura'
+// tabla 'historico_lectura'
 tablaHistoricosLectura = () => {
   db.run(
-    `CREATE TABLE IF NOT EXISTS historicos_lectura (
+    `CREATE TABLE IF NOT EXISTS historico_lectura (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       sitio_id INTEGER NOT NULL,
       tipo_id INTEGER NOT NULL,
       valor REAL NOT NULL,
       etiempo DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (sitio_id) REFERENCES sitios(id),
+      FOREIGN KEY (sitio_id) REFERENCES sitio(id),
       FOREIGN KEY (tipo_id) REFERENCES tipo_variable(id)
   )`,
     (err) => {

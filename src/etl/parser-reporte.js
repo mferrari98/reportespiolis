@@ -1,10 +1,10 @@
-const sitioDAO = require('../dao/sitioDAO');
+const SitioDAO = require('../dao/sitioDAO');
 const TipoVariableDAO = require('../dao/tipoVariableDAO');
 
 const ID_MOD = "PARSER"
 
 const tipoVariableDAO = new TipoVariableDAO();
-const descriptorABuscar = 'ejemplo_descriptor';
+const sitioDAO = new SitioDAO();
 
 function getTipoVariable(firstLine) {
 
@@ -21,11 +21,11 @@ function getTipoVariable(firstLine) {
                         if (err) {
                             console.error(`${ID_MOD} - Error al insertar descriptor:`, err);
                         } else {
-                            console.log(`${ID_MOD} - Nuevo registro creado: ID ${result.id}, descriptor ${descriptor}`);
+                            console.log(`${ID_MOD} - Nuevo registro creado: ID ${result.id}, nombre ${result.descriptor}`);
                         }
                     });
                 } else {
-                    console.log('PARSER - Registro encontrado:', row);
+                    console.log(`${ID_MOD} - Registro encontrado:`, row);
                 }
             }
         });
@@ -35,7 +35,29 @@ function getTipoVariable(firstLine) {
 }
 
 function getSitiosNombre(lines) {
+
     let sitios = lines.map(line => line.split(/\s{2,}/)[0]).filter(word => word !== undefined);
+    sitios.forEach(descriptor => {
+
+        sitioDAO.getByDescriptor(descriptor, (err, row) => {
+            if (err) {
+                console.error(`${ID_MOD} - Error al buscar por nombre:`, err);
+            } else {
+                if (!row) {
+                    // Si no se encuentra el sitio, se crea un nuevo registro
+                    sitioDAO.create(descriptor, (err, result) => {
+                        if (err) {
+                            console.error(`${ID_MOD} - Error al insertar sitio:`, err);
+                        } else {
+                            console.log(`${ID_MOD} - Nuevo registro creado: ID ${result.id}, nombre ${result.descriptor}`);
+                        }
+                    });
+                } else {
+                    console.log(`${ID_MOD} - Registro encontrado:`, row);
+                }
+            }
+        });
+    });
     return sitios
 }
 
