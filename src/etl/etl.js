@@ -4,6 +4,8 @@ const readline = require('readline');
 const { getTipoVariable, getSitiosNombre, getSitiosNiveles } = require('./parser-reporte');
 const { transpilar } = require('./transpilador');
 
+const ID_MOD = "ETL"
+
 let filePath = process.argv[2];
 let lines = [];
 
@@ -12,8 +14,8 @@ const checkInterval = 4 * 1000; // tiempo verificacion de cambios
 
 // Verifica que se haya proporcionado el archivo como argumento
 if (process.argv.length < 3) {
-    console.error('ETL - Parece que la ubicacion del achivo no llega como argumento de la linea de comandos');
-    console.error("ETL - Se utilizara la direccion definida en config.json");
+    console.error(`${ID_MOD} - Parece que la ubicacion del achivo no llega como argumento de la linea de comandos`);
+    console.error(`${ID_MOD} - Se utilizara la direccion definida en config.json`);
 
     fs.readFile('./etl/config.json', 'utf8', (err, jsonString) => {
         if (err) {
@@ -78,7 +80,7 @@ function checkFileModification() {
             console.log(`Actual ${fechaActual} ==> Anterior ${fechaAnterior}`);
             readAndProcessFile();
         } else {
-            console.log('El archivo no ha sido modificado desde la última lectura.');
+            console.log(`${ID_MOD} - El archivo no ha sido modificado desde la última lectura`);
         }
     });
 }
@@ -102,7 +104,7 @@ const intervalId = setInterval(checkFileModification, checkInterval);
 
 function pararETL() {
     clearInterval(intervalId);
-    console.log('ETL - deteniendo observador');
+    console.log(`${ID_MOD} - deteniendo observador`);
 }
 
 module.exports = { pararETL };

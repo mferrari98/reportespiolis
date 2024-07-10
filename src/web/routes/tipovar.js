@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const TipoVariableDAO = require('../../persistencia/tipoVariableDAO');
+const TipoVariableDAO = require('../../dao/tipoVariableDAO');
 const tipoVariableDAO = new TipoVariableDAO();
 
 router.get('/', async (req, res) => {

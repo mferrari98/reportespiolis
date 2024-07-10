@@ -1,4 +1,6 @@
-const { getDatabase } = require('./db');
+const { getDatabase } = require('../basedatos/db');
+
+const ID_MOD = "DAO-SITIO"
 
 const sql_create = `INSERT INTO sitio (descriptor) VALUES (?)`;
 const sql_getById = `SELECT * FROM sitio WHERE id = ?`;
@@ -8,7 +10,8 @@ const sql_delete = `DELETE FROM sitio WHERE id = ?`;
 
 class SitioDAO {
 
- create(descriptor, callback) {
+  create(descriptor, callback) {
+    console.log(`${ID_MOD} - ${this.create.name}`)
     const db = getDatabase();
 
     db.run(sql_create, [descriptor], function (err) {
@@ -22,6 +25,7 @@ class SitioDAO {
   }
 
   getById(id, callback) {
+    console.log(`${ID_MOD} - ${this.getById.name}`)
     const db = getDatabase();
 
     db.get(sql_getById, [id], (err, row) => {
@@ -35,6 +39,7 @@ class SitioDAO {
   }
 
   getAll(callback) {
+    console.log(`${ID_MOD} - ${this.getAll.name}`)
     const db = getDatabase();
 
     db.all(sql_getAll, [], (err, rows) => {
@@ -48,6 +53,7 @@ class SitioDAO {
   }
 
   update(id, descriptor, callback) {
+    console.log(`${ID_MOD} - ${this.update.name}`)
     const db = getDatabase();
 
     db.run(sql_update, [descriptor, id], function (err) {
@@ -61,6 +67,7 @@ class SitioDAO {
   }
 
   delete(id, callback) {
+    console.log(`${ID_MOD} - ${this.delete.name}`)
     const db = getDatabase();
 
     db.run(sql_delete, [id], function (err) {

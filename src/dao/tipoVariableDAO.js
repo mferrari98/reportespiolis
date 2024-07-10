@@ -1,4 +1,6 @@
-const { getDatabase } = require('./db');
+const { getDatabase } = require('../basedatos/db');
+
+const ID_MOD = "DAO-TPOVAR"
 
 const sql_create = `INSERT INTO tipo_variable (descriptor) VALUES (?)`;
 const sql_getById = `SELECT * FROM tipo_variable WHERE id = ?`;
@@ -10,6 +12,7 @@ const sql_delete = `DELETE FROM tipo_variable WHERE id = ?`;
 class TipoVariableDAO {
 
   create(descriptor, callback) {
+    console.log(`${ID_MOD} - ${this.create.name}`)
     const db = getDatabase();
 
     db.run(sql_create, [descriptor], function (err) {
@@ -23,6 +26,7 @@ class TipoVariableDAO {
   }
 
   getById(id, callback) {
+    console.log(`${ID_MOD} - ${this.getById.name}`)
     const db = getDatabase();
 
     db.get(sql_getById, [id], (err, row) => {
@@ -36,6 +40,7 @@ class TipoVariableDAO {
   }
 
   getByDescriptor(descriptor, callback) {
+    console.log(`${ID_MOD} - ${this.getByDescriptor.name}`);
     const db = getDatabase();
 
     db.get(sql_getByDescriptor, [descriptor], (err, row) => {
@@ -49,6 +54,7 @@ class TipoVariableDAO {
   }
 
   getAll(callback) {
+    console.log(`${ID_MOD} - ${this.getAll.name}`)
     const db = getDatabase();
 
     db.all(sql_getAll, [], (err, rows) => {
@@ -62,6 +68,7 @@ class TipoVariableDAO {
   }
 
   update(id, descriptor, callback) {
+    console.log(`${ID_MOD} - ${this.update.name}`)
     const db = getDatabase();
 
     db.run(sql_update, [descriptor, id], function (err) {
@@ -75,6 +82,7 @@ class TipoVariableDAO {
   }
 
   delete(id, callback) {
+    console.log(`${ID_MOD} - ${this.delete.name}`)
     const db = getDatabase();
 
     db.run(sql_delete, [id], function (err) {
