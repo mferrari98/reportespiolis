@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
@@ -14,6 +15,22 @@ router.get('/reporte', async (req, res) => {
     console.error(error);
     res.status(500).send('Internal Server Error');
   }
+});
+
+router.post('/imagenpt', (req, res) => {
+    const imageData = req.body.image;
+
+    // Decodificar la imagen base64
+    const buffer = Buffer.from(imageData, 'base64');
+
+    // Guardar la imagen en el servidor
+    fs.writeFile('grafica.png', buffer, (err) => {
+        if (err) {
+            console.error('Error al guardar la imagen:', err);
+            return res.status(500).json({ message: 'Error al guardar la imagen' });
+        }
+        res.json({ message: 'Imagen guardada exitosamente' });
+    });
 });
 
 module.exports = router;

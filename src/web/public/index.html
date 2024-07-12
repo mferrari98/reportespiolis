@@ -60,7 +60,7 @@
                 </tr>
                 <tr>
                     <td>B.PUJOL</td>
-                    <td>2.00</td>
+                    <td>2.01</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -88,11 +88,12 @@
 
     <!-- Div donde se renderizará el gráfico -->
     <div id="myDiv" style="width: 100%; height: 500px;"></div>
+    <button id="guardar">Guardar como imagen</button>
 
     <script>
         // Datos de la tabla
         var sitios = ['Toma(Rio)', 'Toma(Des.)', 'P.Pot', 'L.Maria', 'KM11', 'R6000', 'B.PUJOL', 'B.OESTE(1K)', 'B.SAN MIGUEL', 'NUEVA CHUBUT', 'PLANTA POT.'];
-        var niveles = ['1.91', '2.33', '1.86', '3.10', '3.75', '3.34', '2.00', '1.46', '2.25', '2.93'];
+        var niveles = ['1.91', '2.33', '1.86', '3.10', '3.75', '3.34', '2.01', '1.46', '2.25', '2.93'];
 
         var trace1 = {
             x: sitios,
@@ -106,7 +107,7 @@
 
         var trace2 = {
             x: sitios,
-            y: [2.09, 0.6699999999999999, 1.14, 1.9, 1.25, 0.6600000000000001, 1, 3.54, 1.5499999999999998, 1.0699999999999998],
+            y: [2.09, 0.6699999999999999, 1.14, 1.9, 1.25, 0.6600000000000001, 0.9900000000000002, 3.54, 1.5499999999999998, 1.0699999999999998],
             name: 'Rebalse',
             type: 'bar',
             marker: {
@@ -126,11 +127,40 @@
             },
             yaxis: {
                 title: 'Nivel [m]'
-            }
+            },
+            dragmode: false,  // Esto deshabilita el modo de arrastre para el zoom
+            zoom: false  // Esto deshabilita completamente la funcionalidad de zoom
         };
 
         // Renderizar el gráfico en el div con id 'myDiv'
-        Plotly.newPlot('myDiv', data, layout);
+        Plotly.newPlot('myDiv', data, layout, {displayModeBar: false});
+
+        document.getElementById('guardar').onclick = function() {
+            Plotly.toImage(document.getElementById('myDiv'), { format: 'png'})
+                .then(function(url) {
+                    // Convertir la imagen a base64
+                    var base64Image = url.split(',')[1];
+
+                    // Enviar la imagen al servidor
+                    fetch('/imagenpt', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ image: base64Image })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Éxito:', data);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                })
+                .catch(function(error) {
+                    console.error('Error al crear la imagen:', error);
+                });
+        };
     </script>
 </body>
 </html>

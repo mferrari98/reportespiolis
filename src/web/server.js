@@ -16,7 +16,7 @@ app.use((req, res, next) => {
     default-src 'none' http://localhost:3000/;\
     script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:3000;\
     style-src 'self' 'unsafe-inline' http://localhost:3000;\
-    img-src 'self' data: http://localhost:3000;\
+    img-src 'self' data: blob: http://localhost:3000;\
     connect-src 'self' http://localhost:3000"
   );
 
@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(express.json({ limit: '10mb' }));
 /*
 alta de rutas para organizar mejor el codigo
 */

@@ -88,6 +88,7 @@
 
     <!-- Div donde se renderizará el gráfico -->
     <div id="myDiv" style="width: 100%; height: 500px;"></div>
+    <button id="guardar">Guardar como imagen</button>
 
     <script>
         // Datos de la tabla
@@ -126,11 +127,40 @@
             },
             yaxis: {
                 title: 'Nivel [m]'
-            }
+            },
+            dragmode: false,  // Esto deshabilita el modo de arrastre para el zoom
+            zoom: false  // Esto deshabilita completamente la funcionalidad de zoom
         };
 
         // Renderizar el gráfico en el div con id 'myDiv'
-        Plotly.newPlot('myDiv', data, layout);
+        Plotly.newPlot('myDiv', data, layout, {displayModeBar: false});
+
+        document.getElementById('guardar').onclick = function() {
+            Plotly.toImage(document.getElementById('myDiv'), { format: 'png'})
+                .then(function(url) {
+                    // Convertir la imagen a base64
+                    var base64Image = url.split(',')[1];
+
+                    // Enviar la imagen al servidor
+                    fetch('/imagenpt', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ image: base64Image })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Éxito:', data);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                })
+                .catch(function(error) {
+                    console.error('Error al crear la imagen:', error);
+                });
+        };
     </script>
 </body>
 </html>
