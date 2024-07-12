@@ -1,6 +1,7 @@
 <!-- template.html -->
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/plotly-latest.min.js"></script>
 </head>
+
 <body>
     <h2>Estado de reservas</h2>
     <div>
@@ -18,6 +20,7 @@
                     <th>Sitio</th>
                     <th>1</th>
                     <th>2</th>
+                    <th>4</th>
                     <th>4</th>
                 </tr>
             </thead>
@@ -59,11 +62,7 @@
                     <td></td>
                 </tr>
                 <tr>
-<<<<<<< HEAD
                     <td>B.PUJOL</td>
-=======
-                    <td>4</td>
->>>>>>> fa41072dfcc39c368f697238158aab0fc40fa2e0
                     <td>2.01</td>
                     <td></td>
                     <td></td>
@@ -96,13 +95,9 @@
 
     <script>
         // Datos de la tabla
-<<<<<<< HEAD
+
         var sitios = ['Toma(Rio)', 'Toma(Des.)', 'P.Pot', 'L.Maria', 'KM11', 'R6000', 'B.PUJOL', 'B.OESTE(1K)', 'B.SAN MIGUEL', 'NUEVA CHUBUT', 'PLANTA POT.'];
         var niveles = ['1.91', '2.33', '1.86', '3.10', '3.75', '3.34', '2.01', '1.46', '2.25', '2.93'];
-=======
-        var sitios = ['1', '10', '8', '9', '5', '3', '4', '2', '6', '7', '11'];
-        var niveles = ['1.91', '2.33', '1.86', '3.11', '3.76', '3.28', '2.01', '1.46', '2.23', '2.93'];
->>>>>>> fa41072dfcc39c368f697238158aab0fc40fa2e0
 
         var trace1 = {
             x: sitios,
@@ -116,11 +111,8 @@
 
         var trace2 = {
             x: sitios,
-<<<<<<< HEAD
             y: [2.09, 0.6699999999999999, 1.14, 1.9, 1.25, 0.6600000000000001, 0.9900000000000002, 3.54, 1.5499999999999998, 1.0699999999999998],
-=======
             y: [2.09, 0.6699999999999999, 1.14, 1.8900000000000001, 1.2400000000000002, 0.7200000000000002, 0.9900000000000002, 3.54, 1.5699999999999998, 1.0699999999999998],
->>>>>>> fa41072dfcc39c368f697238158aab0fc40fa2e0
             name: 'Rebalse',
             type: 'bar',
             marker: {
@@ -146,11 +138,11 @@
         };
 
         // Renderizar el gráfico en el div con id 'myDiv'
-        Plotly.newPlot('myDiv', data, layout, {displayModeBar: false});
+        Plotly.newPlot('myDiv', data, layout, { displayModeBar: false });
 
-        document.getElementById('guardar').onclick = function() {
-            Plotly.toImage(document.getElementById('myDiv'), { format: 'png'})
-                .then(function(url) {
+        document.getElementById('guardar').onclick = function () {
+            Plotly.toImage(document.getElementById('myDiv'), { format: 'png' })
+                .then(function (url) {
                     // Convertir la imagen a base64
                     var base64Image = url.split(',')[1];
 
@@ -162,18 +154,19 @@
                         },
                         body: JSON.stringify({ image: base64Image })
                     })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Éxito:', data);
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Éxito:', data);
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.error('Error al crear la imagen:', error);
                 });
         };
     </script>
 </body>
+
 </html>

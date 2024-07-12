@@ -1,10 +1,12 @@
 const SitioDAO = require('../dao/sitioDAO');
 const TipoVariableDAO = require('../dao/tipoVariableDAO');
+const HistoricoLecturaDAO = require('../dao/historicoLecturaDAO');
 
 const ID_MOD = "PARSER"
 
 const tipoVariableDAO = new TipoVariableDAO();
 const sitioDAO = new SitioDAO();
+const historicoLecturaDAO = new HistoricoLecturaDAO();
 
 function getTipoVariable(firstLine, cb) {
 
@@ -80,13 +82,40 @@ ademas del dato indefinido, aquellos que se van de rango, esto es util para
 no atrapar un volumen/dia como si fuera nivel.
 no es la mejor manera de resolver esto, pero por ahora sirve
 */
-function getSitiosNiveles(lines, indice) {
+async function getNiveles(lines, indice) {
+
     let niveles = lines.map(line => {
         const parts = line.split(/\s{2,}/).filter(word => word.length > 0);
-        return parts[indice + 1]; // +1 porque el primer elemento es el nombre
+        return parts[indice + 1]; // 1 porque 0 es el primer elemento, que es el nombre
     }).filter(dato => dato !== undefined && dato < 10);
 
-    return niveles
+
+    const tipoVariable = await new Promise((resolve, reject) => {
+        tipoVariableDAO.getByDescriptor("Nivel[m]", (err, row) => {
+            if (err) reject(err);
+            else resolve(row);
+        });
+    });
+
+    for (let i = 0; i < niveles.length; i++) {
+        const valor = niveles[i];
+
+        const sitio = await new Promise((resolve, reject) => {
+            sitioDAO.getByOrden(i, (err, row) => {
+                if (err) reject(err);
+                else resolve(row);
+            });
+        });
+
+        await new Promise((resolve, reject) => {
+            historicoLecturaDAO.create(sitio.id, tipoVariable.id, valor, (err, result) => {
+                if (err) reject(err);
+                else resolve(result);
+            });
+        });
+
+        console.log(`${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`);
+    }
 }
 
 function finValidacion(tipo_variable, entidades_creadas, entidades_existentes) {
@@ -100,5 +129,5 @@ function mensaje(origen, cont1, cont2) {
 module.exports = {
     getTipoVariable,
     getSitiosNombre,
-    getSitiosNiveles
+    getNiveles
 };

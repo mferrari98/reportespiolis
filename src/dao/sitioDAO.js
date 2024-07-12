@@ -5,6 +5,7 @@ const ID_MOD = "DAO-SITIO";
 const sql_create = `INSERT INTO sitio (descriptor, orden, rebalse) VALUES (?, ?, ?)`;
 const sql_getById = `SELECT * FROM sitio WHERE id = ?`;
 const sql_getByDescriptor = `SELECT * FROM sitio WHERE descriptor = ?`;
+const sql_getByOrden = `SELECT * FROM sitio WHERE orden = ?`;
 const sql_getAll = `SELECT * FROM sitio`;
 const sql_delete = `DELETE FROM sitio WHERE id = ?`;
 
@@ -61,6 +62,20 @@ SitioDAO.prototype.getByDescriptor = function (descriptor, callback) {
   db.get(sql_getByDescriptor, [descriptor], (err, row) => {
     if (err) {
       console.error('Error fetching from Sitio:', err.message);
+      callback(err);
+    } else {
+      callback(null, row);
+    }
+  });
+};
+
+SitioDAO.prototype.getByOrden = function (orden, callback) {
+  console.log(`${ID_MOD} - getByOrden`);
+  const db = getDatabase();
+
+  db.get(sql_getByOrden, [orden], (err, row) => {
+    if (err) {
+      console.error('Error fetching from sitio:', err.message);
       callback(err);
     } else {
       callback(null, row);

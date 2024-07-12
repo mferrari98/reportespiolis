@@ -20,8 +20,6 @@ crearTablas((err) => {
     }
 });
 
-
-
 process.on('SIGINT', () => {
     parar()
     closeServer(() => {

@@ -1,18 +1,12 @@
                 Nivel[m]      Cloro[mlg/l]     Turbiedad[UTN]     VOL/DIA[m3/día]
-Toma(Rio)       1.91
-Toma(Des.)      2.33                             5.00
-P.Pot           1.86            1.20             0.17
-<<<<<<< HEAD
-L.Maria         3.10            1.08
-KM11            3.75            0.80
-R6000           3.34            0.56
-=======
-L.Maria         3.11            1.08
-KM11            3.76            0.80
-R6000           3.28            0.56
->>>>>>> fa41072dfcc39c368f697238158aab0fc40fa2e0
-B.PUJOL         2.01
-B.OESTE(1K)     1.46
-B.SAN MIGUEL    2.23
-NUEVA CHUBUT    2.93
-PLANTA POT.                                                        13020
+Toma(Rio)           3.03
+Toma(Des.)          2.29                        10.63
+P.Pot               2.29        1.28            0.13
+L.Maria             3.13        1.22
+KM11                3.72        0.69
+R6000               3.16        0.56
+B.PUJOL             2.38
+B.OESTE(1K)         3.24 
+B.SAN MIGUEL        2.36
+NUEVA CHUBUT        3.12
+P.POT.                                                              137290

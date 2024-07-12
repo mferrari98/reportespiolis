@@ -3,10 +3,6 @@ const fs = require('fs');
 // Función para preparar el contenido a escribir
 function transpilar() {
 
-    const complementoNivel = nivelRebalse.map(
-        (nivel, index) => nivel - niveles[index]
-    );
-
     fs.readFile('etl/plantilla.piolis', 'utf8', (err, data) => {
         if (err) {
             console.error('Error al leer el archivo:', err);
@@ -38,8 +34,10 @@ function transpilar() {
             .replace('<!-- NIVEL_8 -->', niveles[8])
             .replace('<!-- SITIO_9 -->', sitios[9])
             .replace('<!-- NIVEL_9 -->', niveles[9])
+
             .replace('<!-- SITIOS -->', sitios.join("', '"))
             .replace('<!-- NIVELES -->', niveles.join("', '"))
+
             .replace('<!-- REBALSE -->', complementoNivel.join(', '));
 
         // Escribir en el archivo

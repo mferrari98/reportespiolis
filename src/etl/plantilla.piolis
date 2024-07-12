@@ -10,7 +10,7 @@
     <script src="js/plotly-latest.min.js"></script>
 </head>
 <body>
-    <h2>Estado de reservas</h2>
+    <h2>Reporte horario</h2>
     <div>
         <table>
             <thead>
@@ -19,6 +19,7 @@
                     <th><!-- HEADER_0 --></th>
                     <th><!-- HEADER_1 --></th>
                     <th><!-- HEADER_2 --></th>
+                    <th><!-- HEADER_3 --></th>
                 </tr>
             </thead>
             <tbody>
@@ -27,40 +28,47 @@
                     <td><!-- NIVEL_0 --></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><!-- SITIO_1 --></td>
                     <td><!-- NIVEL_1 --></td>
                     <td></td>
-                    <td>10.63</td>
+                    <td><!-- TURB_1 --></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><!-- SITIO_2 --></td>
                     <td><!-- NIVEL_2 --></td>
-                    <td>1.28</td>
-                    <td>0.13</td>
+                    <td><!-- CLORO_2 --></td>
+                    <td><!-- TURB_2 --></td>
+                    <td><!-- VOLDIA_2 --></td>
                 </tr>
                 <tr>
                     <td><!-- SITIO_3 --></td>
                     <td><!-- NIVEL_3 --></td>
-                    <td>1.22</td>
+                    <td><!-- CLORO_3 --></td>
+                    <td></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td><!-- SITIO_4 --></td>
                     <td><!-- NIVEL_4 --></td>
-                    <td>0.69</td>
+                    <td><!-- CLORO_4 --></td>
+                    <td></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td><!-- SITIO_5 --></td>
                     <td><!-- NIVEL_5 --></td>
-                    <td>0.56</td>
+                    <td><!-- CLORO_5 --></td>
+                    <td></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td><!-- SITIO_6 --></td>
                     <td><!-- NIVEL_6 --></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -69,16 +77,19 @@
                     <td><!-- NIVEL_7 --></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><!-- SITIO_8 --></td>
                     <td><!-- NIVEL_8 --></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><!-- SITIO_9 --></td>
                     <td><!-- NIVEL_9 --></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                 </tr>

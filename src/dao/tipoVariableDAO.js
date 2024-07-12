@@ -5,6 +5,7 @@ const ID_MOD = "DAO-TPOVAR"
 const sql_create = `INSERT INTO tipo_variable (descriptor, orden) VALUES (?, ?)`;
 const sql_getById = `SELECT * FROM tipo_variable WHERE id = ?`;
 const sql_getByDescriptor = `SELECT * FROM tipo_variable WHERE descriptor = ?`;
+const sql_getByOrden = `SELECT * FROM tipo_variable WHERE orden = ?`;
 const sql_getAll = `SELECT * FROM tipo_variable`;
 const sql_delete = `DELETE FROM tipo_variable WHERE id = ?`;
 
@@ -43,6 +44,20 @@ TipoVariableDAO.prototype.getByDescriptor = function (descriptor, callback) {
   const db = getDatabase();
 
   db.get(sql_getByDescriptor, [descriptor], (err, row) => {
+    if (err) {
+      console.error('Error fetching from tipo_variable:', err.message);
+      callback(err);
+    } else {
+      callback(null, row);
+    }
+  });
+};
+
+TipoVariableDAO.prototype.getByOrden = function (orden, callback) {
+  console.log(`${ID_MOD} - getByOrden`);
+  const db = getDatabase();
+
+  db.get(sql_getByOrden, [orden], (err, row) => {
     if (err) {
       console.error('Error fetching from tipo_variable:', err.message);
       callback(err);

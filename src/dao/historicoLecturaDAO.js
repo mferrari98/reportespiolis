@@ -5,13 +5,12 @@ const ID_MOD = "DAO-HISTORICO-LECTURA";
 const sql_create = `INSERT INTO historico_lectura (sitio_id, tipo_id, valor) VALUES (?, ?, ?)`;
 const sql_getById = `SELECT * FROM historico_lectura WHERE id = ?`;
 const sql_getAll = `SELECT * FROM historico_lectura`;
-const sql_update = `UPDATE historico_lectura SET sitio_id = ?, tipo_id = ?, valor = ?, etiempo = ? WHERE id = ?`;
 const sql_delete = `DELETE FROM historico_lectura WHERE id = ?`;
 
 function HistoricoLecturaDAO() { }
 
 HistoricoLecturaDAO.prototype.create = function (sitio_id, tipo_id, valor, callback) {
-  console.log(`${ID_MOD} - ${this.create.name}`);
+  console.log(`${ID_MOD} - create`);
   const db = getDatabase();
 
   db.run(sql_create, [sitio_id, tipo_id, valor], function (err) {
@@ -48,20 +47,6 @@ HistoricoLecturaDAO.prototype.getAll = function (callback) {
       callback(err);
     } else {
       callback(null, rows);
-    }
-  });
-};
-
-HistoricoLecturaDAO.prototype.update = function (id, sitio_id, tipo_id, valor, etiempo, callback) {
-  console.log(`${ID_MOD} - update`);
-  const db = getDatabase();
-
-  db.run(sql_update, [sitio_id, tipo_id, valor, etiempo, id], function (err) {
-    if (err) {
-      console.error('Error updating historico_lectura:', err.message);
-      callback(err);
-    } else {
-      callback(null, { changes: this.changes });
     }
   });
 };

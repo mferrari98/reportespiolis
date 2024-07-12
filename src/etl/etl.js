@@ -1,7 +1,7 @@
 const fs = require('fs');
 const readline = require('readline');
 
-const { getTipoVariable, getSitiosNombre, getSitiosNiveles } = require('./parser-reporte');
+const { getTipoVariable, getSitiosNombre, getNiveles } = require('./parser-reporte');
 const { transpilar } = require('./transpilador');
 
 const ID_MOD = "ETL"
@@ -54,8 +54,8 @@ function readAndProcessFile() {
                 lines.splice(0, 1)
                 getSitiosNombre(lines, (msjSit) => {
                     console.log(`${ID_MOD} - ${msjTVar} ${msjSit}`)
-                    getSitiosNiveles(lines, 0); // Obtiene los datos de la segunda columna (índice 0)
-                    //transpilar();
+                    getNiveles(lines, 0); // Obtiene los datos de la segunda columna (índice 0)                    
+                    transpilar();
                 });
             });
         });
