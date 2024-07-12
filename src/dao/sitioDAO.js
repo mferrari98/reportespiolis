@@ -2,11 +2,10 @@ const { getDatabase } = require('../basedatos/db');
 
 const ID_MOD = "DAO-SITIO";
 
-const sql_create = `INSERT INTO sitio (descriptor, rebalse) VALUES (?, ?)`;
+const sql_create = `INSERT INTO sitio (descriptor, orden, rebalse) VALUES (?, ?, ?)`;
 const sql_getById = `SELECT * FROM sitio WHERE id = ?`;
 const sql_getByDescriptor = `SELECT * FROM sitio WHERE descriptor = ?`;
 const sql_getAll = `SELECT * FROM sitio`;
-const sql_update = `UPDATE sitio SET descriptor = ? WHERE id = ?`;
 const sql_delete = `DELETE FROM sitio WHERE id = ?`;
 
 const rebalseMap = new Map([
@@ -25,23 +24,23 @@ const rebalseMap = new Map([
 
 function SitioDAO() { }
 
-SitioDAO.prototype.create = function (descriptor, callback) {
+SitioDAO.prototype.create = function (descriptor, orden, callback) {
   console.log(`${ID_MOD} - create`);
   const db = getDatabase();
 
   const rebalse = rebalseMap.get(descriptor) || 0.0;
 
-  db.run(sql_create, [descriptor, rebalse], function (err) {
+  db.run(sql_create, [descriptor, orden, rebalse], function (err) {
     if (err) {
       console.error(`${ID_MOD} - Error inserting into Sitio:`, err.message);
       callback(err);
     } else {
-      callback(null, { id: this.lastID, descriptor, rebalse });
+      callback(null, { id: this.lastID, descriptor, orden, rebalse });
     }
   });
 };
 
-SitioDAO.prototype.getById = function getById(id, callback) {
+SitioDAO.prototype.getById = function (id, callback) {
   console.log(`${ID_MOD} - getById`);
   const db = getDatabase();
 
@@ -79,20 +78,6 @@ SitioDAO.prototype.getAll = function (callback) {
       callback(err);
     } else {
       callback(null, rows);
-    }
-  });
-};
-
-SitioDAO.prototype.update = function (id, descriptor, callback) {
-  console.log(`${ID_MOD} - update`);
-  const db = getDatabase();
-
-  db.run(sql_update, [descriptor, id], function (err) {
-    if (err) {
-      console.error('Error updating Sitio:', err.message);
-      callback(err);
-    } else {
-      callback(null, { id, descriptor });
     }
   });
 };

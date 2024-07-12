@@ -1,9 +1,8 @@
 const fs = require('fs');
 
 // Función para preparar el contenido a escribir
-function transpilar(headers, sitios, niveles) {
+function transpilar() {
 
-    const nivelRebalse = [4, 3, 3, 5, 5, 4, 3, 5, 3.8, 4]
     const complementoNivel = nivelRebalse.map(
         (nivel, index) => nivel - niveles[index]
     );

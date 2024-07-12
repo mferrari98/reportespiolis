@@ -1,43 +1,48 @@
-const { getDatabase, openDatabase } = require('./db');
+const { getDatabase } = require('./db');
 
-openDatabase();
 const db = getDatabase();
 
-// tabla sitio
-db.run(
-  `CREATE TABLE IF NOT EXISTS sitio (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      descriptor TEXT NOT NULL,
-      rebalse FLOAT
-  )`,
-  (err) => {
-    if (err) {
-      console.error('Error creando tabla sitios', err.message);
-    } else {
-      tablaTipoVariable()
+function crearTablas(callback) {
+  // tabla sitio
+  db.run(
+    `CREATE TABLE IF NOT EXISTS sitio (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        descriptor TEXT NOT NULL,
+        orden INTEGER,
+        rebalse FLOAT
+    )`,
+    (err) => {
+      if (err) {
+        console.error('Error creando tabla sitios', err.message);
+        callback(err);
+      } else {
+        tablaTipoVariable(callback)
+      }
     }
-  }
-);
+  );
+}
 
 // tabla tipo_variable
-tablaTipoVariable = () => {
+const tablaTipoVariable = (callback) => {
   db.run(
     `CREATE TABLE IF NOT EXISTS tipo_variable (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        descriptor TEXT NOT NULL
+        descriptor TEXT NOT NULL,
+        orden INTEGER
     )`,
     (err) => {
       if (err) {
         console.error('Error creando tabla tipo_variable', err.message);
+        callback(err);
       } else {
-        tablaHistoricosLectura()
+        tablaHistoricosLectura(callback)
       }
     }
   );
 }
 
 // tabla 'historico_lectura'
-tablaHistoricosLectura = () => {
+const tablaHistoricosLectura = (callback) => {
   db.run(
     `CREATE TABLE IF NOT EXISTS historico_lectura (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -51,9 +56,13 @@ tablaHistoricosLectura = () => {
     (err) => {
       if (err) {
         console.error('Error creando tabla historicos_lectura', err.message);
+        callback(err);
       } else {
         console.log('CREAR-TABLA - Esquema de tablas creado correctamente');
+        callback(null);
       }
     }
   );
 }
+
+module.exports = { crearTablas };

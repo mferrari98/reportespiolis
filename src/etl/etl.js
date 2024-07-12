@@ -11,25 +11,27 @@ let filePath = process.argv[2];
 let lastModifiedTime = null;
 const checkInterval = 4 * 1000; // tiempo verificacion de cambios
 
-// Verifica que se haya proporcionado el archivo como argumento
-if (process.argv.length < 3) {
-    console.error(`${ID_MOD} - Parece que la ubicacion del achivo no llega como argumento de la linea de comandos`);
-    console.error(`${ID_MOD} - Se utilizara la direccion definida en config.json`);
+function iniciar() {
+    // Verifica que se haya proporcionado el archivo como argumento
+    if (process.argv.length < 3) {
+        console.error(`${ID_MOD} - Parece que la ubicacion del achivo no llega como argumento de la linea de comandos`);
+        console.error(`${ID_MOD} - Se utilizara la direccion definida en config.json`);
 
-    fs.readFile('./etl/config.json', 'utf8', (err, jsonString) => {
-        if (err) {
-            console.error('Error al leer el archivo:', err);
-            return;
-        }
-        try {
-            // Parsea el contenido del archivo JSON a un objeto JavaScript
-            const data = JSON.parse(jsonString);
-            filePath = data.direcc_remota + "/reporte_horario_test.log";
-            checkFileModification()
-        } catch (err) {
-            console.error('Error al parsear JSON:', err);
-        }
-    });
+        fs.readFile('./etl/config.json', 'utf8', (err, jsonString) => {
+            if (err) {
+                console.error('Error al leer el archivo:', err);
+                return;
+            }
+            try {
+                // Parsea el contenido del archivo JSON a un objeto JavaScript
+                const data = JSON.parse(jsonString);
+                filePath = data.direcc_remota + "/reporte_horario_test.log";
+                checkFileModification()
+            } catch (err) {
+                console.error('Error al parsear JSON:', err);
+            }
+        });
+    }
 }
 
 // Función para leer y procesar el archivo
@@ -48,11 +50,12 @@ function readAndProcessFile() {
         });
 
         rl.on('close', () => {
-            getTipoVariable(lines[0], (id_tpo_var) => {
+            getTipoVariable(lines[0], (msjTVar) => {
                 lines.splice(0, 1)
-                getSitiosNombre(lines, (id_sitio) => {
-                    const id_historicos = getSitiosNiveles(lines, id_tpo_var, id_sitio, 0); // Obtiene los datos de la segunda columna (índice 0)
-                    transpilar(id_tpo_var, id_sitio, id_historicos);
+                getSitiosNombre(lines, (msjSit) => {
+                    console.log(`${ID_MOD} - ${msjTVar} ${msjSit}`)
+                    getSitiosNiveles(lines, 0); // Obtiene los datos de la segunda columna (índice 0)
+                    //transpilar();
                 });
             });
         });
@@ -101,9 +104,9 @@ function formatoFecha(fechaOriginal) {
 
 const intervalId = setInterval(checkFileModification, checkInterval);
 
-function pararETL() {
+function parar() {
     clearInterval(intervalId);
     console.log(`${ID_MOD} - deteniendo observador`);
 }
 
-module.exports = { pararETL };
+module.exports = { iniciar, parar };

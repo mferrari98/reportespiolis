@@ -2,20 +2,19 @@ const { getDatabase } = require('../basedatos/db');
 
 const ID_MOD = "DAO-TPOVAR"
 
-const sql_create = `INSERT INTO tipo_variable (descriptor) VALUES (?)`;
+const sql_create = `INSERT INTO tipo_variable (descriptor, orden) VALUES (?, ?)`;
 const sql_getById = `SELECT * FROM tipo_variable WHERE id = ?`;
 const sql_getByDescriptor = `SELECT * FROM tipo_variable WHERE descriptor = ?`;
 const sql_getAll = `SELECT * FROM tipo_variable`;
-const sql_update = `UPDATE tipo_variable SET descriptor = ? WHERE id = ?`;
 const sql_delete = `DELETE FROM tipo_variable WHERE id = ?`;
 
 function TipoVariableDAO() { }
 
-TipoVariableDAO.prototype.create = function (descriptor, callback) {
-  console.log(`${ID_MOD} - ${this.create.name}`)
+TipoVariableDAO.prototype.create = function (descriptor, orden, callback) {
+  console.log(`${ID_MOD} - create`);
   const db = getDatabase();
 
-  db.run(sql_create, [descriptor], function (err) {
+  db.run(sql_create, [descriptor, orden], function (err) {
     if (err) {
       console.error('Error inserting into tipo_variable:', err.message);
       callback(err);
@@ -63,20 +62,6 @@ TipoVariableDAO.prototype.getAll = function (callback) {
       callback(err);
     } else {
       callback(null, rows);
-    }
-  });
-};
-
-TipoVariableDAO.prototype.update = function (id, descriptor, callback) {
-  console.log(`${ID_MOD} - update`);
-  const db = getDatabase();
-
-  db.run(sql_update, [descriptor, id], function (err) {
-    if (err) {
-      console.error('Error updating tipo_variable:', err.message);
-      callback(err);
-    } else {
-      callback(null, { changes: this.changes });
     }
   });
 };
