@@ -1,6 +1,6 @@
 const { getDatabase } = require('../basedatos/db');
 
-const ID_MOD = "DAO-SITIO"
+const ID_MOD = "DAO-SITIO";
 
 const sql_create = `INSERT INTO sitio (descriptor, rebalse) VALUES (?, ?)`;
 const sql_getById = `SELECT * FROM sitio WHERE id = ?`;
@@ -23,93 +23,92 @@ const rebalseMap = new Map([
   ['PLANTA POT.', 0.0]
 ]);
 
-class SitioDAO {
+function SitioDAO() { }
 
-  create(descriptor, callback) {
-    console.log(`${ID_MOD} - ${this.create.name}`)
-    const db = getDatabase();
+SitioDAO.prototype.create = function (descriptor, callback) {
+  console.log(`${ID_MOD} - create`);
+  const db = getDatabase();
 
-    const rebalse = rebalseMap.get(descriptor) || 0.0
+  const rebalse = rebalseMap.get(descriptor) || 0.0;
 
-    db.run(sql_create, [descriptor, rebalse], function (err) {
-      if (err) {
-        console.error(`${ID_MOD} - Error inserting into Sitio:`, err.message);
-        callback(err);
-      } else {
-        callback(null, { id: this.lastID, descriptor, rebalse });
-      }
-    });
-  }
+  db.run(sql_create, [descriptor, rebalse], function (err) {
+    if (err) {
+      console.error(`${ID_MOD} - Error inserting into Sitio:`, err.message);
+      callback(err);
+    } else {
+      callback(null, { id: this.lastID, descriptor, rebalse });
+    }
+  });
+};
 
-  getById(id, callback) {
-    console.log(`${ID_MOD} - ${this.getById.name}`)
-    const db = getDatabase();
+SitioDAO.prototype.getById = function getById(id, callback) {
+  console.log(`${ID_MOD} - getById`);
+  const db = getDatabase();
 
-    db.get(sql_getById, [id], (err, row) => {
-      if (err) {
-        console.error('Error fetching from Sitio:', err.message);
-        callback(err);
-      } else {
-        callback(null, row);
-      }
-    });
-  }
+  db.get(sql_getById, [id], (err, row) => {
+    if (err) {
+      console.error('Error fetching from Sitio:', err.message);
+      callback(err);
+    } else {
+      callback(null, row);
+    }
+  });
+};
 
-  getByDescriptor(descriptor, callback) {
-    console.log(`${ID_MOD} - ${this.getByDescriptor.name}`);
-    const db = getDatabase();
+SitioDAO.prototype.getByDescriptor = function (descriptor, callback) {
+  console.log(`${ID_MOD} - getByDescriptor`);
+  const db = getDatabase();
 
-    db.get(sql_getByDescriptor, [descriptor], (err, row) => {
-      if (err) {
-        console.error('Error fetching from Sitio:', err.message);
-        callback(err);
-      } else {
-        callback(null, row);
-      }
-    });
-  }
+  db.get(sql_getByDescriptor, [descriptor], (err, row) => {
+    if (err) {
+      console.error('Error fetching from Sitio:', err.message);
+      callback(err);
+    } else {
+      callback(null, row);
+    }
+  });
+};
 
-  getAll(callback) {
-    console.log(`${ID_MOD} - ${this.getAll.name}`)
-    const db = getDatabase();
+SitioDAO.prototype.getAll = function (callback) {
+  console.log(`${ID_MOD} - getAll`);
+  const db = getDatabase();
 
-    db.all(sql_getAll, [], (err, rows) => {
-      if (err) {
-        console.error('Error fetching from Sitio:', err.message);
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
-  }
+  db.all(sql_getAll, [], (err, rows) => {
+    if (err) {
+      console.error('Error fetching from Sitio:', err.message);
+      callback(err);
+    } else {
+      callback(null, rows);
+    }
+  });
+};
 
-  update(id, descriptor, callback) {
-    console.log(`${ID_MOD} - ${this.update.name}`)
-    const db = getDatabase();
+SitioDAO.prototype.update = function (id, descriptor, callback) {
+  console.log(`${ID_MOD} - update`);
+  const db = getDatabase();
 
-    db.run(sql_update, [descriptor, id], function (err) {
-      if (err) {
-        console.error('Error updating Sitio:', err.message);
-        callback(err);
-      } else {
-        callback(null, { id, descriptor });
-      }
-    });
-  }
+  db.run(sql_update, [descriptor, id], function (err) {
+    if (err) {
+      console.error('Error updating Sitio:', err.message);
+      callback(err);
+    } else {
+      callback(null, { id, descriptor });
+    }
+  });
+};
 
-  delete(id, callback) {
-    console.log(`${ID_MOD} - ${this.delete.name}`)
-    const db = getDatabase();
+SitioDAO.prototype.delete = function (id, callback) {
+  console.log(`${ID_MOD} - delete`);
+  const db = getDatabase();
 
-    db.run(sql_delete, [id], function (err) {
-      if (err) {
-        console.error('Error deleting from Sitio:', err.message);
-        callback(err);
-      } else {
-        callback(null, { id });
-      }
-    });
-  }
-}
+  db.run(sql_delete, [id], function (err) {
+    if (err) {
+      console.error('Error deleting from Sitio:', err.message);
+      callback(err);
+    } else {
+      callback(null, { id });
+    }
+  });
+};
 
 module.exports = SitioDAO;

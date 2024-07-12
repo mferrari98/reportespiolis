@@ -7,7 +7,6 @@ const { transpilar } = require('./transpilador');
 const ID_MOD = "ETL"
 
 let filePath = process.argv[2];
-let lines = [];
 
 let lastModifiedTime = null;
 const checkInterval = 4 * 1000; // tiempo verificacion de cambios
@@ -35,6 +34,7 @@ if (process.argv.length < 3) {
 
 // Función para leer y procesar el archivo
 function readAndProcessFile() {
+    let lines = []
     try {
         const rl = readline.createInterface({
             input: fs.createReadStream(filePath),
@@ -48,14 +48,13 @@ function readAndProcessFile() {
         });
 
         rl.on('close', () => {
-            const headers = getTipoVariable(lines[0]);
-
-            lines.splice(0, 1)
-            const sitios = getSitiosNombre(lines);
-            const niveles = getSitiosNiveles(lines, 0); // Obtiene los datos de la segunda columna (índice 0)
-
-            transpilar(headers, sitios, niveles);
-            lines = [];
+            getTipoVariable(lines[0], (id_tpo_var) => {
+                lines.splice(0, 1)
+                getSitiosNombre(lines, (id_sitio) => {
+                    const id_historicos = getSitiosNiveles(lines, id_tpo_var, id_sitio, 0); // Obtiene los datos de la segunda columna (índice 0)
+                    transpilar(id_tpo_var, id_sitio, id_historicos);
+                });
+            });
         });
     } catch (error) {
         console.error(`Error al leer el archivo: ${error.message}`);

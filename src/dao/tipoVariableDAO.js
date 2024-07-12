@@ -9,91 +9,90 @@ const sql_getAll = `SELECT * FROM tipo_variable`;
 const sql_update = `UPDATE tipo_variable SET descriptor = ? WHERE id = ?`;
 const sql_delete = `DELETE FROM tipo_variable WHERE id = ?`;
 
-class TipoVariableDAO {
+function TipoVariableDAO() { }
 
-  create(descriptor, callback) {
-    console.log(`${ID_MOD} - ${this.create.name}`)
-    const db = getDatabase();
+TipoVariableDAO.prototype.create = function (descriptor, callback) {
+  console.log(`${ID_MOD} - ${this.create.name}`)
+  const db = getDatabase();
 
-    db.run(sql_create, [descriptor], function (err) {
-      if (err) {
-        console.error('Error inserting into tipo_variable:', err.message);
-        callback(err);
-      } else {
-        callback(null, { id: this.lastID });
-      }
-    });
-  }
+  db.run(sql_create, [descriptor], function (err) {
+    if (err) {
+      console.error('Error inserting into tipo_variable:', err.message);
+      callback(err);
+    } else {
+      callback(null, { id: this.lastID, descriptor });
+    }
+  });
+};
 
-  getById(id, callback) {
-    console.log(`${ID_MOD} - ${this.getById.name}`)
-    const db = getDatabase();
+TipoVariableDAO.prototype.getById = function (id, callback) {
+  console.log(`${ID_MOD} - getById`);
+  const db = getDatabase();
 
-    db.get(sql_getById, [id], (err, row) => {
-      if (err) {
-        console.error('Error fetching from tipo_variable:', err.message);
-        callback(err);
-      } else {
-        callback(null, row);
-      }
-    });
-  }
+  db.get(sql_getById, [id], (err, row) => {
+    if (err) {
+      console.error('Error fetching from tipo_variable:', err.message);
+      callback(err);
+    } else {
+      callback(null, row);
+    }
+  });
+};
 
-  getByDescriptor(descriptor, callback) {
-    console.log(`${ID_MOD} - ${this.getByDescriptor.name}`);
-    const db = getDatabase();
+TipoVariableDAO.prototype.getByDescriptor = function (descriptor, callback) {
+  console.log(`${ID_MOD} - getByDescriptor`);
+  const db = getDatabase();
 
-    db.get(sql_getByDescriptor, [descriptor], (err, row) => {
-      if (err) {
-        console.error('Error fetching from tipo_variable:', err.message);
-        callback(err);
-      } else {
-        callback(null, row);
-      }
-    });
-  }
+  db.get(sql_getByDescriptor, [descriptor], (err, row) => {
+    if (err) {
+      console.error('Error fetching from tipo_variable:', err.message);
+      callback(err);
+    } else {
+      callback(null, row);
+    }
+  });
+};
 
-  getAll(callback) {
-    console.log(`${ID_MOD} - ${this.getAll.name}`)
-    const db = getDatabase();
+TipoVariableDAO.prototype.getAll = function (callback) {
+  console.log(`${ID_MOD} - getAll`);
+  const db = getDatabase();
 
-    db.all(sql_getAll, [], (err, rows) => {
-      if (err) {
-        console.error('Error fetching from tipo_variable:', err.message);
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
-  }
+  db.all(sql_getAll, [], (err, rows) => {
+    if (err) {
+      console.error('Error fetching from tipo_variable:', err.message);
+      callback(err);
+    } else {
+      callback(null, rows);
+    }
+  });
+};
 
-  update(id, descriptor, callback) {
-    console.log(`${ID_MOD} - ${this.update.name}`)
-    const db = getDatabase();
+TipoVariableDAO.prototype.update = function (id, descriptor, callback) {
+  console.log(`${ID_MOD} - update`);
+  const db = getDatabase();
 
-    db.run(sql_update, [descriptor, id], function (err) {
-      if (err) {
-        console.error('Error updating tipo_variable:', err.message);
-        callback(err);
-      } else {
-        callback(null, { changes: this.changes });
-      }
-    });
-  }
+  db.run(sql_update, [descriptor, id], function (err) {
+    if (err) {
+      console.error('Error updating tipo_variable:', err.message);
+      callback(err);
+    } else {
+      callback(null, { changes: this.changes });
+    }
+  });
+};
 
-  delete(id, callback) {
-    console.log(`${ID_MOD} - ${this.delete.name}`)
-    const db = getDatabase();
+TipoVariableDAO.prototype.delete = function (id, callback) {
+  console.log(`${ID_MOD} - delete`);
+  const db = getDatabase();
 
-    db.run(sql_delete, [id], function (err) {
-      if (err) {
-        console.error('Error deleting from tipo_variable:', err.message);
-        callback(err);
-      } else {
-        callback(null, { changes: this.changes });
-      }
-    });
-  }
-}
+  db.run(sql_delete, [id], function (err) {
+    if (err) {
+      console.error('Error deleting from tipo_variable:', err.message);
+      callback(err);
+    } else {
+      callback(null, { changes: this.changes });
+    }
+  });
+};
 
 module.exports = TipoVariableDAO;
