@@ -2,23 +2,24 @@ const { getDatabase } = require('../basedatos/db');
 
 const ID_MOD = "DAO-HISTORICO-LECTURA";
 
-const sql_create = `INSERT INTO historico_lectura (sitio_id, tipo_id, valor) VALUES (?, ?, ?)`;
+const sql_create = `INSERT INTO historico_lectura (sitio_id, tipo_id, valor, etiempo) VALUES (?, ?, ?, ?)`;
 const sql_getById = `SELECT * FROM historico_lectura WHERE id = ?`;
 const sql_getAll = `SELECT * FROM historico_lectura`;
+const sql_getMostRecent = `SELECT * FROM historico_lectura WHERE etiempo = (SELECT MAX(etiempo) FROM historico_lectura)`;
 const sql_delete = `DELETE FROM historico_lectura WHERE id = ?`;
 
 function HistoricoLecturaDAO() { }
 
-HistoricoLecturaDAO.prototype.create = function (sitio_id, tipo_id, valor, callback) {
+HistoricoLecturaDAO.prototype.create = function (sitio_id, tipo_id, valor, etiempo, callback) {
   console.log(`${ID_MOD} - create`);
   const db = getDatabase();
 
-  db.run(sql_create, [sitio_id, tipo_id, valor], function (err) {
+  db.run(sql_create, [sitio_id, tipo_id, valor, etiempo], function (err) {
     if (err) {
       console.error('Error inserting into historico_lectura:', err.message);
       callback(err);
     } else {
-      callback(null, { id: this.lastID, sitio_id, tipo_id, valor });
+      callback(null, { id: this.lastID, sitio_id, tipo_id, valor, etiempo });
     }
   });
 };
@@ -44,6 +45,20 @@ HistoricoLecturaDAO.prototype.getAll = function (callback) {
   db.all(sql_getAll, [], (err, rows) => {
     if (err) {
       console.error('Error fetching from historico_lectura:', err.message);
+      callback(err);
+    } else {
+      callback(null, rows);
+    }
+  });
+};
+
+HistoricoLecturaDAO.prototype.getMostRecent = function (callback) {
+  console.log(`${ID_MOD} - getMostRecent`);
+  const db = getDatabase();
+
+  db.all(sql_getMostRecent, [], (err, rows) => {
+    if (err) {
+      console.error('Error fetching most recent records from historico_lectura:', err.message);
       callback(err);
     } else {
       callback(null, rows);

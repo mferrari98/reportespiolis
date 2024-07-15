@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // Función para preparar el contenido a escribir
-function transpilar() {
+function transpilar(reporte) {
 
     fs.readFile('etl/plantilla.piolis', 'utf8', (err, data) => {
         if (err) {
@@ -11,34 +11,35 @@ function transpilar() {
         }
 
         let contenido = data
-            .replace('<!-- HEADER_0 -->', headers[0])
-            .replace('<!-- HEADER_1 -->', headers[1])
-            .replace('<!-- HEADER_2 -->', headers[2])
-            .replace('<!-- SITIO_0 -->', sitios[0])
-            .replace('<!-- NIVEL_0 -->', niveles[0])
-            .replace('<!-- SITIO_1 -->', sitios[1])
-            .replace('<!-- NIVEL_1 -->', niveles[1])
-            .replace('<!-- SITIO_2 -->', sitios[2])
-            .replace('<!-- NIVEL_2 -->', niveles[2])
-            .replace('<!-- SITIO_3 -->', sitios[3])
-            .replace('<!-- NIVEL_3 -->', niveles[3])
-            .replace('<!-- SITIO_4 -->', sitios[4])
-            .replace('<!-- NIVEL_4 -->', niveles[4])
-            .replace('<!-- SITIO_5 -->', sitios[5])
-            .replace('<!-- NIVEL_5 -->', niveles[5])
-            .replace('<!-- SITIO_6 -->', sitios[6])
-            .replace('<!-- NIVEL_6 -->', niveles[6])
-            .replace('<!-- SITIO_7 -->', sitios[7])
-            .replace('<!-- NIVEL_7 -->', niveles[7])
-            .replace('<!-- SITIO_8 -->', sitios[8])
-            .replace('<!-- NIVEL_8 -->', niveles[8])
-            .replace('<!-- SITIO_9 -->', sitios[9])
-            .replace('<!-- NIVEL_9 -->', niveles[9])
+            .replace('<!-- HEADER_0 -->', reporte[0].tipo_id)
+            .replace('<!-- HEADER_1 -->', "...")
+            .replace('<!-- HEADER_2 -->', "...")
+            .replace('<!-- HEADER_3 -->', "...")
+            .replace('<!-- SITIO_0 -->', reporte[0].sitio_id)
+            .replace('<!-- NIVEL_0 -->', reporte[0].valor)
+            .replace('<!-- SITIO_1 -->', reporte[1].sitio_id)
+            .replace('<!-- NIVEL_1 -->', reporte[1].valor)
+            .replace('<!-- SITIO_2 -->', reporte[2].sitio_id)
+            .replace('<!-- NIVEL_2 -->', reporte[2].valor)
+            .replace('<!-- SITIO_3 -->', reporte[3].sitio_id)
+            .replace('<!-- NIVEL_3 -->', reporte[3].valor)
+            .replace('<!-- SITIO_4 -->', reporte[4].sitio_id)
+            .replace('<!-- NIVEL_4 -->', reporte[4].valor)
+            .replace('<!-- SITIO_5 -->', reporte[5].sitio_id)
+            .replace('<!-- NIVEL_5 -->', reporte[5].valor)
+            .replace('<!-- SITIO_6 -->', reporte[6].sitio_id)
+            .replace('<!-- NIVEL_6 -->', reporte[6].valor)
+            .replace('<!-- SITIO_7 -->', reporte[7].sitio_id)
+            .replace('<!-- NIVEL_7 -->', reporte[7].valor)
+            .replace('<!-- SITIO_8 -->', reporte[8].sitio_id)
+            .replace('<!-- NIVEL_8 -->', reporte[8].valor)
+            .replace('<!-- SITIO_9 -->', reporte[9].sitio_id)
+            .replace('<!-- NIVEL_9 -->', reporte[9].valor)
 
-            .replace('<!-- SITIOS -->', sitios.join("', '"))
-            .replace('<!-- NIVELES -->', niveles.join("', '"))
+            .replace('<!-- SITIOS -->', reporte.map(objeto => "'" + objeto["sitio_id"].toString() + "'"))
+            .replace('<!-- NIVELES -->', reporte.map(objeto => objeto["valor"]))
 
-            .replace('<!-- REBALSE -->', complementoNivel.join(', '));
+            .replace('<!-- REBALSE -->', reporte.map(objeto => (objeto["rebalse"] - objeto["valor"]).toFixed(3)));
 
         // Escribir en el archivo
         fs.writeFile("web/public/index.html", contenido, (err) => {

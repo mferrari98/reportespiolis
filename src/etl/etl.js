@@ -4,6 +4,14 @@ const readline = require('readline');
 const { getTipoVariable, getSitiosNombre, getNiveles } = require('./parser-reporte');
 const { transpilar } = require('./transpilador');
 
+const SitioDAO = require('../dao/sitioDAO');
+const TipoVariableDAO = require('../dao/tipoVariableDAO');
+const HistoricoLecturaDAO = require('../dao/historicoLecturaDAO');
+
+const tipoVariableDAO = new TipoVariableDAO();
+const sitioDAO = new SitioDAO();
+const historicoLecturaDAO = new HistoricoLecturaDAO();
+
 const ID_MOD = "ETL"
 
 let filePath = process.argv[2];
@@ -53,15 +61,107 @@ function readAndProcessFile() {
             getTipoVariable(lines[0], (msjTVar) => {
                 lines.splice(0, 1)
                 getSitiosNombre(lines, (msjSit) => {
-                    console.log(`${ID_MOD} - ${msjTVar} ${msjSit}`)
-                    getNiveles(lines, 0); // Obtiene los datos de la segunda columna (índice 0)                    
-                    transpilar();
+
+                    console.log(`${ID_MOD} - ${msjTVar} ${msjSit}`);
+                    getNiveles(lines, 0, (err) => {
+                        if (!err) {
+                            getNuevosDatos((err, reporte) => {
+                                if (!err) {
+                                    transpilar(reporte);
+                                }
+                            });
+                        }
+                    });
                 });
             });
         });
     } catch (error) {
         console.error(`Error al leer el archivo: ${error.message}`);
     }
+}
+
+function getNuevosDatos(callback) {
+    historicoLecturaDAO.getMostRecent((err, rows) => {
+        if (err) {
+            console.error('Error fetching most recent records:', err);
+            callback(err);
+        } else {
+            let remaining = rows.length;
+            const updatedRows = [];
+
+            if (remaining === 0) {
+                callback(null, updatedRows);
+                return;
+            }
+
+            rows.forEach(row => {
+                tipoVariableDAO.getById(row.tipo_id, (err, tipoVarRow) => {
+                    if (err) {
+                        callback(err);
+                        return;
+                    }
+
+                    sitioDAO.getById(row.sitio_id, (err, sitioRow) => {
+                        if (err) {
+                            callback(err);
+                            return;
+                        }
+
+                        updatedRows.push({
+                            ...row,
+                            tipo_id: tipoVarRow.descriptor,
+                            sitio_id: sitioRow.descriptor,
+                            rebalse: sitioRow.rebalse
+                        });
+
+                        remaining -= 1;
+                        if (remaining === 0) {
+                            callback(null, updatedRows);
+                        }
+                    });
+                });
+            });
+        }
+    });
+}
+
+function getNuevosDatos2(callback) {
+    historicoLecturaDAO.getMostRecent(async (err, rows) => {
+        if (err) {
+            console.error('Error fetching most recent records:', err);
+            callback(err);
+        } else {
+            try {
+                const updatedRows = await Promise.all(rows.map(async (row) => {
+
+                    const tipoVariable = await new Promise((resolve, reject) => {
+                        tipoVariableDAO.getById(row.tipo_id, (err, tipoVarRow) => {
+                            if (err) reject(err);
+                            else resolve(tipoVarRow);
+                        });
+                    });
+
+                    const sitio = await new Promise((resolve, reject) => {
+                        sitioDAO.getById(row.sitio_id, (err, sitioRow) => {
+                            if (err) reject(err);
+                            else resolve(sitioRow);
+                        });
+                    });
+
+                    return {
+                        ...row,
+                        tipo_id: tipoVariable.descriptor,
+                        sitio_id: sitio.descriptor
+                    };
+                }));
+
+                callback(null, updatedRows);
+            } catch (error) {
+                console.error('Error fetching related records:', error.message);
+                callback(error);
+            }
+        }
+    });
 }
 
 // Función para verificar la fecha de modificación del archivo

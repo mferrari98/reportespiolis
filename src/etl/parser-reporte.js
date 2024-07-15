@@ -82,13 +82,59 @@ ademas del dato indefinido, aquellos que se van de rango, esto es util para
 no atrapar un volumen/dia como si fuera nivel.
 no es la mejor manera de resolver esto, pero por ahora sirve
 */
-async function getNiveles(lines, indice) {
-
+function getNiveles(lines, indice, callback) {
     let niveles = lines.map(line => {
         const parts = line.split(/\s{2,}/).filter(word => word.length > 0);
         return parts[indice + 1]; // 1 porque 0 es el primer elemento, que es el nombre
     }).filter(dato => dato !== undefined && dato < 10);
 
+    tipoVariableDAO.getByDescriptor("Nivel[m]", (err, tipoVariable) => {
+        if (err) {
+            callback(err);
+            return;
+        }
+
+        const timestamp = new Date().toISOString();
+        let remaining = niveles.length;
+
+        if (remaining === 0) {
+            callback(null);
+            return;
+        }
+
+        for (let i = 0; i < niveles.length; i++) {
+            const valor = niveles[i];
+
+            sitioDAO.getByOrden(i, (err, sitio) => {
+                if (err) {
+                    callback(err);
+                    return;
+                }
+
+                historicoLecturaDAO.create(sitio.id, tipoVariable.id, valor, timestamp, (err, result) => {
+                    if (err) {
+                        callback(err);
+                        return;
+                    }
+
+                    console.log(`${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`);
+
+                    remaining -= 1;
+                    if (remaining === 0) {
+                        callback(null);
+                    }
+                });
+            });
+        }
+    });
+}
+
+async function getNiveles2(lines, indice) {
+
+    let niveles = lines.map(line => {
+        const parts = line.split(/\s{2,}/).filter(word => word.length > 0);
+        return parts[indice + 1]; // 1 porque 0 es el primer elemento, que es el nombre
+    }).filter(dato => dato !== undefined && dato < 10);
 
     const tipoVariable = await new Promise((resolve, reject) => {
         tipoVariableDAO.getByDescriptor("Nivel[m]", (err, row) => {
@@ -96,6 +142,8 @@ async function getNiveles(lines, indice) {
             else resolve(row);
         });
     });
+
+    const timestamp = new Date().toISOString();
 
     for (let i = 0; i < niveles.length; i++) {
         const valor = niveles[i];
@@ -108,7 +156,7 @@ async function getNiveles(lines, indice) {
         });
 
         await new Promise((resolve, reject) => {
-            historicoLecturaDAO.create(sitio.id, tipoVariable.id, valor, (err, result) => {
+            historicoLecturaDAO.create(sitio.id, tipoVariable.id, valor, timestamp, (err, result) => {
                 if (err) reject(err);
                 else resolve(result);
             });

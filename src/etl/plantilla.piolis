@@ -103,8 +103,8 @@
 
     <script>
         // Datos de la tabla
-        var sitios = ['<!-- SITIOS -->'];
-        var niveles = ['<!-- NIVELES -->'];
+        var sitios = [<!-- SITIOS -->];
+        var niveles = [<!-- NIVELES -->];
 
         var trace1 = {
             x: sitios,
