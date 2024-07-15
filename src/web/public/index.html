@@ -31,50 +31,50 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td>L.Maria</td>
-                    <td>3.13</td>
+                    <td>P.Pot</td>
+                    <td>2.37</td>
                     <td></td>
                     <td><!-- TURB_1 --></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td>B.SAN MIGUEL</td>
-                    <td>2.36</td>
+                    <td>L.Maria</td>
+                    <td>3.13</td>
                     <td><!-- CLORO_2 --></td>
                     <td><!-- TURB_2 --></td>
                     <td><!-- VOLDIA_2 --></td>
                 </tr>
                 <tr>
-                    <td>B.PUJOL</td>
-                    <td>2.48</td>
+                    <td>R6000</td>
+                    <td>3.12</td>
                     <td><!-- CLORO_3 --></td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td>P.Pot</td>
-                    <td>2.37</td>
+                    <td>B.SAN MIGUEL</td>
+                    <td>2.36</td>
                     <td><!-- CLORO_4 --></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>R6000</td>
-                    <td>3.12</td>
-                    <td><!-- CLORO_5 --></td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>B.OESTE(1K)</td>
                     <td>3.25</td>
+                    <td><!-- CLORO_5 --></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>B.PUJOL</td>
+                    <td>2.48</td>
                     <td></td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td>NUEVA CHUBUT</td>
-                    <td>3.11</td>
+                    <td>Toma(Des.)</td>
+                    <td>2.15</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -87,8 +87,8 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td>Toma(Des.)</td>
-                    <td>2.15</td>
+                    <td>NUEVA CHUBUT</td>
+                    <td>3.11</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -103,8 +103,8 @@
 
     <script>
         // Datos de la tabla
-        var sitios = ['Toma(Rio)','L.Maria','B.SAN MIGUEL','B.PUJOL','P.Pot','R6000','B.OESTE(1K)','NUEVA CHUBUT','KM11','Toma(Des.)'];
-        var niveles = [3.3,3.13,2.36,2.48,2.37,3.12,3.25,3.11,3.72,2.15];
+        var sitios = ['Toma(Rio)','P.Pot','L.Maria','R6000','B.SAN MIGUEL','B.OESTE(1K)','B.PUJOL','Toma(Des.)','KM11','NUEVA CHUBUT'];
+        var niveles = [3.3,2.37,3.13,3.12,2.36,3.25,2.48,2.15,3.72,3.11];
 
         var trace1 = {
             x: sitios,
@@ -118,7 +118,7 @@
 
         var trace2 = {
             x: sitios,
-            y: [0.700,1.870,1.440,0.520,0.630,0.880,1.750,0.890,1.280,0.850],
+            y: [0.700,0.630,1.870,0.880,1.440,1.750,0.520,0.850,1.280,0.890],
             name: 'Rebalse',
             type: 'bar',
             marker: {
