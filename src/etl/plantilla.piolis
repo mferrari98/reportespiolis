@@ -24,70 +24,70 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><!-- SITIO_0 --></td>
+                    <td id="sit"><!-- SITIO_0 --></td>
                     <td><!-- NIVEL_0 --></td>
                     <td></td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td><!-- SITIO_1 --></td>
+                    <td id="sit"><!-- SITIO_1 --></td>
                     <td><!-- NIVEL_1 --></td>
                     <td></td>
                     <td><!-- TURB_1 --></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td><!-- SITIO_2 --></td>
+                    <td id="sit"><!-- SITIO_2 --></td>
                     <td><!-- NIVEL_2 --></td>
                     <td><!-- CLORO_2 --></td>
                     <td><!-- TURB_2 --></td>
                     <td><!-- VOLDIA_2 --></td>
                 </tr>
                 <tr>
-                    <td><!-- SITIO_3 --></td>
+                    <td id="sit"><!-- SITIO_3 --></td>
                     <td><!-- NIVEL_3 --></td>
                     <td><!-- CLORO_3 --></td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td><!-- SITIO_4 --></td>
+                    <td id="sit"><!-- SITIO_4 --></td>
                     <td><!-- NIVEL_4 --></td>
                     <td><!-- CLORO_4 --></td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td><!-- SITIO_5 --></td>
+                    <td id="sit"><!-- SITIO_5 --></td>
                     <td><!-- NIVEL_5 --></td>
                     <td><!-- CLORO_5 --></td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td><!-- SITIO_6 --></td>
+                    <td id="sit"><!-- SITIO_6 --></td>
                     <td><!-- NIVEL_6 --></td>
                     <td></td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td><!-- SITIO_7 --></td>
+                    <td id="sit"><!-- SITIO_7 --></td>
                     <td><!-- NIVEL_7 --></td>
                     <td></td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td><!-- SITIO_8 --></td>
+                    <td id="sit"><!-- SITIO_8 --></td>
                     <td><!-- NIVEL_8 --></td>
                     <td></td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td><!-- SITIO_9 --></td>
+                    <td id="sit"><!-- SITIO_9 --></td>
                     <td><!-- NIVEL_9 --></td>
                     <td></td>
                     <td></td>
