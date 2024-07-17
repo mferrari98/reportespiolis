@@ -38,8 +38,9 @@ function transpilar(reporte) {
 
             .replace('<!-- SITIOS -->', reporte.map(objeto => "'" + objeto["sitio_id"].toString() + "'"))
             .replace('<!-- NIVELES -->', reporte.map(objeto => objeto["valor"]))
-
-            .replace('<!-- REBALSE -->', reporte.map(objeto => (objeto["rebalse"] - objeto["valor"]).toFixed(3)));
+            
+            .replace('<!-- COMPLEMENTO -->', reporte.map(objeto => (objeto["rebalse"] - objeto["valor"]).toFixed(3)))
+            .replace('<!-- REBALSE -->', reporte.map(objeto => objeto["rebalse"].toFixed(3)));
 
         // Escribir en el archivo
         fs.writeFile("web/public/index.html", contenido, (err) => {

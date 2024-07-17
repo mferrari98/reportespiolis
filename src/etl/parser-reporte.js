@@ -129,43 +129,6 @@ function getNiveles(lines, indice, callback) {
     });
 }
 
-async function getNiveles2(lines, indice) {
-
-    let niveles = lines.map(line => {
-        const parts = line.split(/\s{2,}/).filter(word => word.length > 0);
-        return parts[indice + 1]; // 1 porque 0 es el primer elemento, que es el nombre
-    }).filter(dato => dato !== undefined && dato < 10);
-
-    const tipoVariable = await new Promise((resolve, reject) => {
-        tipoVariableDAO.getByDescriptor("Nivel[m]", (err, row) => {
-            if (err) reject(err);
-            else resolve(row);
-        });
-    });
-
-    const timestamp = new Date().toISOString();
-
-    for (let i = 0; i < niveles.length; i++) {
-        const valor = niveles[i];
-
-        const sitio = await new Promise((resolve, reject) => {
-            sitioDAO.getByOrden(i, (err, row) => {
-                if (err) reject(err);
-                else resolve(row);
-            });
-        });
-
-        await new Promise((resolve, reject) => {
-            historicoLecturaDAO.create(sitio.id, tipoVariable.id, valor, timestamp, (err, result) => {
-                if (err) reject(err);
-                else resolve(result);
-            });
-        });
-
-        console.log(`${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`);
-    }
-}
-
 function finValidacion(tipo_variable, entidades_creadas, entidades_existentes) {
     return tipo_variable.length == (entidades_creadas + entidades_existentes)
 }
