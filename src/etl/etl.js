@@ -68,6 +68,13 @@ function readAndProcessFile() {
                             getNuevosDatos((err, reporte) => {
                                 if (!err) {
                                     transpilar(reporte);
+                                    /*
+                                     modificar transpilar para que ejecute un callback al terno. ese retorno sera atrapado aca
+                                     quien desde alli debera llamar a reporte/index.js
+                                     este ultimo sera el que consuma del index.html la parte que interesa para publicar en el email.
+                                     la otra activiad que tien que resovler reporte, es la de recueprar la imagen que oporunamente le entrega el cliente
+                                     web y ponerla en el mismo destino que el html recortado que seusara en el amil.
+                                    */
                                 }
                             });
                         }
