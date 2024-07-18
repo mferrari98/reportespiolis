@@ -132,44 +132,6 @@ function getNuevosDatos(callback) {
     });
 }
 
-function getNuevosDatos2(callback) {
-    historicoLecturaDAO.getMostRecent(async (err, rows) => {
-        if (err) {
-            console.error('Error fetching most recent records:', err);
-            callback(err);
-        } else {
-            try {
-                const updatedRows = await Promise.all(rows.map(async (row) => {
-
-                    const tipoVariable = await new Promise((resolve, reject) => {
-                        tipoVariableDAO.getById(row.tipo_id, (err, tipoVarRow) => {
-                            if (err) reject(err);
-                            else resolve(tipoVarRow);
-                        });
-                    });
-
-                    const sitio = await new Promise((resolve, reject) => {
-                        sitioDAO.getById(row.sitio_id, (err, sitioRow) => {
-                            if (err) reject(err);
-                            else resolve(sitioRow);
-                        });
-                    });
-
-                    return {
-                        ...row,
-                        tipo_id: tipoVariable.descriptor,
-                        sitio_id: sitio.descriptor
-                    };
-                }));
-
-                callback(null, updatedRows);
-            } catch (error) {
-                console.error('Error fetching related records:', error.message);
-                callback(error);
-            }
-        }
-    });
-}
 
 // Función para verificar la fecha de modificación del archivo
 function checkFileModification() {

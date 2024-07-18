@@ -192,7 +192,7 @@ table {
         // Configurar el diseño del gráfico
         var layout = {
             barmode: 'stack',
-            title: 'Niveles de Agua por Sitio',
+            
             xaxis: {
                 title: 'Sitio'
             },
@@ -207,10 +207,10 @@ table {
           size: 16
         }
         };
-        var config = {responsive: true};
+        var config = {responsive: true, displayModeBar: false};
 
         // Renderizar el gráfico en el div con id 'myDiv'
-        Plotly.newPlot('myDiv', data, layout, config, {displayModeBar: false});
+        Plotly.newPlot('myDiv', data, layout, config);
 
         document.getElementById('guardar').onclick = function() {
             Plotly.toImage(document.getElementById('myDiv'), { format: 'png'})
