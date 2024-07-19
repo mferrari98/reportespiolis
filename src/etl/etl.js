@@ -25,7 +25,7 @@ function iniciar() {
         console.error(`${ID_MOD} - Parece que la ubicacion del achivo no llega como argumento de la linea de comandos`);
         console.error(`${ID_MOD} - Se utilizara la direccion definida en config.json`);
 
-        fs.readFile('./etl/config.json', 'utf8', (err, jsonString) => {
+        fs.readFile('../config.json', 'utf8', (err, jsonString) => {
             if (err) {
                 console.error('Error al leer el archivo:', err);
                 return;
