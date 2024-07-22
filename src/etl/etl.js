@@ -7,10 +7,12 @@ const { transpilar } = require('./transpilador');
 const SitioDAO = require('../dao/sitioDAO');
 const TipoVariableDAO = require('../dao/tipoVariableDAO');
 const HistoricoLecturaDAO = require('../dao/historicoLecturaDAO');
+const RenderHTML = require("../reporte/index")
 
 const tipoVariableDAO = new TipoVariableDAO();
 const sitioDAO = new SitioDAO();
 const historicoLecturaDAO = new HistoricoLecturaDAO();
+const renderHTML = new RenderHTML();
 
 const ID_MOD = "ETL"
 
@@ -67,7 +69,9 @@ function readAndProcessFile() {
                         if (!err) {
                             getNuevosDatos((err, reporte) => {
                                 if (!err) {
-                                    transpilar(reporte);
+                                    transpilar(reporte, () => {
+                                        renderHTML.renderizar()
+                                    });
                                     /*
                                      modificar transpilar para que ejecute un callback al terno. ese retorno sera atrapado aca
                                      quien desde alli debera llamar a reporte/index.js
@@ -179,3 +183,6 @@ function parar() {
 }
 
 module.exports = { iniciar, parar };
+
+console.log(`${ID_MOD} - Current working directory:`, process.cwd());
+console.log(`${ID_MOD} - Directory of the current file:`, __dirname);

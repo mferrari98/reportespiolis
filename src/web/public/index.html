@@ -81,8 +81,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td id="sit">Toma(Rio)</td>
-                    <td>3.3</td>
+                    <td id="sit">Toma(Des.)</td>
+                    <td>2.15</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -95,8 +95,8 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td id="sit">B.PUJOL</td>
-                    <td>2.48</td>
+                    <td id="sit">P.Pot</td>
+                    <td>2.37</td>
                     <td><!-- CLORO_2 --></td>
                     <td><!-- TURB_2 --></td>
                     <td><!-- VOLDIA_2 --></td>
@@ -109,43 +109,43 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td id="sit">B.SAN MIGUEL</td>
-                    <td>2.36</td>
-                    <td><!-- CLORO_4 --></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td id="sit">R6000</td>
-                    <td>3.12</td>
-                    <td><!-- CLORO_5 --></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td id="sit">Toma(Des.)</td>
-                    <td>2.15</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
                     <td id="sit">B.OESTE(1K)</td>
                     <td>3.25</td>
-                    <td></td>
+                    <td><!-- CLORO_4 --></td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td id="sit">NUEVA CHUBUT</td>
                     <td>3.2</td>
+                    <td><!-- CLORO_5 --></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td id="sit">Toma(Rio)</td>
+                    <td>3.3</td>
                     <td></td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td id="sit">P.Pot</td>
-                    <td>2.37</td>
+                    <td id="sit">R6000</td>
+                    <td>3.12</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td id="sit">B.PUJOL</td>
+                    <td>2.48</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td id="sit">B.SAN MIGUEL</td>
+                    <td>2.36</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -160,8 +160,8 @@
 
     <script>
         // Datos de la tabla
-        var sitios = ['Toma(Rio)','L.Maria','B.PUJOL','KM11','B.SAN MIGUEL','R6000','Toma(Des.)','B.OESTE(1K)','NUEVA CHUBUT','P.Pot']
-        var niveles = [3.3,2.3,2.48,3.72,2.36,3.12,2.15,3.25,3.2,2.37]
+        var sitios = ['Toma(Des.)','L.Maria','P.Pot','KM11','B.OESTE(1K)','NUEVA CHUBUT','Toma(Rio)','R6000','B.PUJOL','B.SAN MIGUEL']
+        var niveles = [2.15,2.3,2.37,3.72,3.25,3.2,3.3,3.12,2.48,2.36]
         const miVariableGlobal = getComputedStyle(document.documentElement).getPropertyValue('--mi-variable-global')
 
         var trace1 = {
@@ -179,14 +179,14 @@
 
         var trace2 = {
             x: sitios,
-            y: [0.700,2.700,0.520,1.280,1.440,0.880,0.850,1.750,0.800,0.630],
+            y: [0.850,2.700,0.630,1.280,1.750,0.800,0.700,0.880,0.520,1.440],
             name: 'Rebalse',
             type: 'bar',
             marker: {
                 color: '${var(--mi-variable-global)}',
                 opacity: 0.3
             },
-            text: [4.000,5.000,3.000,5.000,3.800,4.000,3.000,5.000,4.000,3.000].map(String),
+            text: [3.000,5.000,3.000,5.000,5.000,4.000,4.000,4.000,3.000,3.800].map(String),
             textposition: 'auto',
             hoverinfo: 'none',
         };

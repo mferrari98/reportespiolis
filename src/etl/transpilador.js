@@ -1,9 +1,9 @@
 const fs = require('fs');
 
 // Función para preparar el contenido a escribir
-function transpilar(reporte) {
+function transpilar(reporte, cb) {
 
-    fs.readFile('etl/plantilla.piolis', 'utf8', (err, data) => {
+    fs.readFile('./etl/plantilla.piolis', 'utf8', (err, data) => {
         if (err) {
             console.error('Error al leer el archivo:', err);
             res.status(500).send('Error interno del servidor');
@@ -43,12 +43,13 @@ function transpilar(reporte) {
             .replace('<!-- REBALSE -->', reporte.map(objeto => objeto["rebalse"].toFixed(3)));
 
         // Escribir en el archivo
-        fs.writeFile("web/public/index.html", contenido, (err) => {
+        fs.writeFile("./web/public/index.html", contenido, (err) => {
             if (err) {
                 console.error('Error al escribir archivo:', err);
                 return;
             }
             console.log('TRANS - Archivo escrito correctamente.');
+            cb()
         });
     });
 }

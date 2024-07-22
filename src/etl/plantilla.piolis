@@ -13,7 +13,7 @@
     :root {
         --mi-variable-global: #3498db;
         /* Color azul */
-        font-family: 'Courier New';
+        font-family: 'consolas';
     }
 
     h2 {
@@ -207,8 +207,8 @@
             zoom: false,  // Esto deshabilita completamente la funcionalidad de zoom
             autosize: true,
             font: {
-                family: 'Courier New',
-                size: 16
+                family: 'consolas',
+                size: 14
             }
         };
         var config = { responsive: true, displayModeBar: false };
