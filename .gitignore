@@ -132,3 +132,4 @@ dist
 # archivos que se autogeneran
 src/basedatos/database.sqlite
 src/web/public/index.html
+src/reporte/salida

@@ -173,7 +173,7 @@
             name: 'Nivel',
             type: 'bar',
             marker: {
-                color: `${miVariableGlobal}`,
+                color: miVariableGlobal.trim(),
             },
             text: niveles.map(String),
             textposition: 'auto',
@@ -186,7 +186,7 @@
             name: 'Rebalse',
             type: 'bar',
             marker: {
-                color: '${var(--mi-variable-global)}',
+                color: miVariableGlobal.trim(),
                 opacity: 0.3
             },
             text: [<!-- REBALSE -->].map(String),
@@ -245,7 +245,7 @@
                     console.error('Error al crear la imagen:', error);
                 });
         };
-    }
+    })
 </script>
 
 </html>
