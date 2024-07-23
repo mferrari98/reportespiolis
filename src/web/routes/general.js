@@ -24,7 +24,7 @@ router.post('/imagenpt', (req, res) => {
     const buffer = Buffer.from(imageData, 'base64');
 
     // Guardar la imagen en el servidor
-    fs.writeFile('grafica.png', buffer, (err) => {
+    fs.writeFile('reporte/salida/graficoPLOTLY.png', buffer, (err) => {
         if (err) {
             console.error('Error al guardar la imagen:', err);
             return res.status(500).json({ message: 'Error al guardar la imagen' });
