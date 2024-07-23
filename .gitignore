@@ -128,3 +128,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# archivos que se autogeneran
+src/basedatos/database.sqlite
+src/web/public/index.html
