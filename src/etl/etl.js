@@ -19,7 +19,7 @@ const ID_MOD = "ETL"
 let filePath = process.argv[2];
 
 let lastModifiedTime = null;
-const checkInterval = 4 * 1000; // tiempo verificacion de cambios
+const checkInterval = 4 * 1000; // tiempo verificacion de cambios en milisegundos
 
 function iniciar() {
     // Verifica que se haya proporcionado el archivo como argumento
@@ -72,13 +72,6 @@ function readAndProcessFile() {
                                     transpilar(reporte, () => {
                                         renderHTML.renderizar()
                                     });
-                                    /*
-                                     modificar transpilar para que ejecute un callback al terno. ese retorno sera atrapado aca
-                                     quien desde alli debera llamar a reporte/index.js
-                                     este ultimo sera el que consuma del index.html la parte que interesa para publicar en el email.
-                                     la otra activiad que tien que resovler reporte, es la de recueprar la imagen que oporunamente le entrega el cliente
-                                     web y ponerla en el mismo destino que el html recortado que seusara en el amil.
-                                    */
                                 }
                             });
                         }

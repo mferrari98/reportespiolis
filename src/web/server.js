@@ -1,6 +1,6 @@
 /*
 lo podes probar con
-  curl -Uri "http://10.10.4.125:3000/sitios" -Method POST -ContentType "application/json" -Body '{"descriptor":"ee3"}'
+  curl -Uri "http://10.10.4.125:3000/sitio" -Method POST -ContentType "application/json" -Body '{"descriptor":"ee3"}'
 */
 const express = require('express');
 const path = require('path');
@@ -10,11 +10,13 @@ app.use(express.json());
 
 /*
 Middleware para configurar Content-Security-Policy
+
+esta regla parece que no hace falta
+script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:3000;\
 */
 app.use((req, res, next) => {
   res.setHeader("Content-Security-Policy", "\
     default-src 'none' http://localhost:3000/;\
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:3000;\
     style-src 'self' 'unsafe-inline' http://localhost:3000;\
     img-src 'self' data: blob: http://localhost:3000;\
     connect-src 'self' http://localhost:3000"
@@ -32,7 +34,7 @@ const sitioRoutes = require('./routes/sitio');
 const tipoVarRoutes = require('./routes/tipovar');
 const otherRoutes = require('./routes/general');
 
-app.use('/sitios', sitioRoutes);
+app.use('/sitio', sitioRoutes);
 app.use('/tipovar', tipoVarRoutes);
 app.use('/', otherRoutes);
 
