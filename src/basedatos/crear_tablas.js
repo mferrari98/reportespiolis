@@ -8,8 +8,8 @@ function crearTablas(callback) {
     `CREATE TABLE IF NOT EXISTS sitio (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         descriptor TEXT NOT NULL,
-        orden INTEGER,
-        rebalse FLOAT
+        orden INTEGER NOT NULL,
+        rebalse FLOAT NOT NULL
     )`,
     (err) => {
       if (err) {
@@ -28,7 +28,7 @@ const tablaTipoVariable = (callback) => {
     `CREATE TABLE IF NOT EXISTS tipo_variable (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         descriptor TEXT NOT NULL,
-        orden INTEGER
+        orden INTEGER NOT NULL
     )`,
     (err) => {
       if (err) {

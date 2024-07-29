@@ -129,7 +129,6 @@ function getNuevosDatos(callback) {
     });
 }
 
-
 // Función para verificar la fecha de modificación del archivo
 function checkFileModification() {
     fs.stat(filePath, (err, stats) => {
