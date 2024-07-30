@@ -3,24 +3,32 @@ const nodemailer = require('nodemailer');
 
 const ID_MOD = "Email"
 
-/*
-Configuración del transporte SMTP
-es importante entender que SMTP se usa para enviar mensajes unicamente, es decir no se usa
-para recibir mensajes.
-por otro lado, en caso de enviar mensajes debe utilizarse POP3 (mas viejo) o IMAP.
-*/
-let transporter = nodemailer.createTransport({
-    host: 'post.servicoop.com',
-    port: 25,
-    auth: {
-        user: 'hdonato@servicoop.com',
-        pass: 'donato'
-    },
-    tls: {
-        rejectUnauthorized: false       // omitir verificacion en cadena
-    }
-});
+let transporter
 
+fs.readFile('../config.json', 'utf8', (err, jsonString) => {
+    // Parsea el contenido del archivo JSON a un objeto JavaScript
+    const data = JSON.parse(jsonString);
+    let user = data.email.user
+    let pass = data.email.pass
+
+    /*
+    Configuración del transporte SMTP
+    es importante entender que SMTP se usa para enviar mensajes unicamente, es decir no se usa
+    para recibir mensajes.
+    por otro lado, en caso de enviar mensajes debe utilizarse POP3 (mas viejo) o IMAP.
+    */
+    transporter = nodemailer.createTransport({
+        host: 'post.servicoop.com',
+        port: 25,
+        auth: {
+            user: user,
+            pass: pass
+        },
+        tls: {
+            rejectUnauthorized: false       // omitir verificacion en cadena
+        }
+    });
+});
 
 function EnviarEmail() { }
 

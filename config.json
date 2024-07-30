@@ -1,4 +1,10 @@
 {
     "direcc_remota": "//PC0346/datos",
-    "direcc_remota_": "//PC0301/datos"
+    "direcc_remota_": "//PC0301/datos",
+    "email": {
+        "user": "hdonato@servicoop.com",
+        "pass": "donato",
+        "user_": "otro@email.com",
+        "pass_": "micontra"
+    }
 }
