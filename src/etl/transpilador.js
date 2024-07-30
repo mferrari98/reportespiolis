@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // Función para preparar el contenido a escribir
-function transpilar(reporte, cb) {
+function transpilar(reporte, estampatiempo, cb) {
 
     fs.readFile('./etl/plantilla.piolis', 'utf8', (err, data) => {
         if (err) {
@@ -11,6 +11,7 @@ function transpilar(reporte, cb) {
         }
 
         let contenido = data
+            .replace('<!-- ESTAMPATIEMPO -->', formatoFecha(estampatiempo))
             .replace('<!-- HEADER_0 -->', reporte[0].tipo_id)
             .replace('<!-- HEADER_1 -->', "...")
             .replace('<!-- HEADER_2 -->', "...")
@@ -52,6 +53,20 @@ function transpilar(reporte, cb) {
             cb()
         });
     });
+}
+
+function formatoFecha(fechaOriginal) {
+    const fecha = new Date(fechaOriginal);
+
+    // Obtiene los componentes de la fecha
+    const year = fecha.getFullYear();
+    const month = String(fecha.getMonth() + 1).padStart(2, '0');
+    const day = String(fecha.getDate()).padStart(2, '0');
+    const hours = String(fecha.getHours()).padStart(2, '0');
+    const minutes = String(fecha.getMinutes()).padStart(2, '0');
+
+    //return `${year}-${month} ${day} ${hours}:${minutes}`;
+    return `${day}/${month}/${year} a las ${hours}:${minutes}`;
 }
 
 // Exportar la función si es necesario

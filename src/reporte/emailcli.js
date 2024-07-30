@@ -4,13 +4,14 @@ const nodemailer = require('nodemailer');
 const ID_MOD = "Email"
 
 let transporter
+let destinos = []
 
 fs.readFile('../config.json', 'utf8', (err, jsonString) => {
     // Parsea el contenido del archivo JSON a un objeto JavaScript
     const data = JSON.parse(jsonString);
     let user = data.email.user
     let pass = data.email.pass
-
+    destinos = data.email.difusion
     /*
     Configuración del transporte SMTP
     es importante entender que SMTP se usa para enviar mensajes unicamente, es decir no se usa
@@ -30,22 +31,26 @@ fs.readFile('../config.json', 'utf8', (err, jsonString) => {
     });
 });
 
+
+
 function EnviarEmail() { }
 
 EnviarEmail.prototype.enviar = function () {
     // Enviar el correo
     let resumen = "generacion automatica de reportes mejorada"
     let htmlContent = fs.readFileSync('./reporte/salida/tabla.html', 'utf8');
-
+    
     let mailOptions = {
-        from: "'soyhugo' <hdonato@servicoop.com>",
-        to: 'hdonato@servicoop.com',
+        from: "'soymati' <mferrari@servicoop.com>",
+        to: destinos,
         subject: 'reportespiolis',
         text: resumen,
         html: `
             ${resumen}
             ${htmlContent}
-            <img src="cid:graficobarras"/>
+            <div style="text-align: center;">
+                <img src="cid:graficobarras" alt="Grafico de Barras"/>
+            </div>
             `,
         attachments: [
             {

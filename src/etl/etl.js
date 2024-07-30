@@ -18,6 +18,8 @@ const ID_MOD = "ETL"
 
 let filePath = process.argv[2];
 
+let currentModifiedTime
+
 let lastModifiedTime = null;
 const checkInterval = 4 * 1000; // tiempo verificacion de cambios en milisegundos
 
@@ -69,7 +71,7 @@ function readAndProcessFile() {
                         if (!err) {
                             getNuevosDatos((err, reporte) => {
                                 if (!err) {
-                                    transpilar(reporte, () => {
+                                    transpilar(reporte, currentModifiedTime, () => {
                                         renderHTML.renderizar()
                                     });
                                 }
@@ -137,7 +139,7 @@ function checkFileModification() {
             return;
         }
 
-        const currentModifiedTime = stats.mtime;
+        currentModifiedTime = stats.mtime;
 
         if (!lastModifiedTime || currentModifiedTime > lastModifiedTime) {
             const fechaActual = formatoFecha(currentModifiedTime);
