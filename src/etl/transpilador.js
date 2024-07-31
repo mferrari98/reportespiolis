@@ -65,7 +65,6 @@ function formatoFecha(fechaOriginal) {
     const hours = String(fecha.getHours()).padStart(2, '0');
     const minutes = String(fecha.getMinutes()).padStart(2, '0');
 
-    //return `${year}-${month} ${day} ${hours}:${minutes}`;
     return `${day}/${month}/${year} a las ${hours}:${minutes}`;
 }
 

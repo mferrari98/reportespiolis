@@ -12,6 +12,7 @@ fs.readFile('../config.json', 'utf8', (err, jsonString) => {
     let user = data.email.user
     let pass = data.email.pass
     destinos = data.email.difusion
+
     /*
     Configuración del transporte SMTP
     es importante entender que SMTP se usa para enviar mensajes unicamente, es decir no se usa
@@ -31,19 +32,20 @@ fs.readFile('../config.json', 'utf8', (err, jsonString) => {
     });
 });
 
-
-
 function EnviarEmail() { }
 
 EnviarEmail.prototype.enviar = function () {
+
+    const { date, time } = getCurrentDateTime();
+
     // Enviar el correo
-    let resumen = "generacion automatica de reportes mejorada"
+    let resumen = "Generacion automatica de reportes mejorada"
     let htmlContent = fs.readFileSync('./reporte/salida/tabla.html', 'utf8');
     
     let mailOptions = {
-        from: "'soymati' <mferrari@servicoop.com>",
+        from: "<desarrollo.comunicaciones@servicoop.com>",
         to: destinos,
-        subject: 'reportespiolis',
+        subject: `Reporte de agua potable ${date} ${time}`,
         text: resumen,
         html: `
             ${resumen}
@@ -69,6 +71,19 @@ EnviarEmail.prototype.enviar = function () {
     });   
 }
 
+function getCurrentDateTime() {
+    const now = new Date();
+    const options = {
+        year: '2-digit', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: false
+    };
+    const formatter = new Intl.DateTimeFormat('es-ES', options);
+    const parts = formatter.formatToParts(now);
+    const date = `${parts[4].value}/${parts[2].value}/${parts[0].value}`; // dd/mm/yy
+    const time = `${parts[6].value}:${parts[8].value}:${parts[10].value}`; // hh:mm:ss
+    return { date, time };
+}
 
 module.exports = EnviarEmail;
 

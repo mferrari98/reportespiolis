@@ -5,7 +5,13 @@ const ID_MOD = "DAO-HISTORICO-LECTURA";
 const sql_create = `INSERT INTO historico_lectura (sitio_id, tipo_id, valor, etiempo) VALUES (?, ?, ?, ?)`;
 const sql_getById = `SELECT * FROM historico_lectura WHERE id = ?`;
 const sql_getAll = `SELECT * FROM historico_lectura`;
-const sql_getMostRecent = `SELECT * FROM historico_lectura WHERE etiempo = (SELECT MAX(etiempo) FROM historico_lectura)`;
+const sql_getMostRecent = `
+  SELECT hl.*
+  FROM historico_lectura hl
+  JOIN sitio s ON hl.sitio_id = s.id
+  WHERE hl.etiempo = (SELECT MAX(etiempo) FROM historico_lectura)
+  ORDER BY s.orden;
+`;
 const sql_delete = `DELETE FROM historico_lectura WHERE id = ?`;
 
 function HistoricoLecturaDAO() { }
