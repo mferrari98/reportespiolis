@@ -66,7 +66,7 @@ HistoricoLecturaDAO.prototype.getMostRecent = function (callback) {
     if (err) {
       console.error('Error fetching most recent records from historico_lectura:', err.message);
       callback(err);
-    } else {
+    } else {      
       callback(null, rows);
     }
   });

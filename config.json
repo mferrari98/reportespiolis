@@ -6,9 +6,7 @@
         "pass": "donato",
         "user_": "mferrari@servicoop.com",
         "pass_": "servicoop",
-        "difusion": [
-            "mferrari@servicoop.com",
-            "mcaro@servicoop.com",
+        "difusion": [            
             "hdonato@servicoop.com"
         ],
         "difusionreal": [
