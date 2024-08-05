@@ -23,7 +23,7 @@ function extraerTabla() {
     const $ = cheerio.load(archivoHTML);
 
     const headContent = $('head').children().not('script').toString();
-    const bodyContent = $('body').children().not('script, #myDiv, #guardar').toString();
+    const bodyContent = $('body').children().not('#myDiv, #myDiv2, #guardar').toString();
 
     // armar un nuevo html
     const newHtml = `
@@ -50,6 +50,19 @@ async function ejecutarPlotImagen(cb) {
     // Captura la imagen del div con id "myDiv"
     const element = await page.$('#myDiv');
     await element.screenshot({ path: './reporte/salida/grafico.png' });
+
+    await browser.close();
+    cb()
+}
+
+async function ejecutarPlotImagen(cb) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(`file://${process.cwd()}/web/public/index.html`);
+   
+    // Captura la imagen del div con id "myDiv"
+    const element = await page.$('#myDiv2');
+    await element.screenshot({ path: './reporte/salida/grafico2.png' });
 
     await browser.close();
     cb()

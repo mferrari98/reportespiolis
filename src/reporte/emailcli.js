@@ -52,9 +52,15 @@ EnviarEmail.prototype.enviar = function () {
             ${htmlContent}
             <div style="text-align: center;">
                 <img src="cid:graficobarras" alt="Grafico de Barras"/>
+                <img src="cid:graficolineas" alt="Grafico de Lineas"/>
             </div>
             `,
         attachments: [
+            {
+                filename: 'imagen2.jpg',
+                path: './reporte/salida/grafico2.png', // Ruta de la imagen
+                cid: 'graficolineas' // CID para referenciar la imagen en el cuerpo del mensaje
+            },
             {
                 filename: 'imagen.jpg',
                 path: './reporte/salida/grafico.png', // Ruta de la imagen
