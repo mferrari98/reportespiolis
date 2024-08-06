@@ -1,7 +1,7 @@
 const fs = require('fs');
 const readline = require('readline');
 
-const { getTipoVariable, getSitiosNombre, getNiveles } = require('./parser-reporte');
+const { getTipoVariable, getSitiosNombre, getValores } = require('./parser-reporte');
 const { transpilar } = require('./transpilador');
 
 const SitioDAO = require('../dao/sitioDAO');
@@ -67,7 +67,7 @@ function readAndProcessFile() {
                 getSitiosNombre(lines, (msjSit) => {
 
                     console.log(`${ID_MOD} - ${msjTVar} ${msjSit}`);
-                    getNiveles(lines, 0, (err) => {
+                    getValores(lines, (err) => {
                         if (!err) {
                             getNuevosDatos((err, reporte) => {
                                 if (!err) {

@@ -82,11 +82,10 @@ ademas del dato indefinido, aquellos que se van de rango, esto es util para
 no atrapar un volumen/dia como si fuera nivel.
 no es la mejor manera de resolver esto, pero por ahora sirve
 */
-function getNiveles(lines, indice, callback) {
-    let niveles = lines.map(line => {
-        const parts = line.split(/\s{2,}/).filter(word => word.length > 0);
-        return parts[indice + 1]; // 1 porque 0 es el primer elemento, que es el nombre
-    }).filter(dato => dato !== undefined && dato < 10);
+function getValores(lines, callback) {
+
+    const lineas_modif = modifyLines(lines, 16);    
+    const niveles = getColumna(lineas_modif, 1)
 
     tipoVariableDAO.getByDescriptor("Nivel[m]", (err, tipoVariable) => {
         if (err) {
@@ -137,8 +136,69 @@ function mensaje(origen, cont1, cont2) {
     return origen + ` creadas=${cont1} existentes=${cont2}`
 }
 
+function modifyLines(lines, threshold) {
+    const modifiedLines = [];
+
+    for (let line of lines) {
+        let modifiedLine = '';
+        let spaceCount = 0;
+        let i = 0;
+
+        // Recorrer la línea carácter por carácter
+        while (i < line.length) {
+            if (line[i] === ' ') {
+                spaceCount++;
+                if (spaceCount > threshold) {
+                    modifiedLine += ' 0 '; // Insertar un 0 si el espacio es mayor que el umbral
+                    spaceCount = 0;
+                }
+            } else {
+                if(spaceCount > 0)
+                    modifiedLine += " "
+                
+                modifiedLine += line[i];
+                spaceCount = 0;
+            }
+            i++;
+        }
+
+        modifiedLines.push(modifiedLine.trim());
+    }
+
+    return modifiedLines;
+}
+
+/**
+ * Extrae los valores de una columna específica de un arreglo de líneas
+ * 
+ * @param {Array<string>} modifiedLines - Un arreglo de líneas de texto, cada una representando
+ *                                         una fila de datos
+ * @param {number} numCol - El índice de la columna de la que se desea extraer los valores. 
+ *                           Debe ser un número entero que representa la posición de la columna
+ * @returns {Array<number>} Un arreglo que contiene los valores de la columna especificada para
+ *                           cada línea.
+ */
+function getColumna(modifiedLines, numCol) {
+    const columnValues = [];
+
+    for (let line of modifiedLines) {
+        // dividir linia solo cuando hay un número a los lados del espacio
+        const parts = line.split(/(?<=\d)\s+(?=\d)|(?<=\d)\s+(?=\D)|(?<=\D)\s+(?=\d)/);
+
+        // Si la columna solicitada existe en la línea, añadirla al arreglo
+        if (parts.length > numCol) {
+            const value = parseFloat(parts[numCol]);
+            columnValues.push(value);
+        } else {
+            columnValues.push(0); // O cualquier otro valor que indique que la columna no existe
+        }
+    }
+
+    return columnValues;
+}
+
 module.exports = {
     getTipoVariable,
     getSitiosNombre,
-    getNiveles
+    getValores
 };
