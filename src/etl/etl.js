@@ -103,6 +103,7 @@ function getNuevosDatos(callback) {
                         return;
                     }
 
+                    let reporte = []
                     sitioDAO.getById(row.sitio_id, (err, sitioRow) => {
                         if (err) {
                             callback(err);
@@ -116,10 +117,8 @@ function getNuevosDatos(callback) {
                         row["rebalse"] = sitioRow.rebalse
                         
                         if(remaining == rows.length){
-                            console.log(rows[0])
                             console.log(row)
-                        }
-                        
+                        }          
                         remaining -= 1;
                         if (remaining === 0) {                            
                             callback(null, rows);
