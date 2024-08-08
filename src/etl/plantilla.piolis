@@ -1,237 +1,351 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <title>Reportespiolis</title>
-        <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-        <script src="js/plotly-latest.min.js"></script>
-        <style>
-            :root {
-                --color-nivel: #5996e5;
-                --color-rebalse: #d3a53c;
-            }
-        </style>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <body>
+    <title>Reportespiolis</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <script src="js/plotly-latest.min.js"></script>
+    <style>
+        :root {
+            --color-nivel: #5996e5;
+            --color-rebalse: #d3a53c;
+        }
+    </style>
+</head>
+
+<body>
     <h1 style="text-align: center; font-family: 'Consolas';">REPORTE HORARIO</h1>
     <h4 style="text-align: center; font-family: 'Consolas';"> <!-- ESTAMPATIEMPO --></h4>
-        <div>
-            <table style="margin: 25px auto; border-collapse: collapse; border: 1px solid #eee; border-bottom: 2px solid #3498db; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05); font-family: 'consolas';">
-                <thead>
-                    <tr>
-                        <th style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; text-transform: uppercase; font-size: 16px;">Sitio</th>
-                        <th style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; text-transform: uppercase; font-size: 16px;"><!-- HEADER_0 --></th>
-                        <th style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; text-transform: uppercase; font-size: 16px;"><!-- HEADER_1 --></th>
-                        <th style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; text-transform: uppercase; font-size: 16px;"><!-- HEADER_2 --></th>
-                        <th style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; text-transform: uppercase; font-size: 16px;"><!-- HEADER_3 --></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="font-family: 'consolas';">
-                        <td style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- SITIO_0 --></td>
-                        <td style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- NIVEL_0 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                    </tr>
-                    <tr style="font-family: 'consolas';">
-                        <td style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- SITIO_1 --></td>
-                        <td style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- NIVEL_1 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- TURB_1 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                    </tr>
-                    <tr style="font-family: 'consolas';">
-                        <td style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- SITIO_2 --></td>
-                        <td style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- NIVEL_2 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- CLORO_2 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- TURB_2 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- VOLDIA_2 --></td>
-                    </tr>
-                    <tr style="font-family: 'consolas';">
-                        <td style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- SITIO_3 --></td>
-                        <td style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- NIVEL_3 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- CLORO_3 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                    </tr>
-                    <tr style="font-family: 'consolas';">
-                        <td style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- SITIO_4 --></td>
-                        <td style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- NIVEL_4 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- CLORO_4 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                    </tr>
-                    <tr style="font-family: 'consolas';">
-                        <td style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- SITIO_5 --></td>
-                        <td style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- NIVEL_5 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- CLORO_5 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                    </tr>
-                    <tr style="font-family: 'consolas';">
-                        <td style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- SITIO_6 --></td>
-                        <td style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- NIVEL_6 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                    </tr>
-                    <tr style="font-family: 'consolas';">
-                        <td style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- SITIO_7 --></td>
-                        <td style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- NIVEL_7 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                    </tr>
-                    <tr style="font-family: 'consolas';">
-                        <td style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- SITIO_8 --></td>
-                        <td style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- NIVEL_8 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                    </tr>
-                    <tr style="font-family: 'consolas';">
-                        <td style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- SITIO_9 --></td>
-                        <td style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"><!-- NIVEL_9 --></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                        <td style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <div>
+        <table
+            style="margin: 25px auto; border-collapse: collapse; border: 1px solid #eee; border-bottom: 2px solid #3498db; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05); font-family: 'consolas';">
+            <thead>
+                <tr>
+                    <th
+                        style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; text-transform: uppercase; font-size: 16px;">
+                        Sitio</th>
+                    <th
+                        style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; text-transform: uppercase; font-size: 16px;">
+                        <!-- HEADER_0 --></th>
+                    <th
+                        style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; text-transform: uppercase; font-size: 16px;">
+                        <!-- HEADER_1 --></th>
+                    <th
+                        style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; text-transform: uppercase; font-size: 16px;">
+                        <!-- HEADER_2 --></th>
+                    <th
+                        style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; text-transform: uppercase; font-size: 16px;">
+                        <!-- HEADER_3 --></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="font-family: 'consolas';">
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- SITIO_0 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- NIVEL_0 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- CLORO_0 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- TURB_0 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- VOLDIA_0 --></td>
+                </tr>
+                <tr style="font-family: 'consolas';">
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- SITIO_1 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- NIVEL_1 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- CLORO_1 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- TURB_1 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- VOLDIA_1 --></td>
+                </tr>
+                <tr style="font-family: 'consolas';">
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- SITIO_2 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- NIVEL_2 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- CLORO_2 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- TURB_2 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- VOLDIA_2 --></td>
+                </tr>
+                <tr style="font-family: 'consolas';">
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- SITIO_3 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- NIVEL_3 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- CLORO_3 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- TURB_3 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- VOLDIA_3 --></td>
+                </tr>
+                <tr style="font-family: 'consolas';">
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- SITIO_4 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- NIVEL_4 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- CLORO_4 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- TURB_4 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- VOLDIA_4 --></td>
+                </tr>
+                <tr style="font-family: 'consolas';">
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- SITIO_5 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- NIVEL_5 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- CLORO_5 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- TURB_5 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- VOLDIA_5 --></td>
+                </tr>
+                <tr style="font-family: 'consolas';">
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- SITIO_6 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- NIVEL_6 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- CLORO_6 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- TURB_6 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- VOLDIA_6 --></td>
+                </tr>
+                <tr style="font-family: 'consolas';">
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- SITIO_7 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- NIVEL_7 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- CLORO_7 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- TURB_7 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- VOLDIA_7 --></td>
+                </tr>
+                <tr style="font-family: 'consolas';">
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- SITIO_8 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- NIVEL_8 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- CLORO_8 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- TURB_8 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- VOLDIA_8 --></td>
+                </tr>
+                <tr style="font-family: 'consolas';">
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- SITIO_9 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- NIVEL_9 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- CLORO_9 --></td>
+                    <td
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- TURB_9 --></td>
+                    <td
+                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        <!-- VOLDIA_9 --></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-        <!-- Div donde se renderizará el gráfico -->
-        <div id="myDiv" style="width: 100%; height: 500px;"></div>
-        <div id="myDiv2" style="width: 100%; height: 500px;"></div>
-        <button id="guardar">Guardar como imagen</button>
-        <button id="copiar">Copiar al Portapapeles</button>
-    </body>
+    <!-- Div donde se renderizará el gráfico -->
+    <div id="myDiv" style="width: 100%; height: 500px;"></div>
+    <div id="myDiv2" style="width: 100%; height: 500px;"></div>
 
-    <script>
-        document.getElementById('copiar').addEventListener('click', function () {
+    <button id="guardar">Guardar como imagen</button>
+    <button id="copiar">Copiar al Portapapeles</button>
+</body>
 
-            let textToCopy = '';
-            let filas = document.querySelector("tbody").children 
+<script>
+    document.getElementById('copiar').addEventListener('click', function () {
 
-            for (let i = 0; i < filas.length; i++) {
-                textToCopy += filas[i].childNodes[1].innerText + "," + filas[i].childNodes[3].innerText + '\n';                
-            }
-            textToCopy = textToCopy.trim()
-            
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                alert('Texto copiado al portapapeles');
-            }).catch(err => {
-                console.error('Error al copiar el texto: ', err);
-            });
+        let textToCopy = '';
+        let filas = document.querySelector("tbody").children
+
+        for (let i = 0; i < filas.length; i++) {
+            textToCopy += filas[i].childNodes[1].innerText + "," + filas[i].childNodes[3].innerText + '\n';
+        }
+        textToCopy = textToCopy.trim()
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            alert('Texto copiado al portapapeles');
+        }).catch(err => {
+            console.error('Error al copiar el texto: ', err);
         });
-    </script>
+    });
+</script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Datos de la tabla
-            var sitios = [<!-- SITIOS -->]
-            var niveles = [<!-- NIVELES -->]
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Datos de la tabla
+        var sitios = [<!-- SITIOS -->]
+        var niveles = [< !--NIVELES -->]
 
-            var trace1 = {
-                x: sitios,
-                y: niveles,
-                name: 'Nivel',
-                type: 'bar',
-                marker: {
-                    color: getComputedStyle(document.documentElement).getPropertyValue('--color-nivel').trim(),
-                },
-                text: niveles.map(String),
-                textposition: 'auto',
-                hoverinfo: 'none',
-            };
+        var trace1 = {
+            x: sitios,
+            y: niveles,
+            name: 'Nivel',
+            type: 'bar',
+            marker: {
+                color: getComputedStyle(document.documentElement).getPropertyValue('--color-nivel').trim(),
+            },
+            text: niveles.map(String),
+            textposition: 'auto',
+            hoverinfo: 'none',
+        };
 
-            var trace2 = {
-                x: sitios,
-                y: [<!-- COMPLEMENTO -->],
-                name: 'Rebalse',
-                type: 'bar',
-                marker: {
-                    color: getComputedStyle(document.documentElement).getPropertyValue('--color-rebalse').trim(),
-                    opacity: 0.2
-                },
-                text: [<!-- REBALSE -->].map(String),
-                textposition: 'auto',
-                hoverinfo: 'none',
-            };
+        var trace2 = {
+            x: sitios,
+            y: [< !--COMPLEMENTO -->],
+            name: 'Rebalse',
+            type: 'bar',
+            marker: {
+                color: getComputedStyle(document.documentElement).getPropertyValue('--color-rebalse').trim(),
+                opacity: 0.2
+            },
+            text: [< !--REBALSE -->].map(String),
+            textposition: 'auto',
+            hoverinfo: 'none',
+        };
 
-            var trace3 = {
-                name: '<!-- SITIO_0 -->',
-  x: [1, 2, 3, 4],
-  y: [10, 15, 13, 17],
-  type: 'scatter'
-};
+        var trace3 = {
+            name: '<!-- SITIO_0 -->',
+            x: [1, 2, 3, 4],
+            y: [10, 15, 13, 17],
+            type: 'scatter'
+        };
 
-var trace4 = {
-  x: [1, 2, 3, 4],
-  y: [16, 5, 11, 9],
-  type: 'scatter'
-};
+        var trace4 = {
+            x: [1, 2, 3, 4],
+            y: [16, 5, 11, 9],
+            type: 'scatter'
+        };
 
-var data2 = [trace3, trace4];
+        var data2 = [trace3, trace4];
 
-Plotly.newPlot('myDiv2', data2);
+        Plotly.newPlot('myDiv2', data2);
 
-            var data = [trace1, trace2];
+        var data = [trace1, trace2];
 
-            // Configurar el diseño del gráfico
-            var layout = {
-                barmode: 'stack',
+        // Configurar el diseño del gráfico
+        var layout = {
+            barmode: 'stack',
 
-                xaxis: {
-                    title: 'Sitio'
-                },
-                yaxis: {
-                    title: 'Nivel [m]'
-                },
-                dragmode: false,  // Esto deshabilita el modo de arrastre para el zoom
-                zoom: false,  // Esto deshabilita completamente la funcionalidad de zoom
-                autosize: true,
-                font: {
-                    family: 'consolas',
-                    size: 14
-                }
-            };
-            var config = { responsive: true, displayModeBar: false };
+            xaxis: {
+                title: 'Sitio'
+            },
+            yaxis: {
+                title: 'Nivel [m]'
+            },
+            dragmode: false,  // Esto deshabilita el modo de arrastre para el zoom
+            zoom: false,  // Esto deshabilita completamente la funcionalidad de zoom
+            autosize: true,
+            font: {
+                family: 'consolas',
+                size: 14
+            }
+        };
+        var config = { responsive: true, displayModeBar: false };
 
-            // Renderizar el gráfico en el div con id 'myDiv'
-            Plotly.newPlot('myDiv', data, layout, config);
+        // Renderizar el gráfico en el div con id 'myDiv'
+        Plotly.newPlot('myDiv', data, layout, config);
 
-            document.getElementById('guardar').onclick = function () {
-                Plotly.toImage(document.getElementById('myDiv'), { format: 'png' })
-                    .then(function (url) {
-                        // Convertir la imagen a base64
-                        var base64Image = url.split(',')[1];
+        document.getElementById('guardar').onclick = function () {
+            Plotly.toImage(document.getElementById('myDiv'), { format: 'png' })
+                .then(function (url) {
+                    // Convertir la imagen a base64
+                    var base64Image = url.split(',')[1];
 
-                        // Enviar la imagen al servidor
-                        fetch('/imagenpt', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ image: base64Image })
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                console.log('Éxito:', data);
-                            })
-                            .catch((error) => {
-                                console.error('Error:', error);
-                            });
+                    // Enviar la imagen al servidor
+                    fetch('/imagenpt', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ image: base64Image })
                     })
-                    .catch(function (error) {
-                        console.error('Error al crear la imagen:', error);
-                    });
-            };
-        })
-    </script>
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Éxito:', data);
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
+                })
+                .catch(function (error) {
+                    console.error('Error al crear la imagen:', error);
+                });
+        };
+    })
+</script>
+
 </html>

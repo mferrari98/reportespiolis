@@ -1,7 +1,7 @@
 const fs = require('fs');
 const readline = require('readline');
 
-const { getTipoVariable, getSitiosNombre, getValores } = require('./parser-reporte');
+const { getTipoVariable, getSitiosNombre, setNuevosDatos } = require('./parser-reporte');
 const { transpilar } = require('./transpilador');
 
 const SitioDAO = require('../dao/sitioDAO');
@@ -67,7 +67,7 @@ function readAndProcessFile() {
                 getSitiosNombre(lines, (msjSit) => {
 
                     console.log(`${ID_MOD} - ${msjTVar} ${msjSit}`);
-                    getValores(lines, (err) => {
+                    setNuevosDatos(lines, (err) => {
                         if (!err) {
                             getNuevosDatos((err, reporte) => {
                                 if (!err) {
@@ -107,7 +107,9 @@ function getNuevosDatos(callback) {
                             return;
                         }    
                         row["sitio_id"] = sitioRow.descriptor,
-                        row["tipo_id"] = tipoVarRow.descriptor,
+                        row["tipo_id"] = {
+                            "nivel" : tipoVarRow.descriptor,
+                        }
                         row["rebalse"] = sitioRow.rebalse
                     
                         remaining -= 1;

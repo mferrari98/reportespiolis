@@ -3,6 +3,7 @@ const TipoVariableDAO = require('../dao/tipoVariableDAO');
 const HistoricoLecturaDAO = require('../dao/historicoLecturaDAO');
 
 const ID_MOD = "PARSER"
+const SIN_DETERMINAR = "s/d"
 
 const tipoVariableDAO = new TipoVariableDAO();
 const sitioDAO = new SitioDAO();
@@ -13,6 +14,9 @@ function getTipoVariable(firstLine, cb) {
     let entidades_creadas = 0
     let entidades_existentes = 0
 
+    /*
+    es importante este filtro porque evita crear instancias como consecuencia de un objeto mal parseado
+    */
     let tipo_variable = firstLine.split(/\s{2,}/).filter(word => word.length > 0);
 
     for (const [index, descriptor] of tipo_variable.entries()) {
@@ -82,9 +86,108 @@ ademas del dato indefinido, aquellos que se van de rango, esto es util para
 no atrapar un volumen/dia como si fuera nivel.
 no es la mejor manera de resolver esto, pero por ahora sirve
 */
-function getValores(lines, callback) {
+function setNuevosDatos(lines, callback) {
 
-    const lineas_modif = modifyLines(lines, 16);    
+    const lineas_modif = agregarNulos(lines, 16)
+    const timestamp = new Date().toISOString();
+
+    insertarNiveles(lineas_modif, timestamp, () => {
+        insertarCloro(lineas_modif, timestamp, () => {
+            callback()
+        })
+    })
+}
+
+function insertarNiveles(lineas_modif, timestamp, callback) {
+
+    const niveles = getColumna(lineas_modif, 1)
+
+    tipoVariableDAO.getByDescriptor("Nivel[m]", (err, tipoVariable) => {
+        if (err) {
+            callback(err);
+            return;
+        }
+
+        let remaining = niveles.length;
+
+        if (remaining === 0) {
+            callback(null);
+            return;
+        }
+
+        for (let i = 0; i < niveles.length; i++) {
+            const valor = niveles[i];
+
+            sitioDAO.getByOrden(i, (err, sitio) => {
+                if (err) {
+                    callback(err);
+                    return;
+                }
+
+                historicoLecturaDAO.create(sitio.id, tipoVariable.id, valor, timestamp, (err, result) => {
+                    if (err) {
+                        callback(err);
+                        return;
+                    }
+                    console.log(`${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`);
+
+                    remaining -= 1;
+                    if (remaining === 0) {
+                        callback(null);
+                    }
+                });
+            });
+        }
+    });
+}
+
+function insertarCloro(lineas_modif, timestamp, callback) {
+
+    const cloro = getColumna(lineas_modif, 2)
+
+    tipoVariableDAO.getByDescriptor("Cloro[mlg/l]", (err, tipoVariable) => {
+        if (err) {
+            callback(err);
+            return;
+        }
+
+        let remaining = cloro.length;
+
+        if (remaining === 0) {
+            callback(null);
+            return;
+        }
+
+        for (let i = 0; i < cloro.length; i++) {
+            const valor = cloro[i];
+
+            sitioDAO.getByOrden(i, (err, sitio) => {
+                if (err) {
+                    callback(err);
+                    return;
+                }
+
+                historicoLecturaDAO.create(sitio.id, tipoVariable.id, valor, timestamp, (err, result) => {
+                    if (err) {
+                        callback(err);
+                        return;
+                    }
+
+                    console.log(`${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`);
+
+                    remaining -= 1;
+                    if (remaining === 0) {
+                        callback(null);
+                    }
+                });
+            });
+        }
+    });
+}
+
+function setNuevosDatos2(lines, callback) {
+
+    const lineas_modif = agregarNulos(lines, 16)
     const niveles = getColumna(lineas_modif, 1)
 
     tipoVariableDAO.getByDescriptor("Nivel[m]", (err, tipoVariable) => {
@@ -115,7 +218,6 @@ function getValores(lines, callback) {
                         callback(err);
                         return;
                     }
-
                     console.log(`${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`);
 
                     remaining -= 1;
@@ -136,7 +238,7 @@ function mensaje(origen, cont1, cont2) {
     return origen + ` creadas=${cont1} existentes=${cont2}`
 }
 
-function modifyLines(lines, threshold) {
+function agregarNulos(lines, threshold) {
     const modifiedLines = [];
 
     for (let line of lines) {
@@ -145,24 +247,27 @@ function modifyLines(lines, threshold) {
         let i = 0;
 
         // Recorrer la línea carácter por carácter
-        while (i < line.length) {
+        while (i < line.length) {            
             if (line[i] === ' ') {
                 spaceCount++;
                 if (spaceCount > threshold) {
-                    modifiedLine += ' 0 '; // Insertar un 0 si el espacio es mayor que el umbral
+                    modifiedLine += ' '+SIN_DETERMINAR; // Insertar un 0 si el espacio es mayor que el umbral
                     spaceCount = 0;
                 }
             } else {
                 if(spaceCount > 0)
                     modifiedLine += " "
                 
+                /*
+                si no encuenta un blanco, copia la linea en la salida tal como la
+                leyó en la antrada "modifiedLine += line[i]"
+                */
                 modifiedLine += line[i];
                 spaceCount = 0;
             }
             i++;
         }
-
-        modifiedLines.push(modifiedLine.trim());
+        modifiedLines.push(modifiedLine);
     }
 
     return modifiedLines;
@@ -179,18 +284,25 @@ function modifyLines(lines, threshold) {
  *                           cada línea.
  */
 function getColumna(modifiedLines, numCol) {
+    
     const columnValues = [];
+    const regex = /\s(?=\d|\bs\/d)|(?<=\d|\bs\/d)\s/g;
 
     for (let line of modifiedLines) {
-        // dividir linia solo cuando hay un número a los lados del espacio
-        const parts = line.split(/(?<=\d)\s+(?=\d)|(?<=\d)\s+(?=\D)|(?<=\D)\s+(?=\d)/);
-
+        
+        /*
+        dividir linea solo cuando hay un número a los lados del espacio
+        este patron resuelve falsos positivo como se daria en "B.SAN MIGUEL 1.2" -> [B.SAN, MIGUEL, 1.2, ...]
+        cuando lo correcto es [B.SAN MIGUEL, 1.2, ...]
+        */
+        const parts = line.split(regex);        
+        
         // Si la columna solicitada existe en la línea, añadirla al arreglo
         if (parts.length > numCol) {
             const value = parseFloat(parts[numCol]);
-            columnValues.push(value);
+            columnValues.push(isNaN(value) ? parts[numCol] : value);
         } else {
-            columnValues.push(0); // O cualquier otro valor que indique que la columna no existe
+            columnValues.push(SIN_DETERMINAR); // O cualquier otro valor que indique que la columna no existe
         }
     }
 
@@ -200,5 +312,5 @@ function getColumna(modifiedLines, numCol) {
 module.exports = {
     getTipoVariable,
     getSitiosNombre,
-    getValores
+    setNuevosDatos
 };
