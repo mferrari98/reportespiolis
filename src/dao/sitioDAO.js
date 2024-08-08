@@ -7,6 +7,7 @@ const sql_getById = `SELECT * FROM sitio WHERE id = ?`;
 const sql_getByDescriptor = `SELECT * FROM sitio WHERE descriptor = ?`;
 const sql_getByOrden = `SELECT * FROM sitio WHERE orden = ?`;
 const sql_getAll = `SELECT * FROM sitio`;
+const sql_cantSitios = `SELECT COUNT(*) as cant FROM sitio`;
 const sql_delete = `DELETE FROM sitio WHERE id = ?`;
 
 const rebalseMap = new Map([
@@ -92,6 +93,20 @@ SitioDAO.prototype.getAll = function (callback) {
       callback(err);
     } else {
       callback(null, rows);
+    }
+  });
+};
+
+SitioDAO.prototype.cantSitios = function (callback) {
+  console.log(`${ID_MOD} - cantSitios`);
+  const db = getDatabase();
+
+  db.get(sql_cantSitios, [], (err, ret) => {
+    if (err) {
+      console.error('Error fetching from sitio:', err.message);
+      callback(err);
+    } else {
+      callback(null, ret.cant);
     }
   });
 };
