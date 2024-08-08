@@ -19,8 +19,7 @@ const rebalseMap = new Map([
   ['B.PUJOL', 3.0],
   ['B.OESTE(1K)', 5.0],
   ['B.SAN MIGUEL', 3.8],
-  ['NUEVA CHUBUT', 4.0],
-  ['PLANTA POT.', 0.0]
+  ['NUEVA CHUBUT', 4.0]
 ]);
 
 function SitioDAO() { }

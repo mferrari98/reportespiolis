@@ -94,6 +94,8 @@ function getNuevosDatos(callback) {
         } else {
             let remaining = rows.length;
 
+            console.log(rows[0])
+            
             rows.forEach(row => {
                 tipoVariableDAO.getById(row.tipo_id, (err, tipoVarRow) => {
                     if (err) {
@@ -106,12 +108,18 @@ function getNuevosDatos(callback) {
                             callback(err);
                             return;
                         }    
-                        row["sitio_id"] = sitioRow.descriptor,
+                        row["sitio_id"] = sitioRow.descriptor
                         row["tipo_id"] = {
-                            "nivel" : tipoVarRow.descriptor,
+                            "nivel" : (tipoVarRow.id == 1)? tipoVarRow.descriptor : "no aplica",
+                            "cloro" : (tipoVarRow.id == 2)? tipoVarRow.descriptor : "no aplica"
                         }
                         row["rebalse"] = sitioRow.rebalse
-                    
+                        
+                        if(remaining == rows.length){
+                            console.log(rows[0])
+                            console.log(row)
+                        }
+                        
                         remaining -= 1;
                         if (remaining === 0) {                            
                             callback(null, rows);
