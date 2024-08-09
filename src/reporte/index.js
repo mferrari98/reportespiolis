@@ -12,8 +12,10 @@ function RenderHTML() { }
 RenderHTML.prototype.renderizar = function () {
 
     extraerTabla()
-    ejecutarPlotImagen(() => {
-        enviarEmail.enviar()
+    plotBarras(() => {
+        plotLineas(() => {
+            enviarEmail.enviar()
+        })
     })
 }
 
@@ -42,7 +44,7 @@ function extraerTabla() {
     fs.writeFileSync('./reporte/salida/tabla.html', newHtml, 'utf8');
 }
 
-async function ejecutarPlotImagen(cb) {
+async function plotBarras(cb) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(`file://${process.cwd()}/web/public/index.html`);
@@ -55,7 +57,7 @@ async function ejecutarPlotImagen(cb) {
     cb()
 }
 
-async function ejecutarPlotImagen(cb) {
+async function plotLineas(cb) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(`file://${process.cwd()}/web/public/index.html`);

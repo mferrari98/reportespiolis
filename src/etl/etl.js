@@ -117,26 +117,44 @@ function getNuevosDatos(callback) {
                 return;
               }
 
-              reporte[sitioRow.id - 1] = {
+              let nivel_previo;
+              let valor_nivel_previo;
+              let cloro_previo;
+              let valor_cloro_previo;
+
+              try {
+                nivel_previo =
+                  reporte[sitioRow.orden].variable.nivel.descriptor;
+                valor_nivel_previo =
+                  reporte[sitioRow.orden].variable.nivel.valor;
+              } catch (error) {}
+              try {
+                cloro_previo =
+                  reporte[sitioRow.orden].variable.cloro.descriptor;
+                valor_cloro_previo =
+                  reporte[sitioRow.orden].variable.cloro.valor;
+              } catch (error) {}
+
+              reporte[sitioRow.orden] = {
                 sitio: sitioRow.descriptor,
                 variable: {
                   nivel: {
-                    descriptor: tipoVarRow.id == 1 ? tipoVarRow.descriptor : "no aplica",
-                    valor: tipoVarRow.id == 1 ? row.valor : "otra cosa"
+                    descriptor:
+                      tipoVarRow.id == 1 ? tipoVarRow.descriptor : nivel_previo,
+                    valor: tipoVarRow.id == 1 ? row.valor : valor_nivel_previo,
                   },
                   cloro: {
-                    descriptor: tipoVarRow.id == 2 ? tipoVarRow.descriptor : "no aplica",
-                    valor: tipoVarRow.id == 2 ? row.valor : "otra cosa"
-                  }
+                    descriptor:
+                      tipoVarRow.id == 2 ? tipoVarRow.descriptor : cloro_previo,
+                    valor: tipoVarRow.id == 2 ? row.valor : valor_cloro_previo,
+                  },
                 },
                 rebalse: sitioRow.rebalse,
               };
-
               remaining -= 1;
 
               if (remaining === 0) {
-                console.log(reporte[0].variable);
-                callback(null, rows);
+                callback(null, reporte);
               }
             });
           });

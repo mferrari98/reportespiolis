@@ -248,7 +248,7 @@
     document.addEventListener("DOMContentLoaded", function () {
         // Datos de la tabla
         var sitios = [<!-- SITIOS -->]
-        var niveles = [< !--NIVELES -->]
+        var niveles = [<!-- NIVELES -->]
 
         var trace1 = {
             x: sitios,
@@ -265,14 +265,14 @@
 
         var trace2 = {
             x: sitios,
-            y: [< !--COMPLEMENTO -->],
+            y: [<!-- COMPLEMENTO -->],
             name: 'Rebalse',
             type: 'bar',
             marker: {
                 color: getComputedStyle(document.documentElement).getPropertyValue('--color-rebalse').trim(),
                 opacity: 0.2
             },
-            text: [< !--REBALSE -->].map(String),
+            text: [<!-- REBALSE -->].map(String),
             textposition: 'auto',
             hoverinfo: 'none',
         };
@@ -319,32 +319,6 @@
         // Renderizar el gráfico en el div con id 'myDiv'
         Plotly.newPlot('myDiv', data, layout, config);
 
-        document.getElementById('guardar').onclick = function () {
-            Plotly.toImage(document.getElementById('myDiv'), { format: 'png' })
-                .then(function (url) {
-                    // Convertir la imagen a base64
-                    var base64Image = url.split(',')[1];
-
-                    // Enviar la imagen al servidor
-                    fetch('/imagenpt', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ image: base64Image })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log('Éxito:', data);
-                        })
-                        .catch((error) => {
-                            console.error('Error:', error);
-                        });
-                })
-                .catch(function (error) {
-                    console.error('Error al crear la imagen:', error);
-                });
-        };
     })
 </script>
 
