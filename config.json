@@ -1,14 +1,13 @@
 {
-    "direcc_remota_": "//PC0346/datos",
-    "direcc_remota": "//PC0301/datos",
+    "direcc_remota": "//PC0346/datos",
+    "direcc_remota_": "//PC0301/datos",
     "email": {
-        "user_": "hdonato@servicoop.com",
-        "pass_": "donato",
-        "user": "mferrari@servicoop.com",
-        "pass": "servicoop",
+        "user": "hdonato@servicoop.com",
+        "pass": "donato",
+        "user_": "mferrari@servicoop.com",
+        "pass_": "servicoop",
         "difusion": [            
-            "mferrari@servicoop.com"
-            
+            "hdonato@servicoop.com"
         ],
         "difusionreal": [
             "lbarrera@servicoop.com",

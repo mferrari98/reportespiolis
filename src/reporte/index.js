@@ -25,7 +25,7 @@ function extraerTabla() {
     const $ = cheerio.load(archivoHTML);
 
     const headContent = $('head').children().not('script').toString();
-    const bodyContent = $('body').children().not('#myDiv, #myDiv2, #guardar').toString();
+    const bodyContent = $('body').children().not('script, #myDiv, #myDiv2, #guardar').toString();
 
     // armar un nuevo html
     const newHtml = `
