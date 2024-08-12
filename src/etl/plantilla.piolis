@@ -26,19 +26,19 @@
             <thead>
                 <tr>
                     <th
-                        style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; text-transform: uppercase; font-size: 16px;">
+                        style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; font-size: 16px;">
                         Sitio</th>
                     <th
-                        style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; text-transform: uppercase; font-size: 16px;">
+                        style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; font-size: 16px;">
                         <!-- HEADER_0 --></th>
                     <th
-                        style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; text-transform: uppercase; font-size: 16px;">
+                        style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; font-size: 16px;">
                         <!-- HEADER_1 --></th>
                     <th
-                        style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; text-transform: uppercase; font-size: 16px;">
+                        style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; font-size: 16px;">
                         <!-- HEADER_2 --></th>
                     <th
-                        style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; text-transform: uppercase; font-size: 16px;">
+                        style="color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse; text-align: center; background: #3498db; color: #fff; font-size: 16px;">
                         <!-- HEADER_3 --></th>
                 </tr>
             </thead>
@@ -51,13 +51,13 @@
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- NIVEL_0 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- CLORO_0 --></td>
                     <td
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- TURB_0 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- VOLDIA_0 --></td>
                 </tr>
                 <tr style="font-family: 'consolas';">
@@ -68,13 +68,13 @@
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- NIVEL_1 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- CLORO_1 --></td>
                     <td
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- TURB_1 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- VOLDIA_1 --></td>
                 </tr>
                 <tr style="font-family: 'consolas';">
@@ -85,13 +85,13 @@
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- NIVEL_2 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- CLORO_2 --></td>
                     <td
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- TURB_2 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- VOLDIA_2 --></td>
                 </tr>
                 <tr style="font-family: 'consolas';">
@@ -102,13 +102,13 @@
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- NIVEL_3 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- CLORO_3 --></td>
                     <td
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- TURB_3 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- VOLDIA_3 --></td>
                 </tr>
                 <tr style="font-family: 'consolas';">
@@ -119,13 +119,13 @@
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- NIVEL_4 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- CLORO_4 --></td>
                     <td
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- TURB_4 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- VOLDIA_4 --></td>
                 </tr>
                 <tr style="font-family: 'consolas';">
@@ -136,13 +136,13 @@
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- NIVEL_5 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- CLORO_5 --></td>
                     <td
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- TURB_5 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- VOLDIA_5 --></td>
                 </tr>
                 <tr style="font-family: 'consolas';">
@@ -153,13 +153,13 @@
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- NIVEL_6 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- CLORO_6 --></td>
                     <td
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- TURB_6 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- VOLDIA_6 --></td>
                 </tr>
                 <tr style="font-family: 'consolas';">
@@ -170,13 +170,13 @@
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- NIVEL_7 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- CLORO_7 --></td>
                     <td
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- TURB_7 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- VOLDIA_7 --></td>
                 </tr>
                 <tr style="font-family: 'consolas';">
@@ -187,13 +187,13 @@
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- NIVEL_8 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- CLORO_8 --></td>
                     <td
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- TURB_8 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- VOLDIA_8 --></td>
                 </tr>
                 <tr style="font-family: 'consolas';">
@@ -204,13 +204,13 @@
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- NIVEL_9 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- CLORO_9 --></td>
                     <td
                         style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- TURB_9 --></td>
                     <td
-                        style="text-align: left; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
+                        style="text-align: center; color: #000000; border: 1px solid #bebebe; padding: 12px 35px; border-collapse: collapse;">
                         <!-- VOLDIA_9 --></td>
                 </tr>
             </tbody>

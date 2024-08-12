@@ -121,11 +121,6 @@ function getNuevosDatos(callback) {
               remaining -= 1;
 
               if (remaining === 0) {
-                
-                reporte.forEach(elem => {
-                  console.log(elem.sitio)
-                  console.log(elem.variable)
-                })
                 callback(null, reporte);
               }
             });
@@ -157,9 +152,9 @@ function armarObjetoReporte(reporte, row, tipoVarRow, sitioRow) {
 
   try {
     descrip_turb =
-      reporte[sitioRow.orden].variable.cloro.descriptor;
+      reporte[sitioRow.orden].variable.turbiedad.descriptor;
     val_turb =
-      reporte[sitioRow.orden].variable.cloro.valor;
+      reporte[sitioRow.orden].variable.turbiedad.valor;
   } catch (error) { }
 
   reporte[sitioRow.orden] = {
