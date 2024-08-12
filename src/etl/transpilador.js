@@ -1,4 +1,6 @@
 const fs = require('fs');
+const cheerio = require('cheerio');
+
 const { sindet } = require("./parser-reporte")
 
 const ID_MOD = "TRANS";
@@ -12,14 +14,35 @@ function transpilar(reporte, estampatiempo, cb) {
             return;
         }
 
-        let contenido = expandirPlantilla(data)
+        let contenido = expandirPlantilla(reporte, data)
+        fs.writeFile("./etl/plantilla.expand.html", contenido, () => {})
+        
         sustituirMarcas(reporte, estampatiempo, contenido, () => {
             cb()
         })
     });
 }
 
-function expandirPlantilla(data) { return data }
+function expandirPlantilla(reporte, data) {
+    const $ = cheerio.load(data);
+
+    // Seleccionar solo los <tr> dentro del <tbody>
+    const tbody = $('tbody'); // Selecciona el <tbody>
+    const filaPlantilla = tbody.find('tr').first();
+
+    reporte.forEach((item, i) => {
+        const fila = filaPlantilla.clone(); // Clonar la fila de la plantilla
+        fila.find('td').eq(0).text(`SITIO_${i}`);
+        fila.find('td').eq(1).text(`NIVEL_${i}`);
+        fila.find('td').eq(2).text(`CLORO_${i}`);
+        fila.find('td').eq(3).text(`TURB_${i}`);
+        fila.find('td').eq(4).text(`VOLDIA_${i}`);
+        tbody.append(fila); // Agregar la fila al <tbody>
+    });
+
+    filaPlantilla.remove();
+    return $.html();    
+}
 
 function sustituirMarcas(reporte, estampatiempo, contenido, cb) {
     
@@ -32,10 +55,10 @@ function sustituirMarcas(reporte, estampatiempo, contenido, cb) {
 
     reporte.forEach((item, i) => {
         contenido = contenido
-            .replace(`<!-- SITIO_${i} -->`, item.sitio)
-            .replace(`<!-- NIVEL_${i} -->`, item.variable.nivel.valor === sindet ? '' : item.variable.nivel.valor)
-            .replace(`<!-- CLORO_${i} -->`, item.variable.cloro.valor === sindet ? '' : item.variable.cloro.valor)
-            .replace(`<!-- TURB_${i} -->`, item.variable.turbiedad.valor === sindet ? '' : item.variable.turbiedad.valor);
+            .replace(`SITIO_${i}`, item.sitio)
+            .replace(`NIVEL_${i}`, item.variable.nivel.valor === sindet ? '' : item.variable.nivel.valor)
+            .replace(`CLORO_${i}`, item.variable.cloro.valor === sindet ? '' : item.variable.cloro.valor)
+            .replace(`TURB_${i}`, item.variable.turbiedad.valor === sindet ? '' : item.variable.turbiedad.valor);
     })
 
     contenido = contenido
