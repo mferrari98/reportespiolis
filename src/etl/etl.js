@@ -121,6 +121,11 @@ function getNuevosDatos(callback) {
               remaining -= 1;
 
               if (remaining === 0) {
+                
+                reporte.forEach(elem => {
+                  console.log(elem.sitio)
+                  console.log(elem.variable)
+                })
                 callback(null, reporte);
               }
             });
@@ -132,21 +137,28 @@ function getNuevosDatos(callback) {
 }
 
 function armarObjetoReporte(reporte, row, tipoVarRow, sitioRow) {
-  let nivel_previo;
-  let valor_nivel_previo;
-  let cloro_previo;
-  let valor_cloro_previo;
+  let descrip_nivel, val_nivel;
+  let descrip_cloro, val_cloro;
+  let descrip_turb, val_turb;
 
   try {
-    nivel_previo =
+    descrip_nivel =
       reporte[sitioRow.orden].variable.nivel.descriptor;
-    valor_nivel_previo =
+    val_nivel =
       reporte[sitioRow.orden].variable.nivel.valor;
   } catch (error) { }
+  
   try {
-    cloro_previo =
+    descrip_cloro =
       reporte[sitioRow.orden].variable.cloro.descriptor;
-    valor_cloro_previo =
+    val_cloro =
+      reporte[sitioRow.orden].variable.cloro.valor;
+  } catch (error) { }
+
+  try {
+    descrip_turb =
+      reporte[sitioRow.orden].variable.cloro.descriptor;
+    val_turb =
       reporte[sitioRow.orden].variable.cloro.valor;
   } catch (error) { }
 
@@ -155,14 +167,19 @@ function armarObjetoReporte(reporte, row, tipoVarRow, sitioRow) {
     variable: {
       nivel: {
         descriptor:
-          tipoVarRow.id == 1 ? tipoVarRow.descriptor : nivel_previo,
-        valor: tipoVarRow.id == 1 ? row.valor : valor_nivel_previo,
+          tipoVarRow.orden == 0 ? tipoVarRow.descriptor : descrip_nivel,
+        valor: tipoVarRow.orden == 0 ? row.valor : val_nivel,
       },
       cloro: {
         descriptor:
-          tipoVarRow.id == 2 ? tipoVarRow.descriptor : cloro_previo,
-        valor: tipoVarRow.id == 2 ? row.valor : valor_cloro_previo,
+          tipoVarRow.orden == 1 ? tipoVarRow.descriptor : descrip_cloro,
+        valor: tipoVarRow.orden == 1 ? row.valor : val_cloro,
       },
+      turbiedad: {
+        descriptor:
+          tipoVarRow.orden == 2 ? tipoVarRow.descriptor : descrip_turb,
+        valor: tipoVarRow.orden == 2 ? row.valor : val_turb,
+      }
     },
     rebalse: sitioRow.rebalse,
   };

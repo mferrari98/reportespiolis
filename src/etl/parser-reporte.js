@@ -93,7 +93,9 @@ function setNuevosDatos(lines, callback) {
 
     insertarNiveles(lineas_modif, timestamp, () => {
         insertarCloro(lineas_modif, timestamp, () => {
-            callback()
+            insertarTurbiedad(lineas_modif, timestamp, () => {
+                callback()
+            })
         })
     })
 }
@@ -101,7 +103,6 @@ function setNuevosDatos(lines, callback) {
 function insertarNiveles(lineas_modif, timestamp, callback) {
 
     const niveles = getColumna(lineas_modif, 1)
-
     tipoVariableDAO.getByDescriptor("Nivel[m]", (err, tipoVariable) => {
         if (err) {
             callback(err);
@@ -144,7 +145,6 @@ function insertarNiveles(lineas_modif, timestamp, callback) {
 function insertarCloro(lineas_modif, timestamp, callback) {
 
     const cloro = getColumna(lineas_modif, 2)
-
     tipoVariableDAO.getByDescriptor("Cloro[mlg/l]", (err, tipoVariable) => {
         if (err) {
             callback(err);
@@ -185,27 +185,24 @@ function insertarCloro(lineas_modif, timestamp, callback) {
     });
 }
 
-function setNuevosDatos2(lines, callback) {
+function insertarTurbiedad(lineas_modif, timestamp, callback) {
 
-    const lineas_modif = agregarNulos(lines, 16)
-    const niveles = getColumna(lineas_modif, 1)
-
-    tipoVariableDAO.getByDescriptor("Nivel[m]", (err, tipoVariable) => {
+    const turbiedad = getColumna(lineas_modif, 3)
+    tipoVariableDAO.getByDescriptor("Turbiedad[UTN]", (err, tipoVariable) => {
         if (err) {
             callback(err);
             return;
         }
 
-        const timestamp = new Date().toISOString();
-        let remaining = niveles.length;
+        let remaining = turbiedad.length;
 
         if (remaining === 0) {
             callback(null);
             return;
         }
 
-        for (let i = 0; i < niveles.length; i++) {
-            const valor = niveles[i];
+        for (let i = 0; i < turbiedad.length; i++) {
+            const valor = turbiedad[i];
 
             sitioDAO.getByOrden(i, (err, sitio) => {
                 if (err) {
@@ -218,6 +215,7 @@ function setNuevosDatos2(lines, callback) {
                         callback(err);
                         return;
                     }
+
                     console.log(`${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`);
 
                     remaining -= 1;
@@ -238,6 +236,19 @@ function mensaje(origen, cont1, cont2) {
     return origen + ` creadas=${cont1} existentes=${cont2}`
 }
 
+/**
+ * recorre cada línea de texto en `lines` y agrega un marcador donde los blancos exceden un umbral (`threshold`).
+ * El objetivo es insertar este marcador en los lugares donde se espera que haya un valor, pero está ausente,
+ * basado en la longitud del espacio en blanco entre los valores existentes. 
+ * 
+ * @param {string[]} lines - Un arreglo de cadenas de texto, donde cada cadena representa una línea que 
+ * contiene diferentes valores separados por espacios en blanco.
+ * @param {number} threshold - Un número entero que representa la cantidad máxima de espacios consecutivos 
+ * permitidos antes de insertar el marcador.
+ * 
+ * @returns {string[]} - Un arreglo de cadenas de texto en donde todas las filas
+ * poseen la misma cantidad de columnas, lo que facilita el tratamiento del fuente
+ */
 function agregarNulos(lines, threshold) {
     const modifiedLines = [];
 
