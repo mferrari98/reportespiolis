@@ -25,7 +25,7 @@ function extraerTabla() {
     const $ = cheerio.load(archivoHTML);
     
     const headContent = $('head').children().not('script').toString();
-    const bodyContent = $('body').children().not('script, #myDiv, #myDiv2, #guardar').toString();
+    const bodyContent = $('body').children().not('script, #grafBarras, #grafLineas, #guardar').toString();
 
     // armar un nuevo html
     const newHtml = `
@@ -50,8 +50,8 @@ async function plotBarras(cb) {
     await page.goto(`file://${process.cwd()}/web/public/index.html`);
    
     // Captura la imagen del div con id "myDiv"
-    const element = await page.$('#myDiv');
-    await element.screenshot({ path: './reporte/salida/grafico.png' });
+    const element = await page.$('#grafBarras');
+    await element.screenshot({ path: './reporte/salida/grafBarras.png' });
 
     await browser.close();
     cb()
@@ -63,8 +63,8 @@ async function plotLineas(cb) {
     await page.goto(`file://${process.cwd()}/web/public/index.html`);
    
     // Captura la imagen del div con id "myDiv"
-    const element = await page.$('#myDiv2');
-    await element.screenshot({ path: './reporte/salida/grafico2.png' });
+    const element = await page.$('#grafLineas');
+    await element.screenshot({ path: './reporte/salida/grafLineas.png' });
 
     await browser.close();
     cb()
