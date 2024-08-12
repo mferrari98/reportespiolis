@@ -323,5 +323,6 @@ function getColumna(modifiedLines, numCol) {
 module.exports = {
     getTipoVariable,
     getSitiosNombre,
-    setNuevosDatos
+    setNuevosDatos,
+    sindet: SIN_DETERMINAR
 };

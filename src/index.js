@@ -2,7 +2,7 @@ const { closeDatabase } = require('./basedatos/db');
 /*
 observar cambios en el archivo de referencia
 */
-const { iniciar, parar } = require('./etl/etl')
+const { iniciar, parar } = require('./etl/observador')
 /*
 desplegar servidor web el reporte generado
 */

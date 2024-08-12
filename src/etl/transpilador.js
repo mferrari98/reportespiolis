@@ -1,6 +1,8 @@
 const fs = require('fs');
+const { sindet } = require("./parser-reporte")
 
-// Función para preparar el contenido a escribir
+const ID_MOD = "TRANS";
+
 function transpilar(reporte, estampatiempo, cb) {
 
     fs.readFile('./etl/plantilla.piolis', 'utf8', (err, data) => {
@@ -10,68 +12,47 @@ function transpilar(reporte, estampatiempo, cb) {
             return;
         }
 
-        let contenido = data
-            .replace('<!-- ESTAMPATIEMPO -->', formatoFecha(estampatiempo))
-            .replace('<!-- HEADER_0 -->', reporte[0].variable.nivel.descriptor)
-            .replace('<!-- HEADER_1 -->', reporte[0].variable.cloro.descriptor)
-            .replace('<!-- HEADER_2 -->', reporte[0].variable.turbiedad.descriptor)
-            .replace('<!-- HEADER_3 -->', "...")        
-            .replace('<!-- SITIO_0 -->', reporte[0].sitio)
-            .replace('<!-- NIVEL_0 -->', reporte[0].variable.nivel.valor === 's/d' ? '' : reporte[0].variable.nivel.valor)
-            .replace('<!-- CLORO_0 -->', reporte[0].variable.cloro.valor === 's/d' ? '' : reporte[0].variable.cloro.valor)
-            .replace('<!-- TURB_0 -->', reporte[0].variable.turbiedad.valor === 's/d' ? '' : reporte[0].variable.turbiedad.valor)
-            .replace('<!-- SITIO_1 -->', reporte[1].sitio)
-            .replace('<!-- NIVEL_1 -->', reporte[1].variable.nivel.valor === 's/d' ? '' : reporte[1].variable.nivel.valor)
-            .replace('<!-- CLORO_1 -->', reporte[1].variable.cloro.valor === 's/d' ? '' : reporte[1].variable.cloro.valor)
-            .replace('<!-- TURB_1 -->', reporte[1].variable.turbiedad.valor === 's/d' ? '' : reporte[1].variable.turbiedad.valor)
-            .replace('<!-- SITIO_2 -->', reporte[2].sitio)
-            .replace('<!-- NIVEL_2 -->', reporte[2].variable.nivel.valor === 's/d' ? '' : reporte[2].variable.nivel.valor)
-            .replace('<!-- CLORO_2 -->', reporte[2].variable.cloro.valor === 's/d' ? '' : reporte[2].variable.cloro.valor)
-            .replace('<!-- TURB_2 -->', reporte[2].variable.turbiedad.valor === 's/d' ? '' : reporte[2].variable.turbiedad.valor)
-            .replace('<!-- SITIO_3 -->', reporte[3].sitio)
-            .replace('<!-- NIVEL_3 -->', reporte[3].variable.nivel.valor === 's/d' ? '' : reporte[3].variable.nivel.valor)
-            .replace('<!-- CLORO_3 -->', reporte[3].variable.cloro.valor === 's/d' ? '' : reporte[3].variable.cloro.valor)
-            .replace('<!-- TURB_3 -->', reporte[3].variable.turbiedad.valor === 's/d' ? '' : reporte[3].variable.turbiedad.valor)
-            .replace('<!-- SITIO_4 -->', reporte[4].sitio)
-            .replace('<!-- NIVEL_4 -->', reporte[4].variable.nivel.valor === 's/d' ? '' : reporte[4].variable.nivel.valor)
-            .replace('<!-- CLORO_4 -->', reporte[4].variable.cloro.valor === 's/d' ? '' : reporte[4].variable.cloro.valor)
-            .replace('<!-- TURB_4 -->', reporte[4].variable.turbiedad.valor === 's/d' ? '' : reporte[4].variable.turbiedad.valor)
-            .replace('<!-- SITIO_5 -->', reporte[5].sitio)
-            .replace('<!-- NIVEL_5 -->', reporte[5].variable.nivel.valor === 's/d' ? '' : reporte[5].variable.nivel.valor)
-            .replace('<!-- CLORO_5 -->', reporte[5].variable.cloro.valor === 's/d' ? '' : reporte[5].variable.cloro.valor)
-            .replace('<!-- TURB_5 -->', reporte[5].variable.turbiedad.valor === 's/d' ? '' : reporte[5].variable.turbiedad.valor)
-            .replace('<!-- SITIO_6 -->', reporte[6].sitio)
-            .replace('<!-- NIVEL_6 -->', reporte[6].variable.nivel.valor === 's/d' ? '' : reporte[6].variable.nivel.valor)
-            .replace('<!-- CLORO_6 -->', reporte[6].variable.cloro.valor === 's/d' ? '' : reporte[6].variable.cloro.valor)
-            .replace('<!-- TURB_6 -->', reporte[6].variable.turbiedad.valor === 's/d' ? '' : reporte[6].variable.turbiedad.valor)
-            .replace('<!-- SITIO_7 -->', reporte[7].sitio)
-            .replace('<!-- NIVEL_7 -->', reporte[7].variable.nivel.valor === 's/d' ? '' : reporte[7].variable.nivel.valor)
-            .replace('<!-- CLORO_7 -->', reporte[7].variable.cloro.valor === 's/d' ? '' : reporte[7].variable.cloro.valor)
-            .replace('<!-- TURB_7 -->', reporte[7].variable.turbiedad.valor === 's/d' ? '' : reporte[7].variable.turbiedad.valor)
-            .replace('<!-- SITIO_8 -->', reporte[8].sitio)
-            .replace('<!-- NIVEL_8 -->', reporte[8].variable.nivel.valor === 's/d' ? '' : reporte[8].variable.nivel.valor)
-            .replace('<!-- CLORO_8 -->', reporte[8].variable.cloro.valor === 's/d' ? '' : reporte[8].variable.cloro.valor)
-            .replace('<!-- TURB_8 -->', reporte[8].variable.turbiedad.valor === 's/d' ? '' : reporte[8].variable.turbiedad.valor)
-            .replace('<!-- SITIO_9 -->', reporte[9].sitio)
-            .replace('<!-- NIVEL_9 -->', reporte[9].variable.nivel.valor === 's/d' ? '' : reporte[9].variable.nivel.valor)
-            .replace('<!-- CLORO_9 -->', reporte[9].variable.cloro.valor === 's/d' ? '' : reporte[9].variable.cloro.valor)
-            .replace('<!-- TURB_9 -->', reporte[9].variable.turbiedad.valor === 's/d' ? '' : reporte[9].variable.turbiedad.valor)
-            
-            .replace('<!-- SITIOS -->', reporte.map(objeto => "'" + objeto.sitio + "'"))
-            .replace('<!-- NIVELES -->', reporte.map(objeto => (objeto.variable.nivel.valor != "s/d")? objeto.variable.nivel.valor : 0 ))
-            
-            .replace('<!-- COMPLEMENTO -->', reporte.map(objeto => (objeto.variable.nivel.valor != "s/d")? (objeto.rebalse - objeto.variable.nivel.valor).toFixed(3) : 0))
-            .replace('<!-- REBALSE -->', reporte.map(objeto => objeto.rebalse.toFixed(3)));
-
-        // Escribir en el archivo
-        fs.writeFile("./web/public/index.html", contenido, (err) => {
-            if (err) {
-                console.error('Error al escribir archivo:', err);
-                return;
-            }
-            console.log('TRANS - Archivo escrito correctamente.');
+        let contenido = expandirPlantilla(data)
+        sustituirMarcas(reporte, estampatiempo, contenido, () => {
             cb()
-        });
+        })
+    });
+}
+
+function expandirPlantilla(data) { return data }
+
+function sustituirMarcas(reporte, estampatiempo, contenido, cb) {
+    
+    contenido = contenido
+        .replaceAll('<!-- ESTAMPATIEMPO -->', formatoFecha(estampatiempo))
+        .replaceAll('<!-- HEADER_0 -->', reporte[0].variable.nivel.descriptor)
+        .replaceAll('<!-- HEADER_1 -->', reporte[0].variable.cloro.descriptor)
+        .replaceAll('<!-- HEADER_2 -->', reporte[0].variable.turbiedad.descriptor)
+        .replaceAll('<!-- HEADER_3 -->', "...")
+
+    reporte.forEach((item, i) => {
+        contenido = contenido
+            .replace(`<!-- SITIO_${i} -->`, item.sitio)
+            .replace(`<!-- NIVEL_${i} -->`, item.variable.nivel.valor === sindet ? '' : item.variable.nivel.valor)
+            .replace(`<!-- CLORO_${i} -->`, item.variable.cloro.valor === sindet ? '' : item.variable.cloro.valor)
+            .replace(`<!-- TURB_${i} -->`, item.variable.turbiedad.valor === sindet ? '' : item.variable.turbiedad.valor);
+    })
+
+    contenido = contenido
+        .replaceAll('<!-- SITIOS -->', reporte.map(objeto => "'" + objeto.sitio + "'"))
+        .replaceAll('<!-- NIVELES -->', reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? objeto.variable.nivel.valor : 0))
+
+        .replaceAll('<!-- COMPLEMENTO -->', reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? (objeto.rebalse - objeto.variable.nivel.valor).toFixed(3) : 0))
+        .replaceAll('<!-- REBALSE -->', reporte.map(objeto => objeto.rebalse.toFixed(3)));
+
+    // Escribir en el archivo
+    fs.writeFile("./web/public/index.html", contenido, (err) => {
+        if (err) {
+            console.error('Error al escribir archivo:', err);
+            return;
+        }
+        console.log(`${ID_MOD} - Archivo escrito correctamente`);
+        cb()
     });
 }
 

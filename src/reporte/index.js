@@ -23,7 +23,7 @@ function extraerTabla() {
 
     const archivoHTML = fs.readFileSync('./web/public/index.html', 'utf8');
     const $ = cheerio.load(archivoHTML);
-
+    
     const headContent = $('head').children().not('script').toString();
     const bodyContent = $('body').children().not('script, #myDiv, #myDiv2, #guardar').toString();
 
