@@ -14,12 +14,14 @@ function transpilar(reporte, estampatiempo, cb) {
             return;
         }
 
-        let contenido = expandirPlantilla(reporte, data)
-        fs.writeFile("./etl/plantilla.expand.html", contenido, () => {})
+        let contenido = expandirPlantilla(reporte, data)        
+        contenido = sustituirMarcas(reporte, estampatiempo, contenido)
+        contenido = prepararGrafLineas(reporte, contenido)
         
-        sustituirMarcas(reporte, estampatiempo, contenido, () => {
-            cb()
-        })
+        // solo para debug
+        fs.writeFile("./etl/plantilla.expand.html", contenido, () => { })
+
+        crearHTMLSalida(contenido, () => { cb() })
     });
 }
 
@@ -68,6 +70,36 @@ function sustituirMarcas(reporte, estampatiempo, contenido, cb) {
         .replaceAll('<!-- COMPLEMENTO -->', reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? (objeto.rebalse - objeto.variable.nivel.valor).toFixed(3) : 0))
         .replaceAll('<!-- REBALSE -->', reporte.map(objeto => objeto.rebalse.toFixed(3)));
 
+    return contenido
+}
+
+function prepararGrafLineas(reporte, contenido) {
+    const regex = /\[trace3\](\w+):/g;
+
+    // Reemplazar cada marcador y agregar una coma al final
+    const resultado = contenido.replace(regex, (match, p1) => {
+        let nuevoTexto = '';
+
+        switch (p1) {
+            case 'name':
+                nuevoTexto = "[" + reporte.map(item => `"${item.sitio}"`).join(', ') + "]"; // Reemplazo para 'name'                
+                break;
+            case 'x':
+                nuevoTexto = "[" + reporte.map((_, index) => index).join(', ') + "]"; // lista random de niveles con semilla fija
+                break;
+            case 'y':
+                nuevoTexto = "[" + reporte.map(_ => `"${(5.0 * Math.random()).toFixed(3)}"`).join(', ') + "]"; // lista random de niveles con semilla fija
+                break;
+            default:
+                nuevoTexto = `"Valor por defecto"`; // Reemplazo por defecto si 'p1' no coincide con ningún caso
+        }
+
+        return `${p1}: ${nuevoTexto}`;
+    });
+    return resultado
+}
+
+function crearHTMLSalida(contenido, cb) {
     // Escribir en el archivo
     fs.writeFile("./web/public/index.html", contenido, (err) => {
         if (err) {
@@ -96,5 +128,3 @@ function formatoFecha(fechaOriginal) {
 module.exports = {
     transpilar
 };
-
-

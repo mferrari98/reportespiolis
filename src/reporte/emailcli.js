@@ -1,35 +1,30 @@
 const fs = require('fs');
 const nodemailer = require('nodemailer');
+const msg = require('../../config.json');
 
 const ID_MOD = "Email"
 
 let transporter
-let destinos = []
+let destinos = msg.email.difusion
+let user = msg.email.user
+let pass = msg.email.pass
 
-fs.readFile('../config.json', 'utf8', (err, jsonString) => {
-    // Parsea el contenido del archivo JSON a un objeto JavaScript
-    const data = JSON.parse(jsonString);
-    let user = data.email.user
-    let pass = data.email.pass
-    destinos = data.email.difusion
-
-    /*
-    Configuración del transporte SMTP
-    es importante entender que SMTP se usa para enviar mensajes unicamente, es decir no se usa
-    para recibir mensajes.
-    por otro lado, en caso de enviar mensajes debe utilizarse POP3 (mas viejo) o IMAP.
-    */
-    transporter = nodemailer.createTransport({
-        host: 'post.servicoop.com',
-        port: 25,
-        auth: {
-            user: user,
-            pass: pass
-        },
-        tls: {
-            rejectUnauthorized: false       // omitir verificacion en cadena
-        }
-    });
+/*
+Configuración del transporte SMTP
+es importante entender que SMTP se usa para enviar mensajes unicamente, es decir no se usa
+para recibir mensajes.
+por otro lado, en caso de enviar mensajes debe utilizarse POP3 (mas viejo) o IMAP.
+*/
+transporter = nodemailer.createTransport({
+    host: 'post.servicoop.com',
+    port: 25,
+    auth: {
+        user: user,
+        pass: pass
+    },
+    tls: {
+        rejectUnauthorized: false       // omitir verificacion en cadena
+    }
 });
 
 function EnviarEmail() { }
@@ -51,20 +46,20 @@ EnviarEmail.prototype.enviar = function () {
             ${resumen}
             ${htmlContent}
             <div style="text-align: center;">
-                <img src="cid:graficobarras" alt="Grafico de Barras"/>
-                <img src="cid:graficolineas" alt="Grafico de Lineas"/>
+                <img src="cid:grafBarras" alt="Grafico de Barras"/>
+                <img src="cid:grafLineas" alt="Grafico de Lineas"/>
             </div>
             `,
-        attachments: [
-            {
-                filename: 'imagen2.jpg',
-                path: './reporte/salida/grafico2.png', // Ruta de la imagen
-                cid: 'graficolineas' // CID para referenciar la imagen en el cuerpo del mensaje
-            },
+        attachments: [            
             {
                 filename: 'imagen.jpg',
-                path: './reporte/salida/grafico.png', // Ruta de la imagen
-                cid: 'graficobarras' // CID para referenciar la imagen en el cuerpo del mensaje
+                path: './reporte/salida/grafBarras.png', // Ruta de la imagen
+                cid: 'grafBarras' // CID para referenciar la imagen en el cuerpo del mensaje
+            },
+            {
+                filename: 'imagen2.jpg',
+                path: './reporte/salida/grafLineas.png', // Ruta de la imagen
+                cid: 'grafLineas' // CID para referenciar la imagen en el cuerpo del mensaje
             }
         ]
     }
