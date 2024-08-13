@@ -1,7 +1,8 @@
 const fs = require('fs');
 const cheerio = require('cheerio');
 
-const { sindet } = require("./parser-reporte")
+const { sindet } = require("./parser-reporte");
+const { trace } = require('console');
 
 const ID_MOD = "TRANS";
 
@@ -15,7 +16,7 @@ function transpilar(reporte, estampatiempo, cb) {
         }
 
         let contenido = expandirPlantilla(reporte, data)        
-        contenido = sustituirMarcas(reporte, estampatiempo, contenido)
+        contenido = sustituirMarcas(reporte, estampatiempo, contenido)        
         contenido = prepararGrafLineas(reporte, contenido)
         
         // solo para debug
@@ -61,7 +62,7 @@ function sustituirMarcas(reporte, estampatiempo, contenido, cb) {
             .replace(`NIVEL_${i}`, item.variable.nivel.valor === sindet ? '' : item.variable.nivel.valor)
             .replace(`CLORO_${i}`, item.variable.cloro.valor === sindet ? '' : item.variable.cloro.valor)
             .replace(`TURB_${i}`, item.variable.turbiedad.valor === sindet ? '' : item.variable.turbiedad.valor)
-            .replace(`VOLDIA_${i}`, item.variable.turbiedad.valor === sindet ? '' : item.variable.turbiedad.valor);
+            .replace(`VOLDIA_${i}`, item.variable.voldia.valor === sindet ? '' : item.variable.voldia.valor);
     })
 
     contenido = contenido
@@ -75,29 +76,39 @@ function sustituirMarcas(reporte, estampatiempo, contenido, cb) {
 }
 
 function prepararGrafLineas(reporte, contenido) {
-    const regex = /\[trace3\](\w+):/g;
 
-    // Reemplazar cada marcador y agregar una coma al final
-    const resultado = contenido.replace(regex, (match, p1) => {
-        let nuevoTexto = '';
+    let traces = []
+    const marca = '[trace]';
+    const posicionMarca = contenido.indexOf(marca);
+    
+    // Elimina la marca del texto.
+    let textoModificado = contenido.replace(marca, '');
 
-        switch (p1) {
-            case 'name':
-                nuevoTexto = "[" + reporte.map(item => `"${item.sitio}"`).join(', ') + "]"; // Reemplazo para 'name'                
-                break;
-            case 'x':
-                nuevoTexto = "[" + reporte.map((_, index) => index).join(', ') + "]"; // lista random de niveles con semilla fija
-                break;
-            case 'y':
-                nuevoTexto = "[" + reporte.map(_ => `"${(5.0 * Math.random()).toFixed(3)}"`).join(', ') + "]"; // lista random de niveles con semilla fija
-                break;
-            default:
-                nuevoTexto = `"Valor por defecto"`; // Reemplazo por defecto si 'p1' no coincide con ningún caso
-        }
+    // Itera sobre el arreglo `reporte` e inserta la nueva estructura en la posición memorizada.
+    let resultadoFinal = textoModificado.substring(0, posicionMarca); // Texto antes de la marca.
 
-        return `${p1}: ${nuevoTexto}`;
+    reporte.forEach((elem, indice) => {
+
+        traces[indice] = `trace${indice}`
+        let niveles = "[" + reporte.map(_ => `"${(5.0 * Math.random()).toFixed(3)}"`).join(', ') + "]"
+
+        let estructura = `
+        var ${traces[indice]} = {
+            name: "${elem.sitio}",
+            x: [1,2,3,4,5,6,7],
+            y: ${niveles},
+            type: 'scatter'
+        };\n`;
+
+        // Inserta la estructura en la posición original de la marca.
+        resultadoFinal += estructura;
     });
-    return resultado
+
+    resultadoFinal += `\nvar datosLinea = [${traces.join(", ")}];`
+    // Agrega el contenido restante del texto original después de la marca.
+    resultadoFinal += textoModificado.substring(posicionMarca);
+
+    return resultadoFinal;
 }
 
 function crearHTMLSalida(contenido, cb) {

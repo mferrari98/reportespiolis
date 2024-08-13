@@ -96,7 +96,7 @@
         var sitios = [<!-- SITIOS -->]
         var niveles = [<!-- NIVELES -->]
 
-        var trace1 = {
+        var trace10 = {
             x: sitios,
             y: niveles,
             name: 'Nivel',
@@ -109,7 +109,7 @@
             hoverinfo: 'none',
         };
 
-        var trace2 = {
+        var trace11 = {
             x: sitios,
             y: [<!-- COMPLEMENTO -->],
             name: 'Rebalse',
@@ -123,7 +123,7 @@
             hoverinfo: 'none',
         };
 
-        var datosBarra = [trace1, trace2];
+        var datosBarra = [trace10, trace11];
 
         // Configurar el diseño del gráfico
         var layout = {
@@ -143,29 +143,18 @@
                 size: 14
             }
         };
-        var config = { responsive: true, displayModeBar: false };
+        var configBarras = { responsive: true, displayModeBar: false };
 
-        Plotly.newPlot('grafBarras', datosBarra, layout, config);
+        Plotly.newPlot('grafBarras', datosBarra, layout, configBarras);
 
         /* ********************************************
         *********** GRAFICO LINEAS ***********
         ******************************************** */
 
-        var trace3 = {
-            [trace3]name: ,
-            [trace3]x: ,
-            [trace3]y: ,
-            type: 'scatter'
-        };
+        [trace]
 
-        var trace4 = {
-            x: [1, 2, 3, 4],
-            y: [16, 5, 11, 9],
-            type: 'scatter'
-        };
-
-        var datosLinea = [trace3, trace4];
-
+        //var datosLinea = [traces];
+        
         Plotly.newPlot('grafLineas', datosLinea);
     })
 </script>
