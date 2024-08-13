@@ -53,14 +53,15 @@ function sustituirMarcas(reporte, estampatiempo, contenido, cb) {
         .replaceAll('<!-- HEADER_0 -->', reporte[0].variable.nivel.descriptor)
         .replaceAll('<!-- HEADER_1 -->', reporte[0].variable.cloro.descriptor)
         .replaceAll('<!-- HEADER_2 -->', reporte[0].variable.turbiedad.descriptor)
-        .replaceAll('<!-- HEADER_3 -->', "...")
+        .replaceAll('<!-- HEADER_3 -->', reporte[0].variable.voldia.descriptor)
 
     reporte.forEach((item, i) => {
         contenido = contenido
             .replace(`SITIO_${i}`, item.sitio)
             .replace(`NIVEL_${i}`, item.variable.nivel.valor === sindet ? '' : item.variable.nivel.valor)
             .replace(`CLORO_${i}`, item.variable.cloro.valor === sindet ? '' : item.variable.cloro.valor)
-            .replace(`TURB_${i}`, item.variable.turbiedad.valor === sindet ? '' : item.variable.turbiedad.valor);
+            .replace(`TURB_${i}`, item.variable.turbiedad.valor === sindet ? '' : item.variable.turbiedad.valor)
+            .replace(`VOLDIA_${i}`, item.variable.turbiedad.valor === sindet ? '' : item.variable.turbiedad.valor);
     })
 
     contenido = contenido

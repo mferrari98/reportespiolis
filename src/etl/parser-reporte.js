@@ -108,7 +108,7 @@ no es la mejor manera de resolver esto, pero por ahora sirve
 */
 function setNuevosDatos(lines, callback) {
 
-    const lineas_modif = agregarNulos(lines, umbral);
+  const lineas_modif = agregarNulos(lines, umbral);
   const timestamp = new Date().toISOString();
 
   insertarNiveles(lineas_modif, timestamp, () => {
