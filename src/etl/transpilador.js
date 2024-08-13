@@ -74,6 +74,7 @@ function sustituirMarcas(reporte, estampatiempo, contenido, cb) {
       );
   });
 
+  
   contenido = contenido
     .replaceAll(
       "<!-- SITIOS -->",
