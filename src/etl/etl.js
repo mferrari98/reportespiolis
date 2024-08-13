@@ -127,6 +127,7 @@ function armarObjetoReporte(reporte, row, tipoVarRow, sitioRow) {
   };
 }
 
+
 module.exports = { lanzarETL };
 
 console.log(`${ID_MOD} - Directorio trabajo:`, process.cwd());
