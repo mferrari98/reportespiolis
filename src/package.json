@@ -4,7 +4,7 @@
   "description": "scripting que consume un reporte en texto plano y genera un html. el texto de entrada tiene un formato determinado, no se trata de algo adaptable basado en plantillas sino todo lo cantrario, solo es capaz de interpretar el formato impuesto por el servicio que genera esos textos.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "del /Q etl\\plantilla.expand.html reporte\\salida\\*.* basedatos\\database.sqlite"
   },
   "repository": {
     "type": "git",

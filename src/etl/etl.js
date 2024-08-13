@@ -59,12 +59,15 @@ function getNuevosDatos(callback) {
                 return;
               }
 
-              armarObjetoReporte(reporte, row, tipoVarRow, sitioRow);
-              remaining -= 1;
+              historicoLecturaDAO.getHistorico(sitioRow.orden, (_, historico) => {
+                console.log(rows)
+                armarObjetoReporte(reporte, row, tipoVarRow, sitioRow, historico);
+                remaining -= 1;
 
-              if (remaining === 0) {
-                callback(null, reporte);
-              }
+                if (remaining === 0) {
+                  callback(null, reporte);
+                }
+              })
             });
           });
         });
@@ -73,7 +76,7 @@ function getNuevosDatos(callback) {
   });
 }
 
-function armarObjetoReporte(reporte, row, tipoVarRow, sitioRow) {
+function armarObjetoReporte(reporte, row, tipoVarRow, sitioRow, historicos) {
   let descrip_nivel, val_nivel;
   let descrip_cloro, val_cloro;
   let descrip_turb, val_turb;
@@ -82,22 +85,22 @@ function armarObjetoReporte(reporte, row, tipoVarRow, sitioRow) {
   try {
     descrip_nivel = reporte[sitioRow.orden].variable.nivel.descriptor;
     val_nivel = reporte[sitioRow.orden].variable.nivel.valor;
-  } catch (error) {}
+  } catch (error) { }
 
   try {
     descrip_cloro = reporte[sitioRow.orden].variable.cloro.descriptor;
     val_cloro = reporte[sitioRow.orden].variable.cloro.valor;
-  } catch (error) {}
+  } catch (error) { }
 
   try {
     descrip_turb = reporte[sitioRow.orden].variable.turbiedad.descriptor;
     val_turb = reporte[sitioRow.orden].variable.turbiedad.valor;
-  } catch (error) {}
+  } catch (error) { }
 
   try {
     descrip_voldia = reporte[sitioRow.orden].variable.voldia.descriptor;
     val_voldia = reporte[sitioRow.orden].variable.voldia.valor;
-  } catch (error) {}
+  } catch (error) { }
 
   reporte[sitioRow.orden] = {
     sitio: sitioRow.descriptor,
@@ -106,6 +109,8 @@ function armarObjetoReporte(reporte, row, tipoVarRow, sitioRow) {
         descriptor:
           tipoVarRow.orden == 0 ? tipoVarRow.descriptor : descrip_nivel,
         valor: tipoVarRow.orden == 0 ? row.valor : val_nivel,
+        rebalse: sitioRow.rebalse,
+        historico: historicos
       },
       cloro: {
         descriptor:
@@ -122,8 +127,7 @@ function armarObjetoReporte(reporte, row, tipoVarRow, sitioRow) {
           tipoVarRow.orden == 3 ? tipoVarRow.descriptor : descrip_voldia,
         valor: tipoVarRow.orden == 3 ? row.valor : val_voldia,
       },
-    },
-    rebalse: sitioRow.rebalse,
+    }
   };
 }
 

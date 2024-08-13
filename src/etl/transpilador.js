@@ -1,8 +1,6 @@
 const fs = require('fs');
 const cheerio = require('cheerio');
-
 const { sindet } = require("./parser-reporte");
-const { trace } = require('console');
 
 const ID_MOD = "TRANS";
 
@@ -69,8 +67,8 @@ function sustituirMarcas(reporte, estampatiempo, contenido, cb) {
         .replaceAll('<!-- SITIOS -->', reporte.map(objeto => "'" + objeto.sitio + "'"))
         .replaceAll('<!-- NIVELES -->', reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? objeto.variable.nivel.valor : 0))
 
-        .replaceAll('<!-- COMPLEMENTO -->', reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? (objeto.rebalse - objeto.variable.nivel.valor).toFixed(3) : 0))
-        .replaceAll('<!-- REBALSE -->', reporte.map(objeto => objeto.rebalse.toFixed(3)));
+        .replaceAll('<!-- COMPLEMENTO -->', reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? (objeto.variable.nivel.rebalse - objeto.variable.nivel.valor).toFixed(3) : 0))
+        .replaceAll('<!-- REBALSE -->', reporte.map(objeto => objeto.variable.nivel.rebalse.toFixed(3)));
 
     return contenido
 }

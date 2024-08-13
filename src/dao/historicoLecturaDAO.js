@@ -12,6 +12,12 @@ const sql_getMostRecent = `
   WHERE hl.etiempo = (SELECT MAX(etiempo) FROM historico_lectura)
   ORDER BY s.orden;
 `;
+const sql_getHistorico = `
+  SELECT hl.*
+  FROM historico_lectura hl
+  JOIN tipo_variable tv ON hl.tipo_id = tv.id
+  WHERE hl.sitio_id = ? AND tv.descriptor = 'Nivel[m]';
+`;
 const sql_delete = `DELETE FROM historico_lectura WHERE id = ?`;
 
 function HistoricoLecturaDAO() { }
@@ -62,11 +68,25 @@ HistoricoLecturaDAO.prototype.getMostRecent = function (callback) {
   console.log(`${ID_MOD} - getMostRecent`);
   const db = getDatabase();
 
-  db.all(sql_getMostRecent, [], (err, rows) => {
+  db.all(sql_getMostRecent, (err, rows) => {
     if (err) {
       console.error('Error fetching most recent records from historico_lectura:', err.message);
       callback(err);
     } else {      
+      callback(null, rows);
+    }
+  });
+};
+
+HistoricoLecturaDAO.prototype.getHistorico = function (sitio_id, callback) {
+  console.log(`${ID_MOD} - getHistorico`);
+  const db = getDatabase();
+
+  db.all(sql_getHistorico, [sitio_id], (err, rows) => {
+    if (err) {
+      console.error('Error fetching from historico_lectura:', err.message);
+      callback(err);
+    } else {
       callback(null, rows);
     }
   });
