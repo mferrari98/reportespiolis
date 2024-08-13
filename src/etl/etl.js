@@ -18,28 +18,21 @@ const renderHTML = new RenderHTML();
 const ID_MOD = "ETL";
 
 function lanzarETL(lines, currentModifiedTime) {
-  
   getTipoVariable(lines[0], (msjTVar) => {
-
     lines.splice(0, 1);
     getSitiosNombre(lines, (msjSit) => {
-
       console.log(`${ID_MOD} - ${msjTVar} ${msjSit}`);
-      setNuevosDatos(lines, (err) => {
-
-        if (!err) {
-          getNuevosDatos((err, reporte) => {
-
-            if (!err) {
-              transpilar(reporte, currentModifiedTime, () => {
-                renderHTML.renderizar();
-              });
-            }
-          });
-        }
+      setNuevosDatos(lines, () => {
+        getNuevosDatos((err, reporte) => {
+          if (!err) {
+            transpilar(reporte, currentModifiedTime, () => {
+              renderHTML.renderizar();
+            });
+          }
+        });
       });
     });
-  });   
+  });
 }
 
 function getNuevosDatos(callback) {
@@ -66,7 +59,7 @@ function getNuevosDatos(callback) {
                 return;
               }
 
-              armarObjetoReporte(reporte, row, tipoVarRow, sitioRow)
+              armarObjetoReporte(reporte, row, tipoVarRow, sitioRow);
               remaining -= 1;
 
               if (remaining === 0) {
@@ -84,27 +77,27 @@ function armarObjetoReporte(reporte, row, tipoVarRow, sitioRow) {
   let descrip_nivel, val_nivel;
   let descrip_cloro, val_cloro;
   let descrip_turb, val_turb;
+  let descrip_voldia, val_voldia;
 
   try {
-    descrip_nivel =
-      reporte[sitioRow.orden].variable.nivel.descriptor;
-    val_nivel =
-      reporte[sitioRow.orden].variable.nivel.valor;
-  } catch (error) { }
-  
-  try {
-    descrip_cloro =
-      reporte[sitioRow.orden].variable.cloro.descriptor;
-    val_cloro =
-      reporte[sitioRow.orden].variable.cloro.valor;
-  } catch (error) { }
+    descrip_nivel = reporte[sitioRow.orden].variable.nivel.descriptor;
+    val_nivel = reporte[sitioRow.orden].variable.nivel.valor;
+  } catch (error) {}
 
   try {
-    descrip_turb =
-      reporte[sitioRow.orden].variable.turbiedad.descriptor;
-    val_turb =
-      reporte[sitioRow.orden].variable.turbiedad.valor;
-  } catch (error) { }
+    descrip_cloro = reporte[sitioRow.orden].variable.cloro.descriptor;
+    val_cloro = reporte[sitioRow.orden].variable.cloro.valor;
+  } catch (error) {}
+
+  try {
+    descrip_turb = reporte[sitioRow.orden].variable.turbiedad.descriptor;
+    val_turb = reporte[sitioRow.orden].variable.turbiedad.valor;
+  } catch (error) {}
+
+  try {
+    descrip_voldia = reporte[sitioRow.orden].variable.voldia.descriptor;
+    val_voldia = reporte[sitioRow.orden].variable.voldia.valor;
+  } catch (error) {}
 
   reporte[sitioRow.orden] = {
     sitio: sitioRow.descriptor,
@@ -123,7 +116,12 @@ function armarObjetoReporte(reporte, row, tipoVarRow, sitioRow) {
         descriptor:
           tipoVarRow.orden == 2 ? tipoVarRow.descriptor : descrip_turb,
         valor: tipoVarRow.orden == 2 ? row.valor : val_turb,
-      }
+      },
+      voldia: {
+        descriptor:
+          tipoVarRow.orden == 3 ? tipoVarRow.descriptor : descrip_voldia,
+        valor: tipoVarRow.orden == 3 ? row.valor : val_voldia,
+      },
     },
     rebalse: sitioRow.rebalse,
   };
