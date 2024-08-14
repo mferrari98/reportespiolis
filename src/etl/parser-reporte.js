@@ -1,7 +1,7 @@
 const SitioDAO = require("../dao/sitioDAO");
 const TipoVariableDAO = require("../dao/tipoVariableDAO");
 const HistoricoLecturaDAO = require("../dao/historicoLecturaDAO");
-const { umbral } = require("../../config.json");
+const { umbral, verLog } = require("../../config.json");
 
 const ID_MOD = "PARSER";
 const SIN_DETERMINAR = "s/d";
@@ -156,9 +156,11 @@ function insertarNiveles(lineas_modif, timestamp, callback) {
               callback(err);
               return;
             }
-            console.log(
-              `${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`
-            );
+            
+            if (verLog)
+              console.log(
+                `${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`
+              );
 
             remaining -= 1;
             if (remaining === 0) {
@@ -206,10 +208,11 @@ function insertarCloro(lineas_modif, timestamp, callback) {
               return;
             }
 
-            console.log(
-              `${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`
-            );
-
+            if (verLog)
+              console.log(
+                `${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`
+              );
+            
             remaining -= 1;
             if (remaining === 0) {
               callback(null);
@@ -256,9 +259,8 @@ function insertarTurbiedad(lineas_modif, timestamp, callback) {
               return;
             }
 
-            console.log(
-              `${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`
-            );
+            if (verLog)
+              console.log(`${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`);
 
             remaining -= 1;
             if (remaining === 0) {
@@ -306,9 +308,10 @@ function insertarVoldia(lineas_modif, timestamp, callback) {
               return;
             }
 
-            console.log(
-              `${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`
-            );
+            if (verLog)
+              console.log(
+                `${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`
+              );
 
             remaining -= 1;
             if (remaining === 0) {

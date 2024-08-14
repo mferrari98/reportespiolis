@@ -1,3 +1,5 @@
+const { verLog } = require("../../config.json")
+
 const fs = require("fs");
 const readline = require("readline");
 const { lanzarETL } = require("./etl");
@@ -75,12 +77,13 @@ function checkFileModification() {
       const fechaAnterior = formatoFecha(lastModifiedTime);
       lastModifiedTime = currentModifiedTime;
 
-      console.log(`Actual ${fechaActual} ==> Anterior ${fechaAnterior}`);
+      if(verLog)
+        console.log(`Actual ${fechaActual} ==> Anterior ${fechaAnterior}`);
+
       readAndProcessFile();
     } else {
-      console.log(
-        `${ID_MOD} - El archivo no ha sido modificado desde la última lectura`
-      );
+      if (verLog)
+        console.log(`${ID_MOD} - El archivo no ha sido modificado desde la última lectura`);
     }
   });
 }
@@ -104,10 +107,14 @@ const intervalId = setInterval(checkFileModification, checkInterval);
 
 function parar() {
   clearInterval(intervalId);
-  console.log(`${ID_MOD} - deteniendo observador`);
+
+  if (verLog)
+    console.log(`${ID_MOD} - deteniendo observador`);
 }
 
 module.exports = { iniciar, parar };
 
-console.log(`${ID_MOD} - Directorio trabajo:`, process.cwd());
-console.log(`${ID_MOD} - Directorio del archivo:`, __dirname);
+if (verLog) {
+  console.log(`${ID_MOD} - Directorio trabajo:`, process.cwd());
+  console.log(`${ID_MOD} - Directorio del archivo:`, __dirname);
+}

@@ -1,3 +1,4 @@
+const { verLog } = require("../../config.json")
 const { getDatabase } = require('../basedatos/db');
 
 const ID_MOD = "DAO-SITIO";
@@ -26,7 +27,10 @@ const rebalseMap = new Map([
 function SitioDAO() { }
 
 SitioDAO.prototype.create = function (descriptor, orden, callback) {
-  console.log(`${ID_MOD} - create`);
+
+  if (verLog)
+    console.log(`${ID_MOD} - create`);
+
   const db = getDatabase();
 
   const rebalse = rebalseMap.get(descriptor) || 0.0;
@@ -42,7 +46,10 @@ SitioDAO.prototype.create = function (descriptor, orden, callback) {
 };
 
 SitioDAO.prototype.getById = function (id, callback) {
-  console.log(`${ID_MOD} - getById`);
+
+  if (verLog)
+    console.log(`${ID_MOD} - getById`);
+
   const db = getDatabase();
 
   db.get(sql_getById, [id], (err, row) => {
@@ -56,7 +63,10 @@ SitioDAO.prototype.getById = function (id, callback) {
 };
 
 SitioDAO.prototype.getByDescriptor = function (descriptor, callback) {
-  console.log(`${ID_MOD} - getByDescriptor`);
+
+  if (verLog)
+    console.log(`${ID_MOD} - getByDescriptor`);
+
   const db = getDatabase();
 
   db.get(sql_getByDescriptor, [descriptor], (err, row) => {
@@ -70,7 +80,10 @@ SitioDAO.prototype.getByDescriptor = function (descriptor, callback) {
 };
 
 SitioDAO.prototype.getByOrden = function (orden, callback) {
-  console.log(`${ID_MOD} - getByOrden`);
+
+  if (verLog)
+    console.log(`${ID_MOD} - getByOrden`);
+
   const db = getDatabase();
 
   db.get(sql_getByOrden, [orden], (err, row) => {
@@ -84,7 +97,10 @@ SitioDAO.prototype.getByOrden = function (orden, callback) {
 };
 
 SitioDAO.prototype.getAll = function (callback) {
-  console.log(`${ID_MOD} - getAll`);
+
+  if (verLog)
+    console.log(`${ID_MOD} - getAll`);
+
   const db = getDatabase();
 
   db.all(sql_getAll, [], (err, rows) => {
@@ -98,7 +114,10 @@ SitioDAO.prototype.getAll = function (callback) {
 };
 
 SitioDAO.prototype.cantSitios = function (callback) {
-  console.log(`${ID_MOD} - cantSitios`);
+
+  if (verLog)
+    console.log(`${ID_MOD} - cantSitios`);
+
   const db = getDatabase();
 
   db.get(sql_cantSitios, [], (err, ret) => {
@@ -112,7 +131,10 @@ SitioDAO.prototype.cantSitios = function (callback) {
 };
 
 SitioDAO.prototype.delete = function (id, callback) {
-  console.log(`${ID_MOD} - delete`);
+
+  if (verLog)
+    console.log(`${ID_MOD} - delete`);
+
   const db = getDatabase();
 
   db.run(sql_delete, [id], function (err) {

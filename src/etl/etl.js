@@ -1,3 +1,4 @@
+const { verLog } = require("../../config.json")
 const {
   getTipoVariable,
   getSitiosNombre,
@@ -21,7 +22,10 @@ function lanzarETL(lines, currentModifiedTime) {
   getTipoVariable(lines[0], (msjTVar) => {
     lines.splice(0, 1);
     getSitiosNombre(lines, (msjSit) => {
+      
+      
       console.log(`${ID_MOD} - ${msjTVar} ${msjSit}`);
+
       setNuevosDatos(lines, () => {
         getNuevosDatos((err, reporte) => {
           if (!err) {
@@ -59,8 +63,7 @@ function getNuevosDatos(callback) {
                 return;
               }
 
-              historicoLecturaDAO.getHistorico(sitioRow.orden, (_, historico) => {
-                console.log(rows)
+              historicoLecturaDAO.getHistorico(sitioRow.orden, (_, historico) => {                
                 armarObjetoReporte(reporte, row, tipoVarRow, sitioRow, historico);
                 remaining -= 1;
 
@@ -133,5 +136,7 @@ function armarObjetoReporte(reporte, row, tipoVarRow, sitioRow, historicos) {
 
 module.exports = { lanzarETL };
 
-console.log(`${ID_MOD} - Directorio trabajo:`, process.cwd());
-console.log(`${ID_MOD} - Directorio del archivo:`, __dirname);
+if (verLog) {
+  console.log(`${ID_MOD} - Directorio trabajo:`, process.cwd());
+  console.log(`${ID_MOD} - Directorio del archivo:`, __dirname);
+}

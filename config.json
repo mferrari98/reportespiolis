@@ -26,5 +26,6 @@
             "divisionoperacionessanitarias@gmail.com"
         ]
     },
-    "umbral": 20
+    "umbral": 20,
+    "verLog": false
 }

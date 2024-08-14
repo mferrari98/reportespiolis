@@ -1,3 +1,5 @@
+const { verLog } = require("../../config.json")
+
 const fs = require('fs');
 const cheerio = require('cheerio');
 const { sindet } = require("./parser-reporte");
@@ -116,7 +118,9 @@ function crearHTMLSalida(contenido, cb) {
             console.error('Error al escribir archivo:', err);
             return;
         }
-        console.log(`${ID_MOD} - Archivo escrito correctamente`);
+        if (verLog)
+            console.log(`${ID_MOD} - Archivo escrito correctamente`);
+        
         cb()
     });
 }

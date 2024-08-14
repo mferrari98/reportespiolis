@@ -1,3 +1,4 @@
+const { verLog } = require("../../config.json")
 const { getDatabase } = require('../basedatos/db');
 
 const ID_MOD = "DAO-HISTORICO-LECTURA";
@@ -23,7 +24,10 @@ const sql_delete = `DELETE FROM historico_lectura WHERE id = ?`;
 function HistoricoLecturaDAO() { }
 
 HistoricoLecturaDAO.prototype.create = function (sitio_id, tipo_id, valor, etiempo, callback) {
-  console.log(`${ID_MOD} - create`);
+  
+  if (verLog)
+    console.log(`${ID_MOD} - create`);
+
   const db = getDatabase();
 
   db.run(sql_create, [sitio_id, tipo_id, valor, etiempo], function (err) {
@@ -37,7 +41,10 @@ HistoricoLecturaDAO.prototype.create = function (sitio_id, tipo_id, valor, etiem
 };
 
 HistoricoLecturaDAO.prototype.getById = function (id, callback) {
-  console.log(`${ID_MOD} - getById`);
+  
+  if (verLog)
+    console.log(`${ID_MOD} - getById`);
+
   const db = getDatabase();
 
   db.get(sql_getById, [id], (err, row) => {
@@ -51,7 +58,10 @@ HistoricoLecturaDAO.prototype.getById = function (id, callback) {
 };
 
 HistoricoLecturaDAO.prototype.getAll = function (callback) {
-  console.log(`${ID_MOD} - getAll`);
+  
+  if (verLog)
+    console.log(`${ID_MOD} - getAll`);
+
   const db = getDatabase();
 
   db.all(sql_getAll, [], (err, rows) => {
@@ -65,7 +75,10 @@ HistoricoLecturaDAO.prototype.getAll = function (callback) {
 };
 
 HistoricoLecturaDAO.prototype.getMostRecent = function (callback) {
-  console.log(`${ID_MOD} - getMostRecent`);
+  
+  if (verLog)
+    console.log(`${ID_MOD} - getMostRecent`);
+
   const db = getDatabase();
 
   db.all(sql_getMostRecent, (err, rows) => {
@@ -79,7 +92,10 @@ HistoricoLecturaDAO.prototype.getMostRecent = function (callback) {
 };
 
 HistoricoLecturaDAO.prototype.getHistorico = function (sitio_id, callback) {
-  console.log(`${ID_MOD} - getHistorico`);
+  
+  if (verLog)
+    console.log(`${ID_MOD} - getHistorico`);
+
   const db = getDatabase();
 
   db.all(sql_getHistorico, [sitio_id], (err, rows) => {
@@ -93,7 +109,10 @@ HistoricoLecturaDAO.prototype.getHistorico = function (sitio_id, callback) {
 };
 
 HistoricoLecturaDAO.prototype.delete = function (id, callback) {
-  console.log(`${ID_MOD} - delete`);
+ 
+  if (verLog)
+    console.log(`${ID_MOD} - delete`);
+
   const db = getDatabase();
 
   db.run(sql_delete, [id], function (err) {

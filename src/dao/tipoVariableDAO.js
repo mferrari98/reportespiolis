@@ -1,3 +1,4 @@
+const { verLog } = require("../../config.json")
 const { getDatabase } = require('../basedatos/db');
 
 const ID_MOD = "DAO-TPOVAR"
@@ -12,7 +13,10 @@ const sql_delete = `DELETE FROM tipo_variable WHERE id = ?`;
 function TipoVariableDAO() { }
 
 TipoVariableDAO.prototype.create = function (descriptor, orden, callback) {
-  console.log(`${ID_MOD} - create`);
+  
+  if (verLog)
+    console.log(`${ID_MOD} - create`);
+
   const db = getDatabase();
 
   db.run(sql_create, [descriptor, orden], function (err) {
@@ -26,7 +30,10 @@ TipoVariableDAO.prototype.create = function (descriptor, orden, callback) {
 };
 
 TipoVariableDAO.prototype.getById = function (id, callback) {
-  console.log(`${ID_MOD} - getById`);
+  
+  if (verLog)
+    console.log(`${ID_MOD} - getById`);
+
   const db = getDatabase();
 
   db.get(sql_getById, [id], (err, row) => {
@@ -40,7 +47,10 @@ TipoVariableDAO.prototype.getById = function (id, callback) {
 };
 
 TipoVariableDAO.prototype.getByDescriptor = function (descriptor, callback) {
-  console.log(`${ID_MOD} - getByDescriptor`);
+  
+  if (verLog)
+    console.log(`${ID_MOD} - getByDescriptor`);
+  
   const db = getDatabase();
 
   db.get(sql_getByDescriptor, [descriptor], (err, row) => {
@@ -54,7 +64,10 @@ TipoVariableDAO.prototype.getByDescriptor = function (descriptor, callback) {
 };
 
 TipoVariableDAO.prototype.getByOrden = function (orden, callback) {
-  console.log(`${ID_MOD} - getByOrden`);
+  
+  if (verLog)
+    console.log(`${ID_MOD} - getByOrden`);
+  
   const db = getDatabase();
 
   db.get(sql_getByOrden, [orden], (err, row) => {
@@ -68,7 +81,10 @@ TipoVariableDAO.prototype.getByOrden = function (orden, callback) {
 };
 
 TipoVariableDAO.prototype.getAll = function (callback) {
-  console.log(`${ID_MOD} - getAll`);
+  
+  if (verLog)
+    console.log(`${ID_MOD} - getAll`);
+  
   const db = getDatabase();
 
   db.all(sql_getAll, [], (err, rows) => {
@@ -82,7 +98,10 @@ TipoVariableDAO.prototype.getAll = function (callback) {
 };
 
 TipoVariableDAO.prototype.delete = function (id, callback) {
-  console.log(`${ID_MOD} - delete`);
+  
+  if (verLog)
+    console.log(`${ID_MOD} - delete`);
+  
   const db = getDatabase();
 
   db.run(sql_delete, [id], function (err) {
