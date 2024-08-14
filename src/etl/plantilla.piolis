@@ -9,6 +9,8 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <script src="js/plotly-latest.min.js"></script>
+
+    <script src="js/d3.min.js"></script>
     <style>
         :root {
             --color-nivel: #5996e5;
@@ -62,101 +64,167 @@
     <!-- Div donde se renderizará el gráfico -->
     <div id="grafBarras" style="width: 100%; height: 500px;"></div>
     <div id="grafLineas" style="width: 100%; height: 500px;"></div>
+    <div id="grafLineaTiempo" style="width: 100%; height: 500px;"></div>
 
     <button id="guardar">Guardar como imagen</button>
     <button id="copiar">Copiar al Portapapeles</button>
-</body>
 
-<script>
-    document.getElementById('copiar').addEventListener('click', function () {
+    <script>
+        document.getElementById('copiar').addEventListener('click', function () {
 
-        let textToCopy = '';
-        let filas = document.querySelector("tbody").children
+            let textToCopy = '';
+            let filas = document.querySelector("tbody").children
 
-        for (let i = 0; i < filas.length; i++) {
-            textToCopy += filas[i].childNodes[1].innerText + "," + filas[i].childNodes[3].innerText + '\n';
-        }
-        textToCopy = textToCopy.trim()
-
-        navigator.clipboard.writeText(textToCopy).then(() => {
-            alert('Texto copiado al portapapeles');
-        }).catch(err => {
-            console.error('Error al copiar el texto: ', err);
-        });
-    });
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        
-        /* ********************************************
-        *********** GRAFICO BARRAS APILADAS ***********
-        ******************************************** */
-
-        var sitios = [<!-- SITIOS -->]
-        var niveles = [<!-- NIVELES -->]
-
-        var trace10 = {
-            x: sitios,
-            y: niveles,
-            name: 'Nivel',
-            type: 'bar',
-            marker: {
-                color: getComputedStyle(document.documentElement).getPropertyValue('--color-nivel').trim(),
-            },
-            text: niveles.map(String),
-            textposition: 'auto',
-            hoverinfo: 'none',
-        };
-
-        var trace11 = {
-            x: sitios,
-            y: [<!-- COMPLEMENTO -->],
-            name: 'Rebalse',
-            type: 'bar',
-            marker: {
-                color: getComputedStyle(document.documentElement).getPropertyValue('--color-rebalse').trim(),
-                opacity: 0.2
-            },
-            text: [<!-- REBALSE -->].map(String),
-            textposition: 'auto',
-            hoverinfo: 'none',
-        };
-
-        var datosBarra = [trace10, trace11];
-
-        // Configurar el diseño del gráfico
-        var layout = {
-            barmode: 'stack',
-
-            xaxis: {
-                title: 'Sitio'
-            },
-            yaxis: {
-                title: 'Nivel [m]'
-            },
-            dragmode: false,    // Esto deshabilita el modo de arrastre para el zoom
-            zoom: false,        // Esto deshabilita completamente la funcionalidad de zoom
-            autosize: true,
-            font: {
-                family: 'consolas',
-                size: 14
+            for (let i = 0; i < filas.length; i++) {
+                textToCopy += filas[i].childNodes[1].innerText + "," + filas[i].childNodes[3].innerText + '\n';
             }
-        };
-        var configBarras = { responsive: true, displayModeBar: false };
+            textToCopy = textToCopy.trim()
 
-        Plotly.newPlot('grafBarras', datosBarra, layout, configBarras);
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('Texto copiado al portapapeles');
+            }).catch(err => {
+                console.error('Error al copiar el texto: ', err);
+            });
+        });
+    </script>
 
-        /* ********************************************
-        *********** GRAFICO LINEAS ***********
-        ******************************************** */
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            barras()
+            lineas()
+            lineaTiempo()
+        })
+    </script>
 
-        [trace]
+    <script>
+        function barras() {
 
-        //var datosLinea = [traces];
-        
-        Plotly.newPlot('grafLineas', datosLinea);
-    })
-</script>
+            /* ********************************************
+            *********** GRAFICO BARRAS APILADAS ***********
+            ******************************************** */
 
+            var sitios = [<!-- SITIOS -->]
+            var niveles = [<!-- NIVELES -->]
+
+            var trace10 = {
+                x: sitios,
+                y: niveles,
+                name: 'Nivel',
+                type: 'bar',
+                marker: {
+                    color: getComputedStyle(document.documentElement).getPropertyValue('--color-nivel').trim(),
+                },
+                text: niveles.map(String),
+                textposition: 'auto',
+                hoverinfo: 'none',
+            };
+
+            var trace11 = {
+                x: sitios,
+                y: [<!-- COMPLEMENTO -->],
+                name: 'Rebalse',
+                type: 'bar',
+                marker: {
+                    color: getComputedStyle(document.documentElement).getPropertyValue('--color-rebalse').trim(),
+                    opacity: 0.2
+                },
+                text: [<!-- REBALSE -->].map(String),
+                textposition: 'auto',
+                hoverinfo: 'none',
+            };
+
+            var datosBarra = [trace10, trace11];
+
+            // Configurar el diseño del gráfico
+            var layout = {
+                barmode: 'stack',
+
+                xaxis: {
+                    title: 'Sitio'
+                },
+                yaxis: {
+                    title: 'Nivel [m]'
+                },
+                dragmode: false,    // Esto deshabilita el modo de arrastre para el zoom
+                zoom: false,        // Esto deshabilita completamente la funcionalidad de zoom
+                autosize: true,
+                font: {
+                    family: 'consolas',
+                    size: 14
+                }
+            };
+            var configBarras = { responsive: true, displayModeBar: false };
+
+            Plotly.newPlot('grafBarras', datosBarra, layout, configBarras);
+        }
+    </script>
+
+    <script>
+        function lineas() {
+
+            /* ********************************************
+            *********** GRAFICO LINEAS ***********
+            ******************************************** */
+
+            [trace]
+
+            //var datosLinea = [traces];
+            
+            Plotly.newPlot('grafLineas', datosLinea);
+        }
+    </script>
+
+    <script>
+        function lineaTiempo() {
+
+            /* ********************************************
+            *********** GRAFICO LINEA DE TIEMPO ***********
+            ******************************************** */
+
+            function loadCSV(url, callback) {
+                d3.csv(url)
+                    .then(function (data) {
+                        callback(null, data); // Llama al callback con el dato cargado y sin error
+                    })
+                    .catch(function (error) {
+                        callback(error, null); // Llama al callback con el error y sin dato
+                    });
+            }
+
+            // Uso del método loadCSV
+            loadCSV("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv", function (err, rows) {
+                
+                function unpack(rows, key) {
+                    return rows.map(function (row) { return row[key]; });
+                }
+
+                var trace1 = {
+                    type: "scatter",
+                    mode: "lines",
+                    name: 'AAPL High',
+                    x: unpack(rows, 'Date'),
+                    y: unpack(rows, 'AAPL.High'),
+                    line: { color: '#17BECF' }
+                }
+
+                var trace2 = {
+                    type: "scatter",
+                    mode: "lines",
+                    name: 'AAPL Low',
+                    x: unpack(rows, 'Date'),
+                    y: unpack(rows, 'AAPL.Low'),
+                    line: { color: '#7F7F7F' }
+                }
+
+                var data = [trace1, trace2];
+
+                var layout = {
+                    title: 'Historico niveles',
+                };
+
+                Plotly.newPlot('grafLineaTiempo', data, layout);
+            })
+        }
+    </script>
+</body>
 </html>

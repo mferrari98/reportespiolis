@@ -13,11 +13,11 @@ Middleware para configurar Content-Security-Policy
 */
 app.use((req, res, next) => {
   res.setHeader("Content-Security-Policy", "\
-    default-src 'none' http://localhost:3000/;\
     script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:3000;\
     style-src 'self' 'unsafe-inline' http://localhost:3000;\
     img-src 'self' data: blob: http://localhost:3000;\
-    connect-src 'self' http://localhost:3000"
+    connect-src 'self' http://localhost:3000 https://raw.githubusercontent.com;\
+    "
   );
 
   next();
