@@ -32,16 +32,10 @@ SitioDAO.prototype.create = function (descriptor, orden, callback) {
     console.log(`${ID_MOD} - create`);
 
   const db = getDatabase();
-
   const rebalse = rebalseMap.get(descriptor) || 0.0;
 
   db.run(sql_create, [descriptor, orden, rebalse], function (err) {
-    if (err) {
-      console.error(`${ID_MOD} - Error inserting into Sitio:`, err.message);
-      callback(err);
-    } else {
-      callback(null, { id: this.lastID, descriptor, orden, rebalse });
-    }
+    callback(null, { id: this.lastID, descriptor, orden, rebalse });
   });
 };
 
@@ -52,13 +46,8 @@ SitioDAO.prototype.getById = function (id, callback) {
 
   const db = getDatabase();
 
-  db.get(sql_getById, [id], (err, row) => {
-    if (err) {
-      console.error('Error fetching from Sitio:', err.message);
-      callback(err);
-    } else {
-      callback(null, row);
-    }
+  db.get(sql_getById, [id], (_, row) => {
+    callback(null, row);
   });
 };
 
@@ -69,13 +58,8 @@ SitioDAO.prototype.getByDescriptor = function (descriptor, callback) {
 
   const db = getDatabase();
 
-  db.get(sql_getByDescriptor, [descriptor], (err, row) => {
-    if (err) {
-      console.error('Error fetching from Sitio:', err.message);
-      callback(err);
-    } else {
-      callback(null, row);
-    }
+  db.get(sql_getByDescriptor, [descriptor], (_, row) => {
+    callback(null, row);
   });
 };
 
@@ -86,13 +70,8 @@ SitioDAO.prototype.getByOrden = function (orden, callback) {
 
   const db = getDatabase();
 
-  db.get(sql_getByOrden, [orden], (err, row) => {
-    if (err) {
-      console.error('Error fetching from sitio:', err.message);
-      callback(err);
-    } else {
-      callback(null, row);
-    }
+  db.get(sql_getByOrden, [orden], (_, row) => {
+    callback(null, row);
   });
 };
 
@@ -103,13 +82,8 @@ SitioDAO.prototype.getAll = function (callback) {
 
   const db = getDatabase();
 
-  db.all(sql_getAll, [], (err, rows) => {
-    if (err) {
-      console.error('Error fetching from Sitio:', err.message);
-      callback(err);
-    } else {
-      callback(null, rows);
-    }
+  db.all(sql_getAll, [], (_, rows) => {
+    callback(null, rows);
   });
 };
 
@@ -120,13 +94,8 @@ SitioDAO.prototype.cantSitios = function (callback) {
 
   const db = getDatabase();
 
-  db.get(sql_cantSitios, [], (err, ret) => {
-    if (err) {
-      console.error('Error fetching from sitio:', err.message);
-      callback(err);
-    } else {
-      callback(null, ret.cant);
-    }
+  db.get(sql_cantSitios, [], (_, ret) => {
+    callback(null, ret.cant);
   });
 };
 
@@ -137,13 +106,8 @@ SitioDAO.prototype.delete = function (id, callback) {
 
   const db = getDatabase();
 
-  db.run(sql_delete, [id], function (err) {
-    if (err) {
-      console.error('Error deleting from Sitio:', err.message);
-      callback(err);
-    } else {
-      callback(null, { id });
-    }
+  db.run(sql_delete, [id], function (_) {
+    callback(null, { id });
   });
 };
 

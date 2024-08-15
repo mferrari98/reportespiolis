@@ -20,13 +20,13 @@ const ID_MOD = "ETL";
 
 function lanzarETL(lines, currentModifiedTime) {
   getTipoVariable(lines[0], (msjTVar) => {
+    
     lines.splice(0, 1);
     getSitiosNombre(lines, (msjSit) => {
       
-      
       console.log(`${ID_MOD} - ${msjTVar} ${msjSit}`);
-
       setNuevosDatos(lines, () => {
+
         getNuevosDatos((err, reporte) => {
           if (!err) {
             transpilar(reporte, currentModifiedTime, () => {
@@ -40,42 +40,38 @@ function lanzarETL(lines, currentModifiedTime) {
 }
 
 function getNuevosDatos(callback) {
-  historicoLecturaDAO.getMostRecent((err, rows) => {
-    if (err) {
-      console.error("Error fetching most recent records:", err);
-      callback(err);
-    } else {
-      let remaining = rows.length;
+  historicoLecturaDAO.getMostRecent((_, rows) => {
+  
+    let remaining = rows.length;
 
-      sitioDAO.cantSitios((err, cantidad) => {
-        var reporte = new Array(cantidad);
+    sitioDAO.cantSitios((_, cantidad) => {
+      var reporte = new Array(cantidad);
 
-        rows.forEach((row) => {
-          tipoVariableDAO.getById(row.tipo_id, (err, tipoVarRow) => {
+      rows.forEach((row) => {
+        tipoVariableDAO.getById(row.tipo_id, (err, tipoVarRow) => {
+          if (err) {
+            callback(err);
+            return;
+          }
+
+          sitioDAO.getById(row.sitio_id, (err, sitioRow) => {
             if (err) {
               callback(err);
               return;
             }
 
-            sitioDAO.getById(row.sitio_id, (err, sitioRow) => {
-              if (err) {
-                callback(err);
-                return;
+            historicoLecturaDAO.getHistorico(sitioRow.orden, (_, historico) => {                
+              armarObjetoReporte(reporte, row, tipoVarRow, sitioRow, historico);
+              remaining -= 1;
+
+              if (remaining === 0) {
+                callback(null, reporte);
               }
-
-              historicoLecturaDAO.getHistorico(sitioRow.orden, (_, historico) => {                
-                armarObjetoReporte(reporte, row, tipoVarRow, sitioRow, historico);
-                remaining -= 1;
-
-                if (remaining === 0) {
-                  callback(null, reporte);
-                }
-              })
-            });
+            })
           });
         });
       });
-    }
+    });
   });
 }
 

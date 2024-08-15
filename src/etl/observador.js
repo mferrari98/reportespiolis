@@ -15,25 +15,14 @@ function iniciar() {
   // Verifica que se haya proporcionado el archivo como argumento
   if (process.argv.length < 3) {
     console.error(
-      `${ID_MOD} - Parece que la ubicacion del achivo no llega como argumento de la linea de comandos`
-    );
-    console.error(
-      `${ID_MOD} - Se utilizara la direccion definida en config.json`
+      `${ID_MOD} - No hay direccion en linea de comandos, se utilizara definicion de config.json`
     );
 
     fs.readFile("../config.json", "utf8", (err, jsonString) => {
-      if (err) {
-        console.error("Error al leer el archivo:", err);
-        return;
-      }
-      try {
-        // Parsea el contenido del archivo JSON a un objeto JavaScript
-        const data = JSON.parse(jsonString);
-        filePath = data.direcc_remota + "/reporte_horario_test.log";
-        checkFileModification();
-      } catch (err) {
-        console.error("Error al parsear JSON:", err);
-      }
+      // Parsea el contenido del archivo JSON a un objeto JavaScript
+      const data = JSON.parse(jsonString);
+      filePath = data.direcc_remota + "/reporte_horario_test.log";
+      checkFileModification();
     });
   }
 }
@@ -77,7 +66,7 @@ function checkFileModification() {
       const fechaAnterior = formatoFecha(lastModifiedTime);
       lastModifiedTime = currentModifiedTime;
 
-      if(verLog)
+      if (verLog)
         console.log(`Actual ${fechaActual} ==> Anterior ${fechaAnterior}`);
 
       readAndProcessFile();

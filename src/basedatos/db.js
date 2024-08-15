@@ -9,23 +9,15 @@ let db;
 
 function openDatabase() {
   if (!db) {
-    db = new sqlite3.Database(dbPath, (err) => {
-      if (err) {
-        console.error('Error al abrir la base de datos:', err.message);
-      } else {
-        console.log(`${ID_MOD} - Conectado a la base de datos SQLite`);
-      }
+    db = new sqlite3.Database(dbPath, (_) => {
+      console.log(`${ID_MOD} - Conectado a base de datos`);
     });
   }
 }
 
 function closeDatabase(cb) {
-  db.close((err) => {
-    if (err) {
-      console.error(`${ID_MOD} - Error cerrando SQLite:`, err.message);
-    } else {
-      console.log(`${ID_MOD} - SQLite cerrada`);
-    }
+  db.close((_) => {
+    console.log(`${ID_MOD} - Desconectado de base de datos`);
     cb()
   });
 }

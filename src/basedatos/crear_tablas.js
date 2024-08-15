@@ -12,37 +12,28 @@ function crearTablas(callback) {
         rebalse FLOAT NOT NULL
     )`,
     (err) => {
-      if (err) {
-        console.error('Error creando tabla sitios', err.message);
-        callback(err);
-      } else {
-        tablaTipoVariable(callback)
-      }
+      tablaTipoVariable({err_sitio:err}, callback)
     }
   );
 }
 
 // tabla tipo_variable
-const tablaTipoVariable = (callback) => {
+const tablaTipoVariable = (err_previo, callback) => {
   db.run(
     `CREATE TABLE IF NOT EXISTS tipo_variable (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         descriptor TEXT NOT NULL,
         orden INTEGER NOT NULL
     )`,
-    (err) => {
-      if (err) {
-        console.error('Error creando tabla tipo_variable', err.message);
-        callback(err);
-      } else {
-        tablaHistoricosLectura(callback)
-      }
+    (err) => {      
+      err_previo["err_tvar"] = err
+      tablaHistoricosLectura(err_previo, callback)
     }
   );
 }
 
 // tabla 'historico_lectura'
-const tablaHistoricosLectura = (callback) => {
+const tablaHistoricosLectura = (err_previo, callback) => {
   db.run(
     `CREATE TABLE IF NOT EXISTS historico_lectura (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -54,13 +45,8 @@ const tablaHistoricosLectura = (callback) => {
       FOREIGN KEY (tipo_id) REFERENCES tipo_variable(id)
   )`,
     (err) => {
-      if (err) {
-        console.error('Error creando tabla historicos_lectura', err.message);
-        callback(err);
-      } else {
-        console.log('CREAR-TABLA - Esquema de tablas creado correctamente');
-        callback(null);
-      }
+      err_previo["err_histlect"] = err
+      callback(err_previo);
     }
   );
 }
