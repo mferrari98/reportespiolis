@@ -1,5 +1,6 @@
 const fs = require('fs');
 const nodemailer = require('nodemailer');
+const dns = require('dns');
 const msg = require('../../config.json');
 
 const ID_MOD = "Email"
@@ -8,6 +9,8 @@ let transporter
 let destinos = msg.email.difusion
 let user = msg.email.user
 let pass = msg.email.pass
+const smtpHostFallback = "10.10.1.40"; // Dirección IP alternativa si no se puede resolver el host
+const smtpHost = 'post.servicoop.com';
 
 /*
 Configuración del transporte SMTP
@@ -15,17 +18,19 @@ es importante entender que SMTP se usa para enviar mensajes unicamente, es decir
 para recibir mensajes.
 por otro lado, en caso de enviar mensajes debe utilizarse POP3 (mas viejo) o IMAP.
 */
-transporter = nodemailer.createTransport({
-    host: 'post.servicoop.com',
-    port: 25,
-    auth: {
-        user: user,
-        pass: pass
-    },
-    tls: {
-        rejectUnauthorized: false       // omitir verificacion en cadena
-    }
-});
+function createTransporter(host) {
+    return nodemailer.createTransport({
+        host: host,
+        port: 25,
+        auth: {
+            user: user,
+            pass: pass
+        },
+        tls: {
+            rejectUnauthorized: false // omitir verificación en cadena
+        }
+    });
+}
 
 function EnviarEmail() { }
 
@@ -85,6 +90,19 @@ function getCurrentDateTime() {
     const time = `${parts[6].value}:${parts[8].value}:${parts[10].value}`; // hh:mm:ss
     return { date, time };
 }
+
+// Verificar si se puede resolver post.servicoop.com
+(function initTransporter() {
+    dns.lookup(smtpHost, (err) => {
+        if (err) {
+            console.log(`${ID_MOD} - Error resolviendo ${smtpHost}, usando IP fallback: ${smtpHostFallback}`);
+            transporter = createTransporter(smtpHostFallback);
+        } else {
+            console.log(`${ID_MOD} - ${smtpHost} resuelto correctamente.`);
+            transporter = createTransporter(smtpHost);
+        }        
+    });
+})();
 
 module.exports = EnviarEmail;
 
