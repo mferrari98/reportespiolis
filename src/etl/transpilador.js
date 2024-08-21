@@ -8,6 +8,8 @@ const ID_MOD = "TRANS";
 
 function transpilar(reporte, estampatiempo, cb) {
 
+   // console.log(reporte[9].historico)
+
     fs.readFile('./etl/plantilla.piolis', 'utf8', (err, data) => {
         if (err) {
             console.error('Error al leer el archivo:', err);
@@ -18,6 +20,7 @@ function transpilar(reporte, estampatiempo, cb) {
         let contenido = expandirPlantilla(reporte, data)        
         contenido = sustituirMarcas(reporte, estampatiempo, contenido)        
         contenido = prepararGrafLineas(reporte, contenido)
+        contenido = prepararGraficaTemporal(reporte, contenido)
         
         // solo para debug
         fs.writeFile("./etl/plantilla.expand.html", contenido, () => { })
@@ -110,6 +113,70 @@ function prepararGrafLineas(reporte, contenido) {
 
     return resultadoFinal;
 }
+
+function prepararGraficaTemporal(reporte, contenido) {
+    const marca = '[grafico_tiempo]';
+    const posicionMarca = contenido.indexOf(marca);
+    
+    // Elimina la marca del texto.
+    let textoModificado = contenido.replace(marca, '');
+
+    let traces = [];
+    let scriptGrafico = '';
+
+    // Itera sobre el arreglo `reporte` para crear una traza por cada sitio
+    reporte.forEach((elem, indice) => {
+        let fechas = elem.historico.map(item => `"${item.etiempo}"`).join(', ');
+        let valores = elem.historico.map(item => item.valor).join(', ');
+        
+        let trace = `
+        var trace${indice} = {
+            type: "scatter",
+            mode: "lines",
+            name: '${elem.sitio}',
+            x: [${fechas}],
+            y: [${valores}],
+            line: { color: '${getRandomColor()}' }
+        };`;
+
+        traces.push(`trace${indice}`);
+        scriptGrafico += trace;
+    });
+
+    scriptGrafico += `
+    /* ********************************************
+     *********** GRAFICO LINEA DE TIEMPO ***********
+     ******************************************** */
+    var data = [${traces.join(', ')}];
+
+    var layout = {
+        title: 'Histórico de Datos Temporales por Sitio',
+        xaxis: { title: 'Tiempo' },
+        yaxis: { title: 'Valor' }
+    };
+
+    Plotly.newPlot('grafLineaTiempo', data, layout);
+    `;
+
+    // Inserta el código en la posición original de la marca.
+    let resultadoFinal = textoModificado.substring(0, posicionMarca); // Texto antes de la marca.
+    resultadoFinal += scriptGrafico; // Inserta el script dentro de la marca
+    resultadoFinal += textoModificado.substring(posicionMarca); // Texto después de la marca.
+
+    return resultadoFinal;
+}
+
+// Función auxiliar para generar un color aleatorio
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+
 
 function crearHTMLSalida(contenido, cb) {
     // Escribir en el archivo

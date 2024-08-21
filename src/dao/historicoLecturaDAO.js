@@ -14,10 +14,14 @@ const sql_getMostRecent = `
   ORDER BY s.orden;
 `;
 const sql_getHistorico = `
-  SELECT hl.*
-  FROM historico_lectura hl
-  JOIN tipo_variable tv ON hl.tipo_id = tv.id
-  WHERE hl.sitio_id = ? AND tv.descriptor = 'Nivel[m]';
+  SELECT hl.valor, hl.etiempo
+FROM historico_lectura hl
+JOIN tipo_variable tv ON hl.tipo_id = tv.id
+JOIN sitio s ON hl.sitio_id = s.id
+WHERE s.orden = ?
+AND tv.descriptor = 'Nivel[m]'
+ORDER BY hl.etiempo;
+
 `;
 const sql_delete = `DELETE FROM historico_lectura WHERE id = ?`;
 

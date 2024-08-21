@@ -175,55 +175,12 @@
     </script>
 
     <script>
+    
         function lineaTiempo() {
 
-            /* ********************************************
-            *********** GRAFICO LINEA DE TIEMPO ***********
-            ******************************************** */
+            [grafico_tiempo]
 
-            function loadCSV(url, callback) {
-                d3.csv(url)
-                    .then(function (data) {
-                        callback(null, data); // Llama al callback con el dato cargado y sin error
-                    })
-                    .catch(function (error) {
-                        callback(error, null); // Llama al callback con el error y sin dato
-                    });
-            }
-
-            // Uso del método loadCSV
-            loadCSV("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv", function (err, rows) {
-                
-                function unpack(rows, key) {
-                    return rows.map(function (row) { return row[key]; });
-                }
-
-                var trace1 = {
-                    type: "scatter",
-                    mode: "lines",
-                    name: 'AAPL High',
-                    x: unpack(rows, 'Date'),
-                    y: unpack(rows, 'AAPL.High'),
-                    line: { color: '#17BECF' }
-                }
-
-                var trace2 = {
-                    type: "scatter",
-                    mode: "lines",
-                    name: 'AAPL Low',
-                    x: unpack(rows, 'Date'),
-                    y: unpack(rows, 'AAPL.Low'),
-                    line: { color: '#7F7F7F' }
-                }
-
-                var data = [trace1, trace2];
-
-                var layout = {
-                    title: 'Historico niveles',
-                };
-
-                Plotly.newPlot('grafLineaTiempo', data, layout);
-            })
+            
         }
     </script>
 </body>

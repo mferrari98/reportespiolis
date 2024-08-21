@@ -109,7 +109,6 @@ function armarObjetoReporte(reporte, row, tipoVarRow, sitioRow, historicos) {
           tipoVarRow.orden == 0 ? tipoVarRow.descriptor : descrip_nivel,
         valor: tipoVarRow.orden == 0 ? row.valor : val_nivel,
         rebalse: sitioRow.rebalse,
-        historico: historicos
       },
       cloro: {
         descriptor:
@@ -126,7 +125,8 @@ function armarObjetoReporte(reporte, row, tipoVarRow, sitioRow, historicos) {
           tipoVarRow.orden == 3 ? tipoVarRow.descriptor : descrip_voldia,
         valor: tipoVarRow.orden == 3 ? row.valor : val_voldia,
       },
-    }
+    },
+    historico: historicos,   
   };
 }
 
