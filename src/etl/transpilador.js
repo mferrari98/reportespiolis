@@ -6,7 +6,14 @@ const { sindet } = require("./parser-reporte");
 
 const ID_MOD = "TRANS";
 
+let sitios, niveles, rebalse, complemento
+
 function transpilar(reporte, estampatiempo, cb) {
+
+    sitios = reporte.map(objeto => "'" + objeto.sitio + "'")
+    niveles = reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? objeto.variable.nivel.valor : 0)
+    rebalse = reporte.map(objeto => objeto.variable.nivel.rebalse.toFixed(3))
+    complemento = reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? (objeto.variable.nivel.rebalse - objeto.variable.nivel.valor).toFixed(3) : 0)
 
    // console.log(reporte[9].historico)
 
@@ -19,7 +26,7 @@ function transpilar(reporte, estampatiempo, cb) {
 
         let contenido = expandirPlantilla(reporte, data)        
         contenido = sustituirMarcas(reporte, estampatiempo, contenido)        
-        contenido = prepararGrafLineas(reporte, contenido)
+        contenido = prepararGraficaBarras(reporte, contenido)
         contenido = prepararGraficaTemporal(reporte, contenido)
         
         // solo para debug
@@ -69,50 +76,89 @@ function sustituirMarcas(reporte, estampatiempo, contenido, cb) {
     })
 
     contenido = contenido
-        .replaceAll('<!-- SITIOS -->', reporte.map(objeto => "'" + objeto.sitio + "'"))
-        .replaceAll('<!-- NIVELES -->', reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? objeto.variable.nivel.valor : 0))
+        .replaceAll('<!-- SITIOS -->', sitios)
+        .replaceAll('<!-- NIVELES -->', niveles)
 
-        .replaceAll('<!-- COMPLEMENTO -->', reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? (objeto.variable.nivel.rebalse - objeto.variable.nivel.valor).toFixed(3) : 0))
-        .replaceAll('<!-- REBALSE -->', reporte.map(objeto => objeto.variable.nivel.rebalse.toFixed(3)));
+        .replaceAll('<!-- COMPLEMENTO -->', complemento)
+        .replaceAll('<!-- REBALSE -->', rebalse);
 
     return contenido
 }
 
-function prepararGrafLineas(reporte, contenido) {
-
-    let traces = []
-    const marca = '[trace]';
+function prepararGraficaBarras(reporte, contenido) {
+    const marca = '[grafico_barras]';
     const posicionMarca = contenido.indexOf(marca);
     
     // Elimina la marca del texto.
     let textoModificado = contenido.replace(marca, '');
 
-    // Itera sobre el arreglo `reporte` e inserta la nueva estructura en la posición memorizada.
+   
+
+    let scriptGrafico = `
+    /* ********************************************
+     *********** GRAFICO BARRAS APILADAS ***********
+     ******************************************** */
+    
+
+    var trace10 = {
+        x: [${sitios}],
+        y: [${niveles}],
+        name: 'Nivel',
+        type: 'bar',
+        marker: {
+            color: getComputedStyle(document.documentElement).getPropertyValue('--color-nivel').trim(),
+        },
+        text: [${niveles}],
+        textposition: 'auto',
+        hoverinfo: 'none',
+    };
+
+    var trace11 = {
+        x: [${sitios}],
+        y: [${complemento}],
+        name: 'Rebalse',
+        type: 'bar',
+        marker: {
+            color: getComputedStyle(document.documentElement).getPropertyValue('--color-rebalse').trim(),
+            opacity: 0.2
+        },
+        text: [${rebalse}],
+        textposition: 'auto',
+        hoverinfo: 'none',
+    };
+
+    var datosBarra = [trace10, trace11];
+
+    // Configurar el diseño del gráfico
+    var layout = {
+        barmode: 'stack',
+        xaxis: {
+            title: 'Sitio'
+        },
+        yaxis: {
+            title: 'Nivel [m]'
+        },
+        dragmode: false,
+        zoom: false,
+        autosize: true,
+        font: {
+            family: 'consolas',
+            size: 14
+        }
+    };
+    var configBarras = { responsive: true, displayModeBar: false };
+
+    Plotly.newPlot('grafBarras', datosBarra, layout, configBarras);
+    `;
+
+    // Inserta el código en la posición original de la marca.
     let resultadoFinal = textoModificado.substring(0, posicionMarca); // Texto antes de la marca.
-
-    reporte.forEach((elem, indice) => {
-
-        traces[indice] = `trace${indice}`
-        let niveles = "[" + reporte.map(_ => `"${(5.0 * Math.random()).toFixed(3)}"`).join(', ') + "]"
-
-        let estructura = `
-        var ${traces[indice]} = {
-            name: "${elem.sitio}",
-            x: [1,2,3,4,5,6,7],
-            y: ${niveles},
-            type: 'scatter'
-        };\n`;
-
-        // Inserta la estructura en la posición original de la marca.
-        resultadoFinal += estructura;
-    });
-
-    resultadoFinal += `\nvar datosLinea = [${traces.join(", ")}];`
-    // Agrega el contenido restante del texto original después de la marca.
-    resultadoFinal += textoModificado.substring(posicionMarca);
+    resultadoFinal += scriptGrafico; // Inserta el script generado
+    resultadoFinal += textoModificado.substring(posicionMarca); // Texto después de la marca.
 
     return resultadoFinal;
 }
+
 
 function prepararGraficaTemporal(reporte, contenido) {
     const marca = '[grafico_tiempo]';
@@ -126,8 +172,11 @@ function prepararGraficaTemporal(reporte, contenido) {
 
     // Itera sobre el arreglo `reporte` para crear una traza por cada sitio
     reporte.forEach((elem, indice) => {
-        let fechas = elem.historico.map(item => `"${item.etiempo}"`).join(', ');
+        let fechas = elem.historico.map(item => `"${formatoFecha2(item.etiempo)}"`).join(', ');
         let valores = elem.historico.map(item => item.valor).join(', ');
+
+        primeraFecha = formatoFecha2(elem.historico[0].etiempo);
+        ultimaFecha = formatoFecha2(elem.historico[elem.historico.length - 1].etiempo);
         
         let trace = `
         var trace${indice} = {
@@ -136,7 +185,7 @@ function prepararGraficaTemporal(reporte, contenido) {
             name: '${elem.sitio}',
             x: [${fechas}],
             y: [${valores}],
-            line: { color: '${getRandomColor()}' }
+            line: { color: '${getCustomDarkColor()}' }
         };`;
 
         traces.push(`trace${indice}`);
@@ -149,11 +198,19 @@ function prepararGraficaTemporal(reporte, contenido) {
      ******************************************** */
     var data = [${traces.join(', ')}];
 
-    var layout = {
-        title: 'Histórico de Datos Temporales por Sitio',
-        xaxis: { title: 'Tiempo' },
-        yaxis: { title: 'Valor' }
-    };
+  var layout = {
+    title: 'Niveles por Reserva',
+    xaxis: {
+        title: '',
+        
+        //tickvals: uniqueDates,   // Opcional: puedes definir las fechas únicas que deseas mostrar
+    },
+    yaxis: {
+        title: 'Niveles'
+    },
+    showlegend: true,
+    
+};
 
     Plotly.newPlot('grafLineaTiempo', data, layout);
     `;
@@ -166,13 +223,31 @@ function prepararGraficaTemporal(reporte, contenido) {
     return resultadoFinal;
 }
 
-// Función auxiliar para generar un color aleatorio
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
+let colorIndex = 0;
+
+function getCustomDarkColor() {
+    const customDarkColors = [
+        '#17BECF', // Teal/Aqua
+        '#FF8C00', // Dark Orange
+        '#FF4500', // Orange Red
+        '#FF6347', // Tomato
+        '#FFD700', // Gold
+        '#20B2AA', // Light Sea Green
+        '#8A2BE2', // Blue Violet
+        '#FF1493', // Deep Pink
+        '#00CED1', // Dark Turquoise
+        '#DC143C', // Crimson
+        '#CD5C5C', // Indian Red
+        '#F08080', // Light Coral
+        '#C06060'  // Muted Crimson
+    ];
+    
+    // Obtener el color de la secuencia
+    const color = customDarkColors[colorIndex % customDarkColors.length];
+    
+    // Incrementar el índice para la próxima llamada
+    colorIndex++;
+    
     return color;
 }
 
@@ -204,6 +279,21 @@ function formatoFecha(fechaOriginal) {
 
     return `${day}/${month}/${year} a las ${hours}:${minutes}`;
 }
+
+function formatoFecha2(fechaOriginal) {
+    const fecha = new Date(fechaOriginal);
+
+    // Obtiene los componentes de la fecha
+    const year = fecha.getFullYear();
+    const month = String(fecha.getMonth() + 1).padStart(2, '0');
+    const day = String(fecha.getDate()).padStart(2, '0');
+    const hours = String(fecha.getHours()).padStart(2, '0');
+    const minutes = String(fecha.getMinutes()).padStart(2, '0');
+    const seconds = String(fecha.getSeconds()).padStart(2, '0');
+
+    return `${day}-${month}-${year}-${hours}-${minutes}-${seconds}`;
+}
+
 
 // Exportar la función si es necesario
 module.exports = {

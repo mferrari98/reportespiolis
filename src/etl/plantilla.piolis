@@ -13,7 +13,7 @@
     <script src="js/d3.min.js"></script>
     <style>
         :root {
-            --color-nivel: #5996e5;
+            --color-nivel: #3498db;
             --color-rebalse: #d3a53c;
         }
     </style>
@@ -24,7 +24,7 @@
     <h4 style="text-align: center; font-family: 'Consolas';"><!-- ESTAMPATIEMPO --></h4>
     <div>
         <table
-            style="margin: 25px auto; border-collapse: collapse; border: 1px solid #eee; border-bottom: 2px solid #3498db; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05); font-family: 'consolas';">
+            style="margin: 5px auto; border-collapse: collapse; border: 1px solid #eee; border-bottom: 2px solid #3498db; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05); font-family: 'consolas';">
             <thead>
                 <tr>
                     <th
@@ -62,12 +62,30 @@
     </div>
 
     <!-- Div donde se renderizará el gráfico -->
+    <button id="copiar" style="
+    background-color: #333; 
+    border: 1px solid #444; 
+    color: white; 
+    padding: 16px 16px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: block; 
+    font-size: 14px; 
+    font-weight: bold; 
+    margin: 10px auto; /* Centrado horizontalmente */
+    cursor: pointer; 
+    border-radius: 4px; 
+    transition: background-color 0.4s ease, transform 0.2s ease;
+    width: fit-content; /* Ajuste al contenido */
+">
+    Copiar Niveles al Portapapeles
+</button>
+
     <div id="grafBarras" style="width: 100%; height: 500px;"></div>
-    <div id="grafLineas" style="width: 100%; height: 500px;"></div>
     <div id="grafLineaTiempo" style="width: 100%; height: 500px;"></div>
 
-    <button id="guardar">Guardar como imagen</button>
-    <button id="copiar">Copiar al Portapapeles</button>
+
+
 
     <script>
         document.getElementById('copiar').addEventListener('click', function () {
@@ -91,7 +109,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             barras()
-            lineas()
+            
             lineaTiempo()
         })
     </script>
@@ -99,78 +117,8 @@
     <script>
         function barras() {
 
-            /* ********************************************
-            *********** GRAFICO BARRAS APILADAS ***********
-            ******************************************** */
-
-            var sitios = [<!-- SITIOS -->]
-            var niveles = [<!-- NIVELES -->]
-
-            var trace10 = {
-                x: sitios,
-                y: niveles,
-                name: 'Nivel',
-                type: 'bar',
-                marker: {
-                    color: getComputedStyle(document.documentElement).getPropertyValue('--color-nivel').trim(),
-                },
-                text: niveles.map(String),
-                textposition: 'auto',
-                hoverinfo: 'none',
-            };
-
-            var trace11 = {
-                x: sitios,
-                y: [<!-- COMPLEMENTO -->],
-                name: 'Rebalse',
-                type: 'bar',
-                marker: {
-                    color: getComputedStyle(document.documentElement).getPropertyValue('--color-rebalse').trim(),
-                    opacity: 0.2
-                },
-                text: [<!-- REBALSE -->].map(String),
-                textposition: 'auto',
-                hoverinfo: 'none',
-            };
-
-            var datosBarra = [trace10, trace11];
-
-            // Configurar el diseño del gráfico
-            var layout = {
-                barmode: 'stack',
-
-                xaxis: {
-                    title: 'Sitio'
-                },
-                yaxis: {
-                    title: 'Nivel [m]'
-                },
-                dragmode: false,    // Esto deshabilita el modo de arrastre para el zoom
-                zoom: false,        // Esto deshabilita completamente la funcionalidad de zoom
-                autosize: true,
-                font: {
-                    family: 'consolas',
-                    size: 14
-                }
-            };
-            var configBarras = { responsive: true, displayModeBar: false };
-
-            Plotly.newPlot('grafBarras', datosBarra, layout, configBarras);
-        }
-    </script>
-
-    <script>
-        function lineas() {
-
-            /* ********************************************
-            *********** GRAFICO LINEAS ***********
-            ******************************************** */
-
-            [trace]
-
-            //var datosLinea = [traces];
+            [grafico_barras]
             
-            Plotly.newPlot('grafLineas', datosLinea);
         }
     </script>
 

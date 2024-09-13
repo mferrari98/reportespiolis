@@ -17,11 +17,14 @@ const rebalseMap = new Map([
   ['P.Pot', 3.0],
   ['L.Maria', 5.0],
   ['KM11', 5.0],
+  ['B.SAN MIGUEL', 4.0],
   ['R6000', 4.0],
-  ['B.PUJOL', 3.0],
   ['B.OESTE(1K)', 5.0],
-  ['B.SAN MIGUEL', 3.8],
-  ['NUEVA CHUBUT', 4.0]
+  ['NUEVA CHUBUT', 4.0],
+  ['B.PUJOL', 3.0],
+  ['Cota(126)', 4.0],
+  ['Cota(45)', 4.0],
+  ['Doradillo', 4.0]
 ]);
 
 function SitioDAO() { }

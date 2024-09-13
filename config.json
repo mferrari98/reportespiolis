@@ -1,17 +1,12 @@
 {
-<<<<<<< HEAD
+    "direcc_remota_": "/mnt/pc0346.compartido",
     "direcc_remota_": "//PC0346/datos",
     "direcc_remota": "//PC0301/datos",
-=======
-    "direcc_remota_": "/mnt/pc0346.compartido",
-    "direcc_remota": "//PC0346/datos",
-    "direcc_remota_": "//PC0301/datos",
->>>>>>> 4f93ff682051430d1960e7881348cd0870b3906e
     "email": {
         "user_": "hdonato@servicoop.com",
         "pass_": "donato",
         "user": "mferrari@servicoop.com",
-        "pass": "servicoop",
+        "pass": "servicoop1",
         "difusion": [            
             "mferrari@servicoop.com"
         ],
