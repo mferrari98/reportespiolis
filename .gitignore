@@ -133,7 +133,7 @@ dist
 src/basedatos/database.sqlite
 src/etl/plantilla.expand.html
 src/web/public/index.html
-src/reporte/salida
+src/reporte/salida/*
 
 # archivos que dependen de cada instancia
 ../config.json
