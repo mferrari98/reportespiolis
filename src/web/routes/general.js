@@ -33,4 +33,11 @@ router.post('/imagenpt', (req, res) => {
     });
 });
 
+router.get('/poblarbd', (req, res) => {
+
+  let message = 'poblando base de datos'
+  console.log(message);
+  res.json({ message });
+});
+
 module.exports = router;

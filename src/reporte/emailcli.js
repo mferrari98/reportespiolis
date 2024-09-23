@@ -43,7 +43,7 @@ EnviarEmail.prototype.enviar = function () {
     let htmlContent = fs.readFileSync('./reporte/salida/tabla.html', 'utf8');
     
     let mailOptions = {
-        from: "<desarrollo.comunicaciones@servicoop.com>",
+        from: "<fachada.correo@servicoop.com>",
         to: destinos,
         subject: `Reporte de agua potable ${date} ${time}`,
         text: resumen,
@@ -73,7 +73,7 @@ EnviarEmail.prototype.enviar = function () {
         if (error) {
             return console.log(error);
         }
-        console.log('Message sent: %s', info.messageId);
+        console.log('Mensaje enviado: %s, Destinatarios: %s', info.envelope.from, JSON.stringify(info.envelope.to));
     });   
 }
 
