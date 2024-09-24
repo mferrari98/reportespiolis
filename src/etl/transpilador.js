@@ -2,7 +2,7 @@ const { verLog } = require("../../config.json")
 
 const fs = require('fs');
 const cheerio = require('cheerio');
-const { sindet } = require("./parser-reporte");
+const { sindet } = require("./etl");
 
 const ID_MOD = "TRANS";
 
@@ -25,6 +25,11 @@ function transpilar(reporte, estampatiempo, cb) {
         crearHTMLSalida(contenido, () => { cb() })
     });
 }
+
+/* ===========================================================
+===================== FUNCIONES INTERNAS =====================
+==============================================================
+*/
 
 function expandirPlantilla(reporte, data) {
     const $ = cheerio.load(data);

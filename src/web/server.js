@@ -5,6 +5,8 @@ lo podes probar con
 const express = require('express');
 const path = require('path');
 
+const ID_MOD = "WEBSERV"
+
 const app = express();
 app.use(express.json());
 
@@ -40,7 +42,7 @@ app.use('/', otherRoutes);
 levantar server
 */
 const server = app.listen(3000, () => {
-  console.log("WEBSERV - Escuchando p=3000\n");
+  console.log(`${ID_MOD} - Escuchando p=3000`);
 });
 
 /*

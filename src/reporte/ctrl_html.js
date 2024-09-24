@@ -1,9 +1,11 @@
+const { verLog } = require("../../config.json")
+
 const fs = require('fs');
 const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
-const EnviarEmail = require('./emailcli');
+const EnviarEmail = require('./ctrl_email');
 
-const ID_MOD = "Render"
+const ID_MOD = "CtrlHTML"
 
 const enviarEmail = new EnviarEmail();
 
@@ -72,5 +74,7 @@ async function plotLineas(cb) {
 
 module.exports = RenderHTML;
 
-console.log(`${ID_MOD} - Current working directory:`, process.cwd());
-console.log(`${ID_MOD} - Directory of the current file:`, __dirname);
+if (verLog) {
+    console.log(`${ID_MOD} - Directorio trabajo:`, process.cwd());
+    console.log(`${ID_MOD} - Directorio del archivo:`, __dirname);
+}

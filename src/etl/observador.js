@@ -1,8 +1,9 @@
-const { verLog } = require("../../config.json")
-
 const fs = require("fs");
 const readline = require("readline");
+
+const { verLog } = require("../../config.json")
 const { lanzarETL } = require("./etl");
+const { lanzarReporte } = require("../reporte/reporte")
 
 const ID_MOD = "OBSERV";
 
@@ -27,6 +28,18 @@ function iniciar() {
   }
 }
 
+function parar() {
+  clearInterval(intervalId);
+
+  if (verLog)
+    console.log(`${ID_MOD} - deteniendo observador`);
+}
+
+/* ===========================================================
+===================== FUNCIONES INTERNAS =====================
+==============================================================
+*/
+
 // Función para leer y procesar el archivo
 function readAndProcessFile() {
   let lines = [];
@@ -43,7 +56,9 @@ function readAndProcessFile() {
     });
 
     rl.on("close", () => {
-      lanzarETL(lines, currentModifiedTime)
+      lanzarETL(lines, () => {
+        lanzarReporte(currentModifiedTime)
+      })
     });
 
   } catch (error) {
@@ -93,13 +108,6 @@ function formatoFecha(fechaOriginal) {
 }
 
 const intervalId = setInterval(checkFileModification, checkInterval);
-
-function parar() {
-  clearInterval(intervalId);
-
-  if (verLog)
-    console.log(`${ID_MOD} - deteniendo observador`);
-}
 
 module.exports = { iniciar, parar };
 

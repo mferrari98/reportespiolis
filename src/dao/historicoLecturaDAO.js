@@ -25,19 +25,6 @@ const sql_getHistorico = `
   JOIN tipo_variable tv ON hl.tipo_id = tv.id
   WHERE hl.sitio_id = ? AND tv.descriptor = 'Nivel[m]';
 `;
-
-/*
-const sql_getHistorico = `
-SELECT hl.valor, hl.etiempo
-FROM historico_lectura hl
-JOIN tipo_variable tv ON hl.tipo_id = tv.id
-JOIN sitio s ON hl.sitio_id = s.id
-WHERE s.orden = ?
-AND tv.descriptor = 'Nivel[m]'
-AND DATE(hl.etiempo) >= DATE('now', '-7 days')
-ORDER BY hl.etiempo;
-`;
-*/
 const sql_delete = `DELETE FROM historico_lectura WHERE id = ?`;
 
 /*

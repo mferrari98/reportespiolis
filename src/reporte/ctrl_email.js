@@ -1,14 +1,15 @@
+const { verLog, email } = require("../../config.json")
+
 const fs = require('fs');
 const nodemailer = require('nodemailer');
 const dns = require('dns');
-const msg = require('../../config.json');
 
-const ID_MOD = "Email"
+const ID_MOD = "CtrlEmail"
 
 let transporter
-let destinos = msg.email.difusion
-let user = msg.email.user
-let pass = msg.email.pass
+let destinos = email.difusion
+let user = email.user
+let pass = email.pass
 const smtpHostFallback = "10.10.1.40"; // Dirección IP alternativa si no se puede resolver el host
 const smtpHost = 'post.servicoop.com';
 
@@ -106,5 +107,7 @@ function getCurrentDateTime() {
 
 module.exports = EnviarEmail;
 
-console.log(`${ID_MOD} - Current working directory:`, process.cwd());
-console.log(`${ID_MOD} - Directory of the current file:`, __dirname);
+if (verLog) {
+    console.log(`${ID_MOD} - Directorio trabajo:`, process.cwd());
+    console.log(`${ID_MOD} - Directorio del archivo:`, __dirname);
+}

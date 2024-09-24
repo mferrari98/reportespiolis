@@ -13,7 +13,7 @@ armar esquema de base de datos
 const { crearTablas } = require('./basedatos/crear_tablas');
 
 crearTablas((err) => {
-    console.error("CREAR ESQUEMA - resumen errores ->", err)
+    console.error("ESQUEMA - resumen errores ->", err)
     iniciar()    
 });
 

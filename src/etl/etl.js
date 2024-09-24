@@ -1,137 +1,444 @@
-const { verLog } = require("../../config.json")
-const {
-  getTipoVariable,
-  getSitiosNombre,
-  setNuevosDatos,
-} = require("./parser-reporte");
-const { transpilar } = require("./transpilador");
+const { umbral, verLog } = require("../../config.json")
 
 const SitioDAO = require("../dao/sitioDAO");
 const TipoVariableDAO = require("../dao/tipoVariableDAO");
 const HistoricoLecturaDAO = require("../dao/historicoLecturaDAO");
-const RenderHTML = require("../reporte/index");
 
 const tipoVariableDAO = new TipoVariableDAO();
 const sitioDAO = new SitioDAO();
 const historicoLecturaDAO = new HistoricoLecturaDAO();
-const renderHTML = new RenderHTML();
 
 const ID_MOD = "ETL";
+const SIN_DETERMINAR = "s/d";
 
-function lanzarETL(lines, currentModifiedTime) {
+/**
+ * 
+ * @param {es el reporte en texto plano, con campos separados por un blanco no determinado
+ * pueden ser tabs o espacios} lines 
+ * 
+ * esta funcion lanza el proceso ETL completo en sus tres llamadas encadenadas:
+ * getTipoVariable, getSitiosNombre y nuevoHistoricoLectura, quienes realizan
+ * el proceso de extraccion, transformacion y carga por su cuenta.
+ */
+function lanzarETL(lines, cb) {
   getTipoVariable(lines[0], (msjTVar) => {
     
-    lines.splice(0, 1);
+    lines.splice(0, 1);    
     getSitiosNombre(lines, (msjSit) => {
       
       console.log(`${ID_MOD} - ${msjTVar} ${msjSit}`);
-      setNuevosDatos(lines, () => {
+      nuevoHistoricoLectura(lines, () => {
+        cb()
+      });
+    });
+  });
+}
 
-        getNuevosDatos((err, reporte) => {
-          if (!err) {
-            transpilar(reporte, currentModifiedTime, () => {
-              renderHTML.renderizar();
-            });
-          }
+/* ===========================================================
+===================== FUNCIONES INTERNAS =====================
+==============================================================
+*/
+
+function getTipoVariable(firstLine, cb) {
+  let entidades_creadas = 0;
+  let entidades_existentes = 0;
+
+  /*
+    es importante este filtro porque evita crear instancias como consecuencia de un objeto mal parseado
+    */
+  let tipo_variable = firstLine
+    .split(/\s{2,}/)
+    .filter((word) => word.length > 0);
+
+  for (const [index, descriptor] of tipo_variable.entries()) {
+    tipoVariableDAO.getByDescriptor(descriptor, (err, row) => {
+      if (err) {
+        console.error(`${ID_MOD} - Error al buscar por descriptor:`, err);
+      } else {
+        if (!row) {
+          // Si no se encuentra el descriptor, se crea un nuevo registro
+          tipoVariableDAO.create(descriptor, index, (err, result) => {
+            if (err) {
+              console.error(
+                `${ID_MOD} - Error al insertar tipo_variable:`,
+                err
+              );
+            } else {
+              entidades_creadas++;
+              if (
+                finValidacion(
+                  tipo_variable,
+                  entidades_creadas,
+                  entidades_existentes
+                )
+              )
+                cb(
+                  mensaje("[TpoVar]", entidades_creadas, entidades_existentes)
+                );
+            }
+          });
+        } else {
+          entidades_existentes++;
+          if (
+            finValidacion(
+              tipo_variable,
+              entidades_creadas,
+              entidades_existentes
+            )
+          )
+            cb(mensaje("[TpoVar]", entidades_creadas, entidades_existentes));
+        }
+      }
+    });
+  }
+}
+
+function getSitiosNombre(lines, cb) {
+  let entidades_creadas = 0;
+  let entidades_existentes = 0;
+
+  let sitios = lines
+    .map((line) => line.split(/\s{2,}/)[0])
+    .filter((word) => word !== undefined);
+
+  for (const [index, descriptor] of sitios.entries()) {
+    sitioDAO.getByDescriptor(descriptor, (err, row) => {
+      if (err) {
+        console.error(`${ID_MOD} - Error al buscar por descriptor:`, err);
+      } else {
+        if (!row) {
+          // Si no se encuentra el descriptor, se crea un nuevo registro
+          sitioDAO.create(descriptor, index, (err, result) => {
+            if (err) {
+              console.error(`${ID_MOD} - Error al insertar sitio:`, err);
+            } else {
+              entidades_creadas++;
+              if (
+                finValidacion(sitios, entidades_creadas, entidades_existentes)
+              )
+                cb(mensaje("[Sitio]", entidades_creadas, entidades_existentes));
+            }
+          });
+        } else {
+          entidades_existentes++;
+          if (finValidacion(sitios, entidades_creadas, entidades_existentes))
+            cb(mensaje("[Sitio]", entidades_creadas, entidades_existentes));
+        }
+      }
+    });
+  }
+}
+
+function nuevoHistoricoLectura(lines, callback) {
+
+  const lineas_modif = agregarNulos(lines, umbral);
+  const timestamp = new Date().toISOString();
+
+  insertarNiveles(lineas_modif, timestamp, () => {
+    insertarCloro(lineas_modif, timestamp, () => {
+      insertarTurbiedad(lineas_modif, timestamp, () => {
+        insertarVoldia(lineas_modif, timestamp, () => {
+          callback();
         });
       });
     });
   });
 }
 
-function getNuevosDatos(callback) {
-  historicoLecturaDAO.getMostRecent((_, rows) => {
-  
-    let remaining = rows.length;
+function insertarNiveles(lineas_modif, timestamp, callback) {
 
-    sitioDAO.cantSitios((_, cantidad) => {
-      var reporte = new Array(cantidad);
+  const niveles = getColumna(lineas_modif, 1);
 
-      rows.forEach((row) => {
-        tipoVariableDAO.getById(row.tipo_id, (err, tipoVarRow) => {
-          if (err) {
-            callback(err);
-            return;
-          }
+  tipoVariableDAO.getByDescriptor("Nivel[m]", (err, tipoVariable) => {
+    if (err) {
+      callback(err);
+      return;
+    }
 
-          sitioDAO.getById(row.sitio_id, (err, sitioRow) => {
+    let remaining = niveles.length;
+    if (remaining === 0) {
+      callback(null);
+      return;
+    }
+
+    for (let i = 0; i < niveles.length; i++) {
+      const valor = niveles[i];
+
+      sitioDAO.getByOrden(i, (err, sitio) => {
+        if (err) {
+          callback(err);
+          return;
+        }
+
+        historicoLecturaDAO.create(
+          sitio.id,
+          tipoVariable.id,
+          valor,
+          timestamp,
+          (err, result) => {
             if (err) {
               callback(err);
               return;
             }
 
-            historicoLecturaDAO.getHistorico(sitioRow.orden, (_, historico) => {
-              
-              armarObjetoReporte(reporte, row, tipoVarRow, sitioRow, historico);
-              remaining -= 1;
+            if (verLog)
+              console.log(
+                `${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`
+              );
 
-              if (remaining === 0) {
-                callback(null, reporte);
-              }
-            })
-          });
-        });
+            remaining -= 1;
+            if (remaining === 0) {
+              callback(null);
+            }
+          }
+        );
       });
-    });
+    }
   });
 }
 
-function armarObjetoReporte(reporte, row, tipoVarRow, sitioRow, historicos) {
-  let descrip_nivel, val_nivel;
-  let descrip_cloro, val_cloro;
-  let descrip_turb, val_turb;
-  let descrip_voldia, val_voldia;
-
-  try {
-    descrip_nivel = reporte[sitioRow.orden].variable.nivel.descriptor;
-    val_nivel = reporte[sitioRow.orden].variable.nivel.valor;
-  } catch (error) { }
-
-  try {
-    descrip_cloro = reporte[sitioRow.orden].variable.cloro.descriptor;
-    val_cloro = reporte[sitioRow.orden].variable.cloro.valor;
-  } catch (error) { }
-
-  try {
-    descrip_turb = reporte[sitioRow.orden].variable.turbiedad.descriptor;
-    val_turb = reporte[sitioRow.orden].variable.turbiedad.valor;
-  } catch (error) { }
-
-  try {
-    descrip_voldia = reporte[sitioRow.orden].variable.voldia.descriptor;
-    val_voldia = reporte[sitioRow.orden].variable.voldia.valor;
-  } catch (error) { }
-
-  reporte[sitioRow.orden] = {
-    sitio: sitioRow.descriptor,
-    variable: {
-      nivel: {
-        descriptor:
-          tipoVarRow.orden == 0 ? tipoVarRow.descriptor : descrip_nivel,
-        valor: tipoVarRow.orden == 0 ? row.valor : val_nivel,
-        rebalse: sitioRow.rebalse,
-        historico: historicos
-      },
-      cloro: {
-        descriptor:
-          tipoVarRow.orden == 1 ? tipoVarRow.descriptor : descrip_cloro,
-        valor: tipoVarRow.orden == 1 ? row.valor : val_cloro,
-      },
-      turbiedad: {
-        descriptor:
-          tipoVarRow.orden == 2 ? tipoVarRow.descriptor : descrip_turb,
-        valor: tipoVarRow.orden == 2 ? row.valor : val_turb,
-      },
-      voldia: {
-        descriptor:
-          tipoVarRow.orden == 3 ? tipoVarRow.descriptor : descrip_voldia,
-        valor: tipoVarRow.orden == 3 ? row.valor : val_voldia,
-      },
+function insertarCloro(lineas_modif, timestamp, callback) {
+  const cloro = getColumna(lineas_modif, 2);
+  tipoVariableDAO.getByDescriptor("Cloro[mlg/l]", (err, tipoVariable) => {
+    if (err) {
+      callback(err);
+      return;
     }
-  };
+
+    let remaining = cloro.length;
+
+    if (remaining === 0) {
+      callback(null);
+      return;
+    }
+
+    for (let i = 0; i < cloro.length; i++) {
+      const valor = cloro[i];
+
+      sitioDAO.getByOrden(i, (err, sitio) => {
+        if (err) {
+          callback(err);
+          return;
+        }
+
+        historicoLecturaDAO.create(
+          sitio.id,
+          tipoVariable.id,
+          valor,
+          timestamp,
+          (err, result) => {
+            if (err) {
+              callback(err);
+              return;
+            }
+
+            if (verLog)
+              console.log(
+                `${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`
+              );
+
+            remaining -= 1;
+            if (remaining === 0) {
+              callback(null);
+            }
+          }
+        );
+      });
+    }
+  });
 }
 
-module.exports = { lanzarETL };
+function insertarTurbiedad(lineas_modif, timestamp, callback) {
+  const turbiedad = getColumna(lineas_modif, 3);
+  tipoVariableDAO.getByDescriptor("Turbiedad[UTN]", (err, tipoVariable) => {
+    if (err) {
+      callback(err);
+      return;
+    }
+
+    let remaining = turbiedad.length;
+
+    if (remaining === 0) {
+      callback(null);
+      return;
+    }
+
+    for (let i = 0; i < turbiedad.length; i++) {
+      const valor = turbiedad[i];
+
+      sitioDAO.getByOrden(i, (err, sitio) => {
+        if (err) {
+          callback(err);
+          return;
+        }
+
+        historicoLecturaDAO.create(
+          sitio.id,
+          tipoVariable.id,
+          valor,
+          timestamp,
+          (err, result) => {
+            if (err) {
+              callback(err);
+              return;
+            }
+
+            if (verLog)
+              console.log(`${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`);
+
+            remaining -= 1;
+            if (remaining === 0) {
+              callback(null);
+            }
+          }
+        );
+      });
+    }
+  });
+}
+
+function insertarVoldia(lineas_modif, timestamp, callback) {
+  const voldia = getColumna(lineas_modif, 4);
+  tipoVariableDAO.getByDescriptor("VOL/DIA[m3/día]", (err, tipoVariable) => {
+    if (err) {
+      callback(err);
+      return;
+    }
+
+    let remaining = voldia.length;
+
+    if (remaining === 0) {
+      callback(null);
+      return;
+    }
+
+    for (let i = 0; i < voldia.length; i++) {
+      const valor = voldia[i];
+
+      sitioDAO.getByOrden(i, (err, sitio) => {
+        if (err) {
+          callback(err);
+          return;
+        }
+
+        historicoLecturaDAO.create(
+          sitio.id,
+          tipoVariable.id,
+          valor,
+          timestamp,
+          (err, result) => {
+            if (err) {
+              callback(err);
+              return;
+            }
+
+            if (verLog)
+              console.log(
+                `${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`
+              );
+
+            remaining -= 1;
+            if (remaining === 0) {
+              callback(null);
+            }
+          }
+        );
+      });
+    }
+  });
+}
+
+function finValidacion(tipo_variable, entidades_creadas, entidades_existentes) {
+  return tipo_variable.length == entidades_creadas + entidades_existentes;
+}
+
+function mensaje(origen, cont1, cont2) {
+  return origen + ` creadas=${cont1} existentes=${cont2}`;
+}
+
+/**
+ * recorre cada línea de texto en `lines` y agrega un marcador donde los blancos exceden un umbral (`threshold`).
+ * El objetivo es insertar este marcador en los lugares donde se espera que haya un valor, pero está ausente,
+ * basado en la longitud del espacio en blanco entre los valores existentes.
+ *
+ * @param {string[]} lines - Un arreglo de cadenas de texto, donde cada cadena representa una línea que
+ * contiene diferentes valores separados por espacios en blanco.
+ * @param {number} threshold - Un número entero que representa la cantidad máxima de espacios consecutivos
+ * permitidos antes de insertar el marcador.
+ *
+ * @returns {string[]} - Un arreglo de cadenas de texto en donde todas las filas
+ * poseen la misma cantidad de columnas, lo que facilita el tratamiento del fuente
+ */
+function agregarNulos(lines, threshold) {
+  const modifiedLines = [];
+
+  for (let line of lines) {
+    let modifiedLine = "";
+    let spaceCount = 0;
+    let i = 0;
+
+    // Recorrer la línea carácter por carácter
+    while (i < line.length) {
+      if (line[i] === " ") {
+        spaceCount++;
+        if (spaceCount > threshold) {
+          modifiedLine += " " + SIN_DETERMINAR; // Insertar un 0 si el espacio es mayor que el umbral
+          spaceCount = 0;
+        }
+      } else {
+        if (spaceCount > 0) modifiedLine += " ";
+
+        /*
+        si no encuenta un blanco, copia la linea en la salida tal como la
+        leyó en la antrada "modifiedLine += line[i]"
+        */
+        modifiedLine += line[i];
+        spaceCount = 0;
+      }
+      i++;
+    }
+    modifiedLines.push(modifiedLine);
+  }
+
+  return modifiedLines;
+}
+
+/**
+ * Extrae los valores de una columna específica de un arreglo de líneas
+ *
+ * @param {Array<string>} modifiedLines - Un arreglo de líneas de texto, cada una representando
+ *                                         una fila de datos
+ * @param {number} numCol - El índice de la columna de la que se desea extraer los valores.
+ *                           Debe ser un número entero que representa la posición de la columna
+ * @returns {Array<number>} Un arreglo que contiene los valores de la columna especificada para
+ *                           cada línea.
+ */
+function getColumna(modifiedLines, numCol) {
+  const columnValues = [];
+  const regex = /\s(?=\d|\bs\/d)|(?<=\d|\bs\/d)\s/g;
+
+  for (let line of modifiedLines) {
+    
+    /*
+    dividir linea solo cuando hay un número a los lados del espacio
+    este patron resuelve falsos positivo como se daria en "B.SAN MIGUEL 1.2" -> [B.SAN, MIGUEL, 1.2, ...]
+    cuando lo correcto es [B.SAN MIGUEL, 1.2, ...]
+    */
+    const parts = line.split(regex);
+
+    // Si la columna solicitada existe en la línea, añadirla al arreglo
+    if (parts.length > numCol) {
+      const value = parseFloat(parts[numCol]);
+      columnValues.push(isNaN(value) ? parts[numCol] : value);
+    } else {
+      columnValues.push(SIN_DETERMINAR); // O cualquier otro valor que indique que la columna no existe
+    }
+  }
+
+  return columnValues;
+}
+
+module.exports = { lanzarETL, sindet:SIN_DETERMINAR };
 
 if (verLog) {
   console.log(`${ID_MOD} - Directorio trabajo:`, process.cwd());
