@@ -1,7 +1,7 @@
 const { umbral, verLog } = require("../../config.json")
 
-const SitioDAO = require("../dao/sitioDAO");
 const TipoVariableDAO = require("../dao/tipoVariableDAO");
+const SitioDAO = require("../dao/sitioDAO");
 const HistoricoLecturaDAO = require("../dao/historicoLecturaDAO");
 
 const tipoVariableDAO = new TipoVariableDAO();

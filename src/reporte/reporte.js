@@ -49,8 +49,7 @@ function getNuevosDatos(callback) {
                             callback(err);
                             return;
                         }
-
-                        historicoLecturaDAO.getHistorico(sitioRow.orden, (_, historico) => {
+                        historicoLecturaDAO.getHistorico(sitioRow.id, (_, historico) => {
 
                             armarObjetoReporte(reporte, row, tipoVarRow, sitioRow, historico);
                             remaining -= 1;

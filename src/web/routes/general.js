@@ -2,6 +2,7 @@ const fs = require('fs');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
+const HistLectControl = require("../../control/histLectControl");
 
 router.get('/favicon.ico', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'favicon.ico'));
@@ -35,9 +36,11 @@ router.post('/imagenpt', (req, res) => {
 
 router.get('/poblarbd', (req, res) => {
 
-  let message = 'poblando base de datos'
-  console.log(message);
-  res.json({ message });
+  const histLectControl = new HistLectControl();
+  
+  histLectControl.poblar((err) => {
+    res.json({ message: 'poblando base de datos', err });
+  })
 });
 
 module.exports = router;
