@@ -90,13 +90,12 @@ function prepararGrafLineas(reporte, contenido) {
     reporte.forEach((elem, indice) => {
 
         traces[indice] = `trace${indice}`
-        let niveles = "[" + reporte.map(_ => `"${(5.0 * Math.random()).toFixed(3)}"`).join(', ') + "]"
 
         let estructura = `
         var ${traces[indice]} = {
             name: "${elem.sitio}",
-            x: [1,2,3,4,5,6,7],
-            y: ${niveles},
+            x: [${unpack(elem.variable.nivel.historico, 'etiempo')}],
+            y: [${unpack(elem.variable.nivel.historico, 'valor')}],
             type: 'scatter'
         };\n`;
 
@@ -109,6 +108,12 @@ function prepararGrafLineas(reporte, contenido) {
     resultadoFinal += textoModificado.substring(posicionMarca);
 
     return resultadoFinal;
+}
+
+function unpack(rows, key) {
+    return rows.map(function (row) {
+        return `"${row[key]}"`
+    });
 }
 
 function crearHTMLSalida(contenido, cb) {
