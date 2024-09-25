@@ -33,9 +33,9 @@ function createTransporter(host) {
     });
 }
 
-function EnviarEmail() { }
+function EmailControl() { }
 
-EnviarEmail.prototype.enviar = function () {
+EmailControl.prototype.enviar = function () {
 
     const { date, time } = getCurrentDateTime();
 
@@ -105,7 +105,7 @@ function getCurrentDateTime() {
     });
 })();
 
-module.exports = EnviarEmail;
+module.exports = EmailControl;
 
 if (verLog) {
     console.log(`${ID_MOD} - Directorio trabajo:`, process.cwd());

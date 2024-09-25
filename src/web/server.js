@@ -32,11 +32,8 @@ alta de rutas para organizar mejor el codigo
 */
 const sitioRoutes = require('./routes/sitio');
 const tipoVarRoutes = require('./routes/tipovar');
-const otherRoutes = require('./routes/general');
-
-app.use('/sitio', sitioRoutes);
-app.use('/tipovar', tipoVarRoutes);
-app.use('/', otherRoutes);
+const generalRoutes = require('./routes/general');
+const desarrolloRoutes = require('./routes/desarrollo');
 
 /*
 levantar server
@@ -71,4 +68,15 @@ function closeServer(cb) {
   });
 }
 
-module.exports = { closeServer };
+module.exports = function (observador) {
+
+  app.use('/sitio', sitioRoutes);
+  app.use('/tipovar', tipoVarRoutes);
+  app.use('/reporte', generalRoutes(observador));
+  app.use('/poblarbd', desarrolloRoutes);
+
+  // Retornar lo que quieras, por ejemplo, iniciar un servidor o cualquier lógica
+  return {
+    closeServer
+  };
+};

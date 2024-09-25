@@ -123,7 +123,7 @@ function unpack(rows, key) {
 
 function crearHTMLSalida(contenido, cb) {
     // Escribir en el archivo
-    fs.writeFile("./web/public/index.html", contenido, (err) => {
+    fs.writeFile("./web/public/reporte.html", contenido, (err) => {
         if (err) {
             console.error('Error al escribir archivo:', err);
             return;

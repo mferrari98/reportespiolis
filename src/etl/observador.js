@@ -28,6 +28,10 @@ function iniciar() {
   }
 }
 
+function verUltimoCambio(evSCADA, cb) {
+  lanzarReporte(evSCADA, currentModifiedTime, () => { cb() })
+}
+
 function parar() {
   clearInterval(intervalId);
 
@@ -57,7 +61,7 @@ function readAndProcessFile() {
 
     rl.on("close", () => {
       lanzarETL(lines, () => {
-        lanzarReporte(currentModifiedTime)
+        verUltimoCambio(true, () => { } )
       })
     });
 
@@ -109,7 +113,7 @@ function formatoFecha(fechaOriginal) {
 
 const intervalId = setInterval(checkFileModification, checkInterval);
 
-module.exports = { iniciar, parar };
+module.exports = { iniciar, verUltimoCambio, parar };
 
 if (verLog) {
   console.log(`${ID_MOD} - Directorio trabajo:`, process.cwd());

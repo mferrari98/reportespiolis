@@ -2,16 +2,19 @@ const fs = require('fs');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-const HistLectControl = require("../../control/histLectControl");
+
+let observador
 
 router.get('/favicon.ico', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'favicon.ico'));
 });
 
-router.get('/reporte', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const filePath = path.join(__dirname, '..', 'public', 'index.html');
-    res.sendFile(filePath);
+    observador.verUltimoCambio(false, () => {
+      const filePath = path.join(__dirname, '..', 'public', 'reporte.html');
+      res.sendFile(filePath);
+    })    
   } catch (error) {
     console.error(error);
     res.status(500).send('Internal Server Error');
@@ -34,13 +37,7 @@ router.post('/imagenpt', (req, res) => {
     });
 });
 
-router.get('/poblarbd', (req, res) => {
-
-  const histLectControl = new HistLectControl();
-  
-  histLectControl.poblar((resultado) => {
-    res.json({ message: 'poblando base de datos', resultado });
-  })
-});
-
-module.exports = router;
+module.exports = (parametro) => {
+  observador = parametro
+  return router;
+};

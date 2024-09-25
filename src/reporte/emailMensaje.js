@@ -3,27 +3,17 @@ const { verLog } = require("../../config.json")
 const fs = require('fs');
 const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
-const EnviarEmail = require('./ctrl_email');
+const EmailControl = require('./emailControl');
 
 const ID_MOD = "CtrlHTML"
 
-const enviarEmail = new EnviarEmail();
+const emailControl = new EmailControl();
 
-function RenderHTML() { }
+function EmailMensaje() { }
 
-RenderHTML.prototype.renderizar = function () {
+EmailMensaje.prototype.extraerTabla = function() {
 
-    extraerTabla()
-    plotBarras(() => {
-        plotLineas(() => {
-            enviarEmail.enviar()
-        })
-    })
-}
-
-function extraerTabla() {
-
-    const archivoHTML = fs.readFileSync('./web/public/index.html', 'utf8');
+    const archivoHTML = fs.readFileSync('./web/public/reporte.html', 'utf8');
     const $ = cheerio.load(archivoHTML);
     
     const headContent = $('head').children().not('script').toString();
@@ -46,10 +36,23 @@ function extraerTabla() {
     fs.writeFileSync('./reporte/salida/tabla.html', newHtml, 'utf8');
 }
 
+EmailMensaje.prototype.renderizar = function () {
+    plotBarras(() => {
+        plotLineas(() => {
+            emailControl.enviar()
+        })
+    })
+}
+
+/* ===========================================================
+===================== FUNCIONES INTERNAS =====================
+==============================================================
+*/
+
 async function plotBarras(cb) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto(`file://${process.cwd()}/web/public/index.html`);
+    await page.goto(`file://${process.cwd()}/web/public/reporte.html`);
    
     // Captura la imagen del div con id "myDiv"
     const element = await page.$('#grafBarras');
@@ -62,7 +65,7 @@ async function plotBarras(cb) {
 async function plotLineas(cb) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto(`file://${process.cwd()}/web/public/index.html`);
+    await page.goto(`file://${process.cwd()}/web/public/reporte.html`);
    
     // Captura la imagen del div con id "myDiv"
     const element = await page.$('#grafLineas');
@@ -72,7 +75,7 @@ async function plotLineas(cb) {
     cb()
 }
 
-module.exports = RenderHTML;
+module.exports = EmailMensaje;
 
 if (verLog) {
     console.log(`${ID_MOD} - Directorio trabajo:`, process.cwd());

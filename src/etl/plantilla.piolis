@@ -166,11 +166,17 @@
             ******************************************** */
             
             [trace]
+
             var layout = {
                 title: 'Niveles historicos',
                 font: {
                     family: 'consolas',
                     size: 12
+                },
+                yaxis: {
+                    autorange: true,
+                    range: [0.0, 10.0],
+                    type: 'linear'
                 }
             };
 

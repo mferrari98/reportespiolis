@@ -3,22 +3,25 @@ const { verLog } = require("../../config.json")
 const SitioDAO = require("../dao/sitioDAO");
 const TipoVariableDAO = require("../dao/tipoVariableDAO");
 const HistoricoLecturaDAO = require("../dao/historicoLecturaDAO");
-const RenderHTML = require("./ctrl_html");
+const EmailMensaje = require("./emailMensaje");
 const { transpilar } = require("../etl/transpilador");
 
 const tipoVariableDAO = new TipoVariableDAO();
 const sitioDAO = new SitioDAO();
 const historicoLecturaDAO = new HistoricoLecturaDAO();
-const renderHTML = new RenderHTML();
+const emailMensaje = new EmailMensaje();
 
 const ID_MOD = "REPORTE";
 
-let lanzarReporte = function (currentModifiedTime) { 
-
+let lanzarReporte = function (evSCADA, currentModifiedTime, cb) { 
     getNuevosDatos((err, reporte) => {
         if (!err) {
             transpilar(reporte, currentModifiedTime, () => {
-                renderHTML.renderizar();
+                cb()
+                if (evSCADA) {
+                    emailMensaje.extraerTabla();
+                    emailMensaje.renderizar();    
+                }                
             });
         }
     });

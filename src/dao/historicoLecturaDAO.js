@@ -23,7 +23,8 @@ const sql_getHistorico = `
   SELECT hl.*
   FROM historico_lectura hl
   JOIN tipo_variable tv ON hl.tipo_id = tv.id
-  WHERE hl.sitio_id = ? AND tv.descriptor = 'Nivel[m]';
+  WHERE hl.sitio_id = ? AND tv.descriptor = 'Nivel[m]'
+  ORDER BY etiempo;
 `;
 const sql_delete = `DELETE FROM historico_lectura WHERE id = ?`;
 
