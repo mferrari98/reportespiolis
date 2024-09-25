@@ -38,8 +38,8 @@ router.get('/poblarbd', (req, res) => {
 
   const histLectControl = new HistLectControl();
   
-  histLectControl.poblar((err) => {
-    res.json({ message: 'poblando base de datos', err });
+  histLectControl.poblar((resultado) => {
+    res.json({ message: 'poblando base de datos', resultado });
   })
 });
 

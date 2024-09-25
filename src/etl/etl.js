@@ -11,6 +11,7 @@ const historicoLecturaDAO = new HistoricoLecturaDAO();
 const ID_MOD = "ETL";
 const SIN_DETERMINAR = "s/d";
 
+const tipo_variables = ["Nivel[m]", "Cloro[mlg/l]", "Turbiedad[UTN]", "VOL/DIA[m3/dia]"]
 /**
  * 
  * @param {es el reporte en texto plano, con campos separados por un blanco no determinado
@@ -134,10 +135,10 @@ function nuevoHistoricoLectura(lines, callback) {
   const lineas_modif = agregarNulos(lines, umbral);
   const timestamp = new Date().toISOString();
 
-  insertarNiveles(lineas_modif, timestamp, () => {
-    insertarCloro(lineas_modif, timestamp, () => {
-      insertarTurbiedad(lineas_modif, timestamp, () => {
-        insertarVoldia(lineas_modif, timestamp, () => {
+  insertar(lineas_modif, 1, timestamp, () => {        // nivel
+    insertar(lineas_modif, 2, timestamp, () => {      // cloro
+      insertar(lineas_modif, 3, timestamp, () => {    // turbiedad
+        insertar(lineas_modif, 4, timestamp, () => {  // vol/dia
           callback();
         });
       });
@@ -145,25 +146,30 @@ function nuevoHistoricoLectura(lines, callback) {
   });
 }
 
-function insertarNiveles(lineas_modif, timestamp, callback) {
+function insertar(lineas_modif, columna, timestamp, callback) {
 
-  const niveles = getColumna(lineas_modif, 1);
+  const tipoVar = getColumna(lineas_modif, columna);
 
-  tipoVariableDAO.getByDescriptor("Nivel[m]", (err, tipoVariable) => {
+  tipoVariableDAO.getByDescriptor(tipo_variables[columna-1], (err, tipoVariable) => {
     if (err) {
       callback(err);
       return;
     }
 
-    let remaining = niveles.length;
+    let remaining = tipoVar.length;
     if (remaining === 0) {
       callback(null);
       return;
     }
 
-    for (let i = 0; i < niveles.length; i++) {
-      const valor = niveles[i];
+    for (let i = 0; i < tipoVar.length; i++) {
+      const valor = tipoVar[i];
 
+      if (valor == SIN_DETERMINAR) {  // no insertar en bd
+        remaining--
+        continue
+      } 
+        
       sitioDAO.getByOrden(i, (err, sitio) => {
         if (err) {
           callback(err);
@@ -186,158 +192,7 @@ function insertarNiveles(lineas_modif, timestamp, callback) {
                 `${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`
               );
 
-            remaining -= 1;
-            if (remaining === 0) {
-              callback(null);
-            }
-          }
-        );
-      });
-    }
-  });
-}
-
-function insertarCloro(lineas_modif, timestamp, callback) {
-  const cloro = getColumna(lineas_modif, 2);
-  tipoVariableDAO.getByDescriptor("Cloro[mlg/l]", (err, tipoVariable) => {
-    if (err) {
-      callback(err);
-      return;
-    }
-
-    let remaining = cloro.length;
-
-    if (remaining === 0) {
-      callback(null);
-      return;
-    }
-
-    for (let i = 0; i < cloro.length; i++) {
-      const valor = cloro[i];
-
-      sitioDAO.getByOrden(i, (err, sitio) => {
-        if (err) {
-          callback(err);
-          return;
-        }
-
-        historicoLecturaDAO.create(
-          sitio.id,
-          tipoVariable.id,
-          valor,
-          timestamp,
-          (err, result) => {
-            if (err) {
-              callback(err);
-              return;
-            }
-
-            if (verLog)
-              console.log(
-                `${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`
-              );
-
-            remaining -= 1;
-            if (remaining === 0) {
-              callback(null);
-            }
-          }
-        );
-      });
-    }
-  });
-}
-
-function insertarTurbiedad(lineas_modif, timestamp, callback) {
-  const turbiedad = getColumna(lineas_modif, 3);
-  tipoVariableDAO.getByDescriptor("Turbiedad[UTN]", (err, tipoVariable) => {
-    if (err) {
-      callback(err);
-      return;
-    }
-
-    let remaining = turbiedad.length;
-
-    if (remaining === 0) {
-      callback(null);
-      return;
-    }
-
-    for (let i = 0; i < turbiedad.length; i++) {
-      const valor = turbiedad[i];
-
-      sitioDAO.getByOrden(i, (err, sitio) => {
-        if (err) {
-          callback(err);
-          return;
-        }
-
-        historicoLecturaDAO.create(
-          sitio.id,
-          tipoVariable.id,
-          valor,
-          timestamp,
-          (err, result) => {
-            if (err) {
-              callback(err);
-              return;
-            }
-
-            if (verLog)
-              console.log(`${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`);
-
-            remaining -= 1;
-            if (remaining === 0) {
-              callback(null);
-            }
-          }
-        );
-      });
-    }
-  });
-}
-
-function insertarVoldia(lineas_modif, timestamp, callback) {
-  const voldia = getColumna(lineas_modif, 4);
-  tipoVariableDAO.getByDescriptor("VOL/DIA[m3/día]", (err, tipoVariable) => {
-    if (err) {
-      callback(err);
-      return;
-    }
-
-    let remaining = voldia.length;
-
-    if (remaining === 0) {
-      callback(null);
-      return;
-    }
-
-    for (let i = 0; i < voldia.length; i++) {
-      const valor = voldia[i];
-
-      sitioDAO.getByOrden(i, (err, sitio) => {
-        if (err) {
-          callback(err);
-          return;
-        }
-
-        historicoLecturaDAO.create(
-          sitio.id,
-          tipoVariable.id,
-          valor,
-          timestamp,
-          (err, result) => {
-            if (err) {
-              callback(err);
-              return;
-            }
-
-            if (verLog)
-              console.log(
-                `${ID_MOD} - Insertado historico_lectura {${sitio.descriptor}:${tipoVariable.descriptor}:${valor}}`
-              );
-
-            remaining -= 1;
+            remaining--
             if (remaining === 0) {
               callback(null);
             }
