@@ -64,10 +64,10 @@ function sustituirMarcas(reporte, estampatiempo, contenido, cb) {
     reporte.forEach((item, i) => {
         contenido = contenido
             .replace(`SITIO_${i}`, item.sitio)
-            .replace(`NIVEL_${i}`, item.variable.nivel.valor === sindet ? '' : item.variable.nivel.valor)
-            .replace(`CLORO_${i}`, item.variable.cloro.valor === sindet ? '' : item.variable.cloro.valor)
-            .replace(`TURB_${i}`, item.variable.turbiedad.valor === sindet ? '' : item.variable.turbiedad.valor)
-            .replace(`VOLDIA_${i}`, item.variable.voldia.valor === sindet ? '' : item.variable.voldia.valor);
+            .replace(`NIVEL_${i}`, item.variable.nivel.valor === undefined ? '-' : item.variable.nivel.valor)
+            .replace(`CLORO_${i}`, item.variable.cloro.valor === undefined ? '-' : item.variable.cloro.valor)
+            .replace(`TURB_${i}`, item.variable.turbiedad.valor === undefined ? '-' : item.variable.turbiedad.valor)
+            .replace(`VOLDIA_${i}`, item.variable.voldia.valor === undefined ? '-' : item.variable.voldia.valor);
     })
 
     contenido = contenido

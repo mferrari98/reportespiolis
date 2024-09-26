@@ -1,4 +1,4 @@
-const { umbral, verLog } = require("../../config.json")
+const { umbral_parser_columnas, verLog } = require("../../config.json")
 
 const TipoVariableDAO = require("../dao/tipoVariableDAO");
 const SitioDAO = require("../dao/sitioDAO");
@@ -132,7 +132,7 @@ function getSitiosNombre(lines, cb) {
 
 function nuevoHistoricoLectura(lines, callback) {
 
-  const lineas_modif = agregarNulos(lines, umbral);
+  const lineas_modif = agregarNulos(lines, umbral_parser_columnas);
   const timestamp = new Date().toISOString();
 
   insertar(lineas_modif, 1, timestamp, () => {        // nivel

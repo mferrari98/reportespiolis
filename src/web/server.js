@@ -73,7 +73,7 @@ module.exports = function (observador) {
   app.use('/sitio', sitioRoutes);
   app.use('/tipovar', tipoVarRoutes);
   app.use('/reporte', generalRoutes(observador));
-  app.use('/poblarbd', desarrolloRoutes);
+  app.use('/bd', desarrolloRoutes);
 
   // Retornar lo que quieras, por ejemplo, iniciar un servidor o cualquier lógica
   return {

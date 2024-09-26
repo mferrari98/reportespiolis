@@ -27,6 +27,8 @@ const sql_getHistorico = `
   ORDER BY etiempo;
 `;
 const sql_delete = `DELETE FROM historico_lectura WHERE id = ?`;
+// sqlite no acepta truncate, por lo que debe emularse su comportamiento con delete
+const sql_truncate = `DELETE FROM historico_lectura; DELETE FROM SQLITE_SEQUENCE WHERE name="historico_lectura"`;
 
 /*
 *************************************************
@@ -105,6 +107,19 @@ HistoricoLecturaDAO.prototype.delete = function (id, callback) {
 
   db.run(sql_delete, [id], function (err) {
     callback(null, { changes: this.changes });
+  });
+};
+
+HistoricoLecturaDAO.prototype.truncate = function (callback) {
+
+  if (verLog)
+    console.log(`${ID_MOD} - truncate`);
+
+  const db = getDatabase();
+
+  db.run(sql_truncate, function (err) {
+    // TRUNCATE no devuelve el número de filas afectadas
+    callback(null, { changes: "se borro todo el contenido de la tabla" });
   });
 };
 
