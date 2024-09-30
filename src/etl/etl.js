@@ -1,4 +1,4 @@
-const { umbral_parser_columnas, verLog } = require("../../config.json")
+const config = require("../../config.json")
 
 const TipoVariableDAO = require("../dao/tipoVariableDAO");
 const SitioDAO = require("../dao/sitioDAO");
@@ -10,6 +10,9 @@ const historicoLecturaDAO = new HistoricoLecturaDAO();
 
 const ID_MOD = "ETL";
 const SIN_DETERMINAR = "s/d";
+
+const verLog = config.desarrollo.verLog
+const umbral = config.umbral_parser_columnas
 
 const tipo_variables = ["Nivel[m]", "Cloro[mlg/l]", "Turbiedad[UTN]", "VOL/DIA[m3/dia]"]
 /**
@@ -132,7 +135,7 @@ function getSitiosNombre(lines, cb) {
 
 function nuevoHistoricoLectura(lines, callback) {
 
-  const lineas_modif = agregarNulos(lines, umbral_parser_columnas);
+  const lineas_modif = agregarNulos(lines, umbral);
   const timestamp = new Date().toISOString();
 
   insertar(lineas_modif, 1, timestamp, () => {        // nivel

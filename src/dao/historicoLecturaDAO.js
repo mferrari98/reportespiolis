@@ -1,4 +1,4 @@
-const { verLog } = require("../../config.json")
+const { verLog } = require("../../config.json").desarrollo
 const { getDatabase } = require('../basedatos/db');
 
 const ID_MOD = "DAO-HISTORICO-LECTURA";

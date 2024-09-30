@@ -1,11 +1,14 @@
 const fs = require("fs");
 const readline = require("readline");
 
-const { verLog } = require("../../config.json")
+const config = require("../../config.json")
 const { lanzarETL } = require("./etl");
-const { lanzarReporte } = require("../reporte/reporte")
+const { lanzarReporte } = require("../control/controlReporte")
 
 const ID_MOD = "OBSERV";
+
+const verLog = config.desarrollo.verLog
+const dir_reporte = config.direcciones.sca_wizcon
 
 let filePath = process.argv[2];
 let currentModifiedTime;
@@ -19,12 +22,8 @@ function iniciar() {
       `${ID_MOD} - No hay direccion en linea de comandos, se utilizara definicion de config.json`
     );
 
-    fs.readFile("../config.json", "utf8", (err, jsonString) => {
-      // Parsea el contenido del archivo JSON a un objeto JavaScript
-      const data = JSON.parse(jsonString);
-      filePath = data.direcc_remota + "/reporte_horario_test.log";
-      checkFileModification();
-    });
+    filePath = dir_reporte
+    checkFileModification();    
   }
 }
 

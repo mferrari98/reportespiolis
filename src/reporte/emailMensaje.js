@@ -1,4 +1,4 @@
-const { verLog } = require("../../config.json")
+const { verLog } = require("../../config.json").desarrollo
 
 const fs = require('fs');
 const cheerio = require('cheerio');

@@ -1,4 +1,4 @@
-const { verLog } = require("../../config.json")
+const { verLog } = require("../../config.json").desarrollo
 const { getDatabase } = require('../basedatos/db');
 
 const ID_MOD = "DAO-SITIO";
@@ -8,6 +8,7 @@ const sql_getById = `SELECT * FROM sitio WHERE id = ?`;
 const sql_getByDescriptor = `SELECT * FROM sitio WHERE descriptor = ?`;
 const sql_getByOrden = `SELECT * FROM sitio WHERE orden = ?`;
 const sql_getAll = `SELECT * FROM sitio`;
+const sql_getTodosDescriptores = `SELECT DISTINCT descriptor, rebalse FROM sitio ORDER BY orden`;
 const sql_cantSitios = `SELECT COUNT(*) as cant FROM sitio`;
 const sql_delete = `DELETE FROM sitio WHERE id = ?`;
 
@@ -90,6 +91,19 @@ SitioDAO.prototype.getAll = function (callback) {
     callback(null, rows);
   });
 };
+
+SitioDAO.prototype.getTodosDescriptores = function (callback) {
+
+  if (verLog)
+    console.log(`${ID_MOD} - getTodosDescriptores`);
+
+  const db = getDatabase();
+
+  db.all(sql_getTodosDescriptores, [], (_, rows) => {
+    callback(null, rows);
+  });
+};
+
 
 SitioDAO.prototype.cantSitios = function (callback) {
 

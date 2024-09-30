@@ -1,4 +1,4 @@
-const { verLog } = require("../../config.json")
+const { verLog } = require("../../config.json").desarrollo
 const { getDatabase } = require('../basedatos/db');
 
 const ID_MOD = "DAO-TPOVAR"
@@ -8,6 +8,7 @@ const sql_getById = `SELECT * FROM tipo_variable WHERE id = ?`;
 const sql_getByDescriptor = `SELECT * FROM tipo_variable WHERE descriptor = ?`;
 const sql_getByOrden = `SELECT * FROM tipo_variable WHERE orden = ?`;
 const sql_getAll = `SELECT * FROM tipo_variable`;
+const sql_getTodosDescriptores = `SELECT DISTINCT descriptor FROM tipo_variable ORDER BY orden`;
 const sql_delete = `DELETE FROM tipo_variable WHERE id = ?`;
 
 function TipoVariableDAO() { }
@@ -68,6 +69,18 @@ TipoVariableDAO.prototype.getAll = function (callback) {
   const db = getDatabase();
 
   db.all(sql_getAll, [], (_, rows) => {
+    callback(null, rows);
+  });
+};
+
+TipoVariableDAO.prototype.getTodosDescriptores = function (callback) {
+
+  if (verLog)
+    console.log(`${ID_MOD} - getTodosDescriptores`);
+
+  const db = getDatabase();
+
+  db.all(sql_getTodosDescriptores, [], (_, rows) => {
     callback(null, rows);
   });
 };
