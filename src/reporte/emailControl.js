@@ -1,4 +1,4 @@
-const { verLog, email } = require("../../config.json")
+const config = require("../../config.json")
 
 const fs = require('fs');
 const nodemailer = require('nodemailer');
@@ -6,10 +6,12 @@ const dns = require('dns');
 
 const ID_MOD = "CtrlEmail"
 
+const verLog = config.desarrollo.verLog
+let destinos = config.email.difusion
+let user = config.email.credenciales.user
+let pass = config.email.credenciales.pass
+
 let transporter
-let destinos = email.difusion
-let user = email.user
-let pass = email.pass
 const smtpHostFallback = "10.10.1.40"; // Dirección IP alternativa si no se puede resolver el host
 const smtpHost = 'post.servicoop.com';
 

@@ -1,4 +1,4 @@
-const { verLog } = require("../../config.json")
+const { verLog } = require("../../config.json").desarrollo
 
 const fs = require('fs');
 const cheerio = require('cheerio');
@@ -95,21 +95,28 @@ function prepararGrafLineas(reporte, contenido) {
     // Itera sobre el arreglo `reporte` e inserta la nueva estructura en la posición memorizada.
     let resultadoFinal = textoModificado.substring(0, posicionMarca); // Texto antes de la marca.
 
-    reporte.forEach((elem, indice) => {
+    for (let indice = 0; indice < reporte.length; indice++) {
 
+        const historicos = reporte[indice].variable.nivel.historico
+        if (historicos == undefined)
+            continue
+
+        let valx = unpack(historicos, 'etiempo')
+        let valy = unpack(historicos, 'valor')
+        
         traces[indice] = `trace${indice}`
 
         let estructura = `
         var ${traces[indice]} = {
-            name: "${elem.sitio}",
-            x: [${unpack(elem.variable.nivel.historico, 'etiempo')}],
-            y: [${unpack(elem.variable.nivel.historico, 'valor')}],
+            name: "${reporte[indice].sitio}",
+            x: [${valx}],
+            y: [${valy}],
             type: 'scatter'
         };\n`;
 
         // Inserta la estructura en la posición original de la marca.
         resultadoFinal += estructura;
-    });
+    };
 
     resultadoFinal += `\nvar datosLinea = [${traces.join(", ")}];`
     // Agrega el contenido restante del texto original después de la marca.

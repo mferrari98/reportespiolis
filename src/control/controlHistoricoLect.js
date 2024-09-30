@@ -1,7 +1,7 @@
 const TipoVariableDAO = require("../dao/tipoVariableDAO");
 const SitioDAO = require("../dao/sitioDAO");
 const HistoricoLecturaDAO = require("../dao/historicoLecturaDAO");
-const desviacion = require("../../config.json").desviacion_poblarbd
+const desviacion = require("../../config.json").desarrollo.desviacion_poblarbd
 
 const tipoVariableDAO = new TipoVariableDAO();
 const sitioDAO = new SitioDAO();
@@ -11,7 +11,7 @@ const ID_MOD = "CtrlHLect"
 
 const fourHours = 4 * 60 * 60 * 1000; // 4 horas * 60 minutos * 60 segundos * 1000 ms
 const cant_reportes = 20
-const cant_sitios = 14
+const cant_sitios = 11
 
 const MAX_RANGO = 4.5
 const MIN_RANGO = 0.1
@@ -31,29 +31,26 @@ HistLectControl.prototype.poblar = function (cb) {
             // estamapa de tiempo en formato ISO
             const estampa = new Date(timestamp - (fourHours * i)).toISOString()
 
-            for (let j = 1; j <= cant_sitios; j++) {
+            for (let j = 0; j <= cant_sitios; j++) {
                 
                 let valor = generarValorAleatorio(desviacion);
 
-                sitioDAO.getById(j, (err2, sitio) => {
-                    if (err1 || err2) {
-                        callback(`${err1,err2}`);
-                        return;
+                sitioDAO.getByOrden(j, (err2, sitio) => {
+
+                    remanente--
+                    if (err1 != undefined && err2 != undefined) {
+                        historicoLecturaDAO.create(
+                            sitio.id,
+                            tipoVariable.id,
+                            valor,
+                            estampa,
+                            (err, result) => {
+                                acumulado[i][j - 1] = result
+                            }
+                        )
                     }
-                    
-                    historicoLecturaDAO.create(
-                        sitio.id,
-                        tipoVariable.id,
-                        valor,
-                        estampa,
-                        (err, result) => {
-                            acumulado[i][j-1] = result
-                            
-                            remanente--                            
-                            if (remanente == 0)
-                                cb(acumulado)
-                        }
-                    )  
+                    if (remanente == 0)
+                        cb(acumulado)
                 })
             }
         }

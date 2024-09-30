@@ -28,6 +28,8 @@
         ]
     },
     "umbral_parser_columnas": 20,
-    "verLog": false,
-    "desviacion_poblarbd": 1
+    "desarrollo": {
+        "verLog": false,
+        "desviacion_poblarbd": 1
+    }
 }

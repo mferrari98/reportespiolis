@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const HistLectControl = require("../../control/histLectControl");
+const HistLectControl = require("../../control/controlHistoricoLect");
 
 router.get('/poblar', (req, res) => {
 
