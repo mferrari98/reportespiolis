@@ -73,8 +73,11 @@ function sustituirMarcas(reporte, estampatiempo, contenido, cb) {
     contenido = contenido
         .replaceAll('<!-- SITIOS -->', reporte.map(objeto => "'" + objeto.sitio + "'"))
         .replaceAll('<!-- NIVELES -->', reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? objeto.variable.nivel.valor : 0))
+        .replaceAll('<!-- NIVELESTOTAL -->', parseFloat(reporte.reduce((total, objeto) => total + (objeto.variable.nivel.valor != sindet ? objeto.variable.nivel.valor : 0), 0).toFixed(3)))
+
 
         .replaceAll('<!-- COMPLEMENTO -->', reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? (objeto.variable.nivel.rebalse - objeto.variable.nivel.valor).toFixed(3) : 0))
+        .replaceAll('<!-- COMPLEMENTOTOTAL -->', reporte.reduce((total, objeto) => total + ((objeto.variable.nivel.valor != sindet) ? parseFloat((objeto.variable.nivel.rebalse - objeto.variable.nivel.valor).toFixed(3)) : 0), 0).toFixed(3))
         .replaceAll('<!-- REBALSE -->', reporte.map(objeto => objeto.variable.nivel.rebalse.toFixed(3)));
 
     return contenido
