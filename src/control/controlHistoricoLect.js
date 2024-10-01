@@ -31,26 +31,23 @@ HistLectControl.prototype.poblar = function (cb) {
             // estamapa de tiempo en formato ISO
             const estampa = new Date(timestamp - (fourHours * i)).toISOString()
 
-            for (let j = 0; j <= cant_sitios; j++) {
+            for (let j = 0; j < cant_sitios; j++) {
                 
                 let valor = generarValorAleatorio(desviacion);
 
                 sitioDAO.getByOrden(j, (err2, sitio) => {
-
-                    remanente--
-                    if (err1 != undefined && err2 != undefined) {
-                        historicoLecturaDAO.create(
-                            sitio.id,
-                            tipoVariable.id,
-                            valor,
-                            estampa,
-                            (err, result) => {
-                                acumulado[i][j - 1] = result
-                            }
-                        )
-                    }
-                    if (remanente == 0)
-                        cb(acumulado)
+                    historicoLecturaDAO.create(
+                        sitio.id,
+                        tipoVariable.id,
+                        valor,
+                        estampa,
+                        (err, result) => {
+                            acumulado[i][j] = result
+                            
+                            if (--remanente == 0)
+                                cb(acumulado)
+                        }
+                    )
                 })
             }
         }

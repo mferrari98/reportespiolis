@@ -44,20 +44,22 @@ function getNuevosDatos(callback) {
                 
                 let remaining = rows.length;
                 rows.forEach((row) => {
-
+                    
                     tipoVariableDAO.getById(row.tipo_id, (err, tipoVarRow) => {
                         sitioDAO.getById(row.sitio_id, (err, sitioRow) => {
                             historicoLecturaDAO.getHistorico(sitioRow.id, (_, historico) => {
 
                                 completarReporte(mi_reporte, row, tipoVarRow, sitioRow, historico);
                                 remaining -= 1;
-
+                                
                                 if (remaining === 0)
                                     callback(null, mi_reporte);
                             })
                         });
                     });
                 });
+                if (remaining === 0)
+                    callback(null, mi_reporte);
             });
         })
     });
