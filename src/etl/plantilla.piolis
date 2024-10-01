@@ -187,46 +187,31 @@
 
     <script>
 
-    function pie(){
-        
-      var data = [{
+        function pie(){
 
-  "type": "sunburst",
+            /* ********************************************
+            *********** GRAFICO TORTA ***********
+            ******************************************** */
+            
+            var data = [{
+                "type": "sunburst",
+                "labels": ["RESERV","AGUA",<!-- SITIOS -->,"VACIO"],
+                "parents": ["", "RESERV", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "RESERV"],
+                "values":  [(<!-- NIVELESTOTAL -->+<!-- COMPLEMENTOTOTAL -->), <!-- NIVELESTOTAL -->, <!-- NIVELES -->,<!-- COMPLEMENTOTOTAL -->],
+                outsidetextfont: {size: 20, color: "#377eb8"},
+                "leaf": {opacity: 0.6},
+                "marker": {line: {width: 2}},
+                "branchvalues": 'total'
+            }];
 
-  "labels": ["RESERV","AGUA",<!-- SITIOS -->"VACIO"],
+            var layout = {
+                margin: {l: 0, r: 0, b: 0, t: 0},
+                width: 500,
+                height: 500
+            };
 
-  "parents": ["", "RESERV", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "RESERV"],
-
-  "values":  [(<!-- NIVELESTOTAL -->+<!-- COMPLEMENTOTOTAL -->), <!-- NIVELESTOTAL -->, <!-- NIVELES --><!-- COMPLEMENTOTOTAL -->],
-
-  outsidetextfont: {size: 20, color: "#377eb8"},
-
-  "leaf": {opacity: 0.6},
-
-  "marker": {line: {width: 2}},
-
-    "branchvalues": 'total'
-
-
-}];
-
-
-var layout = {
-
-  margin: {l: 0, r: 0, b: 0, t: 0},
-
-  width: 500,
-
-  height: 500
-
-};
-
-
-
-Plotly.newPlot('grafPie', data, layout);
-
-    }
-
+            Plotly.newPlot('grafPie', data, layout);
+        }
     </script>
 </body>
 </html>
