@@ -17,7 +17,7 @@ EmailMensaje.prototype.extraerTabla = function() {
     const $ = cheerio.load(archivoHTML);
     
     const headContent = $('head').children().not('script').toString();
-    const bodyContent = $('body').children().not('script, #grafBarras, #grafLineas, #guardar').toString();
+    const bodyContent = $('body').children().not('script, #grafBarras, #grafLineas, #grafPie, #guardar').toString();
 
     // armar un nuevo html
     const newHtml = `
@@ -39,7 +39,10 @@ EmailMensaje.prototype.extraerTabla = function() {
 EmailMensaje.prototype.renderizar = function () {
     plotBarras(() => {
         plotLineas(() => {
-            emailControl.enviar()
+            plotPie(() => {
+                emailControl.enviar()
+            })
+            
         })
     })
 }
@@ -70,6 +73,19 @@ async function plotLineas(cb) {
     // Captura la imagen del div con id "myDiv"
     const element = await page.$('#grafLineas');
     await element.screenshot({ path: './reporte/salida/grafLineas.png' });
+
+    await browser.close();
+    cb()
+}
+
+async function plotPie(cb) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(`file://${process.cwd()}/web/public/reporte.html`);
+   
+    // Captura la imagen del div con id "myDiv"
+    const element = await page.$('#grafPie');
+    await element.screenshot({ path: './reporte/salida/grafPie.png' });
 
     await browser.close();
     cb()

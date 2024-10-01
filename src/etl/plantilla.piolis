@@ -12,7 +12,7 @@
 
     <style>
         :root {
-            --color-nivel: #5996e5;
+            --color-nivel: #3498db;
             --color-rebalse: #d3a53c;
         }
     </style>
@@ -63,6 +63,7 @@
     <!-- Div donde se renderizará el gráfico -->
     <div id="grafBarras" style="width: 100%; height: 500px;"></div>
     <div id="grafLineas" style="width: 100%; height: 500px;"></div>
+    <div style="width: 100%; height: 600px; margin: 0 auto;" id="grafPie"></div>
 
     <button id="guardar">Guardar como imagen</button>
     <button id="copiar">Copiar al Portapapeles</button>
@@ -90,7 +91,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             barras()
             lineas()
-            lineaTiempo()
+            pie()
         })
     </script>
 
@@ -182,6 +183,50 @@
 
             Plotly.newPlot('grafLineas', datosLinea, layout);
         }
+    </script>
+
+    <script>
+
+    function pie(){
+        
+      var data = [{
+
+  "type": "sunburst",
+
+  "labels": ["RESERV","AGUA",<!-- SITIOS -->"VACIO"],
+
+  "parents": ["", "RESERV", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "RESERV"],
+
+  "values":  [(<!-- NIVELESTOTAL -->+<!-- COMPLEMENTOTOTAL -->), <!-- NIVELESTOTAL -->, <!-- NIVELES --><!-- COMPLEMENTOTOTAL -->],
+
+  outsidetextfont: {size: 20, color: "#377eb8"},
+
+  "leaf": {opacity: 0.6},
+
+  "marker": {line: {width: 2}},
+
+    "branchvalues": 'total'
+
+
+}];
+
+
+var layout = {
+
+  margin: {l: 0, r: 0, b: 0, t: 0},
+
+  width: 500,
+
+  height: 500
+
+};
+
+
+
+Plotly.newPlot('grafPie', data, layout);
+
+    }
+
     </script>
 </body>
 </html>
