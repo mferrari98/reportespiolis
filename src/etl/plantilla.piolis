@@ -195,9 +195,12 @@
             
             var data = [{
                 "type": "sunburst",
-                "labels": ["RESERV","AGUA",<!-- SITIOS -->,"VACIO"],
-                "parents": ["", "RESERV", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "RESERV"],
-                "values":  [(<!-- NIVELESTOTAL -->+<!-- COMPLEMENTOTOTAL -->), <!-- NIVELESTOTAL -->, <!-- NIVELES -->,<!-- COMPLEMENTOTOTAL -->],
+
+                [tracePie]
+
+                
+
+
                 outsidetextfont: {size: 20, color: "#377eb8"},
                 "leaf": {opacity: 0.6},
                 "marker": {line: {width: 2}},

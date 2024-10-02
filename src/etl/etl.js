@@ -178,7 +178,6 @@ function insertar(lineas_modif, columna, timestamp, callback) {
           callback(err);
           return;
         }
-
         historicoLecturaDAO.create(
           sitio.id,
           tipoVariable.id,

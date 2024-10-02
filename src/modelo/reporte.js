@@ -16,6 +16,7 @@ Reporte.prototype.declarar = function (sitios, cb) {
                         descriptor: descriptores[0].descriptor,
                         valor: undefined,
                         rebalse: sitios[index].rebalse,
+                        cubicaje: sitios[index].cubicaje, 
                         historico: undefined
                     },
                     cloro: {

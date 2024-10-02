@@ -3,12 +3,12 @@ const { getDatabase } = require('../basedatos/db');
 
 const ID_MOD = "DAO-SITIO";
 
-const sql_create = `INSERT INTO sitio (descriptor, orden, rebalse) VALUES (?, ?, ?)`;
+const sql_create = `INSERT INTO sitio (descriptor, orden, rebalse, cubicaje) VALUES (?, ?, ?, ?)`;
 const sql_getById = `SELECT * FROM sitio WHERE id = ?`;
 const sql_getByDescriptor = `SELECT * FROM sitio WHERE descriptor = ?`;
 const sql_getByOrden = `SELECT * FROM sitio WHERE orden = ?`;
 const sql_getAll = `SELECT * FROM sitio`;
-const sql_getTodosDescriptores = `SELECT DISTINCT descriptor, rebalse FROM sitio ORDER BY orden`;
+const sql_getTodosDescriptores = `SELECT DISTINCT descriptor, rebalse, cubicaje FROM sitio ORDER BY orden`;
 const sql_cantSitios = `SELECT COUNT(*) as cant FROM sitio`;
 const sql_delete = `DELETE FROM sitio WHERE id = ?`;
 
@@ -28,6 +28,19 @@ const rebalseMap = new Map([
   ['Doradillo', 4.0]
 ]);
 
+const cubicajeMap = new Map([
+  ['L.Maria', 1086.95],
+  ['KM11', 3260.86],
+  ['B.SAN MIGUEL', 263.15],
+  ['R6000', 1714.28],
+  ['B.OESTE(1K)', 342.85],
+  ['NUEVA CHUBUT', 263.15],
+  ['B.PUJOL', 80],
+  ['Cota(45)', 277.77],
+  ['Cota(126)', 54.54],
+  ['Doradillo', 71.83]
+]); 
+
 function SitioDAO() { }
 
 SitioDAO.prototype.create = function (descriptor, orden, callback) {
@@ -37,8 +50,9 @@ SitioDAO.prototype.create = function (descriptor, orden, callback) {
 
   const db = getDatabase();
   const rebalse = rebalseMap.get(descriptor) || 0.0;
+  const cubicaje = cubicajeMap.get(descriptor) || 0.0;
 
-  db.run(sql_create, [descriptor, orden, rebalse], function (err) {
+  db.run(sql_create, [descriptor, orden, rebalse, cubicaje], function (err) {
     callback(null, { id: this.lastID, descriptor, orden, rebalse });
   });
 };

@@ -9,7 +9,8 @@ function crearTablas(callback) {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         descriptor TEXT NOT NULL,
         orden INTEGER NOT NULL,
-        rebalse FLOAT NOT NULL
+        rebalse FLOAT NOT NULL,
+        cubicaje FLOAT NOT NULL
     )`,
     (err) => {
       tablaTipoVariable({err_sitio:err}, callback)

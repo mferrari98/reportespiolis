@@ -18,7 +18,8 @@ function transpilar(reporte, estampatiempo, cb) {
         let contenido = expandirPlantilla(reporte, data)        
         contenido = sustituirMarcas(reporte, estampatiempo, contenido)        
         contenido = prepararGrafLineas(reporte, contenido)
-        
+        contenido = calcularLlenado(reporte, contenido)
+
         // solo para debug
         fs.writeFile("./etl/plantilla.expand.html", contenido, () => { })
 
@@ -75,7 +76,6 @@ function sustituirMarcas(reporte, estampatiempo, contenido, cb) {
         .replaceAll('<!-- NIVELES -->', reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? objeto.variable.nivel.valor : 0))
         .replaceAll('<!-- NIVELESTOTAL -->', parseFloat(reporte.reduce((total, objeto) => total + (objeto.variable.nivel.valor != sindet ? objeto.variable.nivel.valor : 0), 0).toFixed(3)))
 
-
         .replaceAll('<!-- COMPLEMENTO -->', reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? (objeto.variable.nivel.rebalse - objeto.variable.nivel.valor).toFixed(3) : 0))
         .replaceAll('<!-- COMPLEMENTOTOTAL -->', reporte.reduce((total, objeto) => total + ((objeto.variable.nivel.valor != sindet) ? parseFloat((objeto.variable.nivel.rebalse - objeto.variable.nivel.valor).toFixed(3)) : 0), 0).toFixed(3))
         .replaceAll('<!-- REBALSE -->', reporte.map(objeto => objeto.variable.nivel.rebalse.toFixed(3)));
@@ -130,6 +130,62 @@ function unpack(rows, key) {
         return `"${row[key]}"`
     });
 }
+
+function calcularLlenado(reporte, contenido){
+    let sitios = reporte.map(objeto => "'" + objeto.sitio + "'");
+    let nuevosArreglos = [];
+    let nivelestotales = parseFloat(reporte.reduce((total, objeto) => total + (objeto.variable.nivel.valor != sindet ? objeto.variable.nivel.valor : 0), 0).toFixed(3))
+    let complemento = reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? (objeto.variable.nivel.rebalse - objeto.variable.nivel.valor).toFixed(3) : 0)
+    let niveles = reporte.map(objeto => (objeto.variable.nivel.valor != sindet) ? objeto.variable.nivel.valor : 0)
+    let cubicaje = reporte.map(objeto => (objeto.variable.nivel.cubicaje != sindet) ? objeto.variable.nivel.cubicaje : 0)
+    let llenado = []
+    let llenadoniveltotal = 0
+    let llenadocomplementototal = []
+
+    // Verificar que los arreglos tienen el mismo tamaño
+        if (niveles.length === cubicaje.length) {
+            for (let i = 0; i < niveles.length; i++) {
+                // Multiplicar los valores de los arreglos y agregarlos al arreglo de llenado
+                let resultado = niveles[i] * cubicaje[i];
+                llenado.push(resultado);
+
+                // Suma de todos los commplementos
+                llenadocomplementototal =+ complemento[i] * resultado;
+
+                // Sumar el resultado a llenadoniveltotal
+                llenadoniveltotal += resultado;
+    }
+}
+
+    
+    let tracePie = 'tracePie';
+    const marcaPie = '[tracePie]';
+    const posicionMarcaPie = contenido.indexOf(marcaPie);
+
+    // Elimina la marca del texto.
+    let textoModificadoPie = contenido.replace(marcaPie, '');
+
+    // Texto antes de la marca.
+    let resultadoFinalPie = textoModificadoPie.substring(0, posicionMarcaPie);
+
+    // Estructura para el gráfico tipo "pie".
+    let estructuraPie = `
+        
+            labels: ["RESERV","AGUA", ${sitios}, "VACIO"],
+            parents: ["", "RESERV", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "AGUA", "RESERV"],
+            values: [(${llenadoniveltotal}+${llenadocomplementototal}), ${llenadoniveltotal}, ${llenado}, ${llenadocomplementototal}],
+        \n`;
+
+    // Inserta la estructura en la posición original de la marca.
+    resultadoFinalPie += estructuraPie;
+
+    // Agrega el contenido restante del texto original después de la marca.
+    resultadoFinalPie += textoModificadoPie.substring(posicionMarcaPie);
+
+    return resultadoFinalPie;
+}
+
+
 
 function crearHTMLSalida(contenido, cb) {
     // Escribir en el archivo
