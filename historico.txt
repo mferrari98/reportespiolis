@@ -1,0 +1,259 @@
+2024-10-15T13:56:21.964Z [-] LOG - Directorio trabajo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-15T13:56:21.982Z [-] ETL - Directorio del archivo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\etl
+2024-10-15T13:56:21.965Z [-] LOG - Directorio del archivo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\control
+2024-10-15T13:56:22.625Z [-] CTRL-EMAIL - Directorio del archivo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\reporte
+2024-10-15T13:56:22.625Z [-] CTRL-HTML - Directorio trabajo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-15T13:56:21.982Z [-] ETL - Directorio trabajo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-15T13:56:22.625Z [-] CTRL-EMAIL - Directorio trabajo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-15T13:56:22.625Z [-] CTRL-HTML - Directorio del archivo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\reporte
+2024-10-15T13:56:22.627Z [-] REPORTE - Directorio del archivo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\control
+2024-10-15T13:56:22.627Z [-] REPORTE - Directorio trabajo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-15T13:56:22.627Z [-] OBSERV - Directorio trabajo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-15T13:56:22.627Z [-] OBSERV - Directorio del archivo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\etl
+2024-10-15T13:56:22.748Z [-] WEBSERV - Escuchando en p=3000
+2024-10-15T13:56:22.750Z [-] CTRL-EMAIL - post.servicoop.com resuelto correctamente.
+2024-10-15T13:56:22.754Z [-] DB - Conectado a base de datos
+2024-10-15T13:56:22.758Z [-] ESQUEMA - resumen errores ->,
+2024-10-15T13:56:22.758Z [-] OBSERV - No hay direccion en linea de comandos, se utilizara definicion de config.json
+2024-10-15T13:56:22.761Z [-] OBSERV - EXITO: Actual 2024-10-15 13:00:01 ==> Anterior 1969-12-31 21:00:00
+2024-10-15T13:56:22.765Z [-] OBSERV - se leyeron datos desde wizcon
+2024-10-15T13:56:22.779Z [-] OBSERV - se leyeron datos desde citec. %s fila %s,Mar Oct 15 2024 12:59:00 - 3,15,867
+2024-10-15T13:56:22.780Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-15T13:56:22.780Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-15T13:56:22.780Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-15T13:56:22.780Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-15T13:56:22.781Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T13:56:22.781Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T13:56:22.782Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T13:56:22.782Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T13:56:22.782Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T13:56:22.782Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T13:56:22.782Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T13:56:22.782Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T13:56:22.782Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T13:56:22.783Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T13:56:22.783Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T13:56:22.784Z [-] ETL - [TpoVar] creadas=0 existentes=4 [Sitio] creadas=0 existentes=11
+2024-10-15T13:56:22.784Z [-] DAO-HISTORICO-LECTURA - existe
+2024-10-15T13:56:22.785Z [-] DAO-SITIO - getTodosDescriptores
+2024-10-15T13:56:22.786Z [-] DAO-SITIO - getByOrden
+2024-10-15T13:56:22.786Z [-] DAO-TPOVAR - getTodosDescriptores
+2024-10-15T13:56:22.787Z [-] DAO-HISTORICO-LECTURA - getMostRecent
+2024-10-15T13:56:22.788Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.788Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.788Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.789Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.789Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.789Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.789Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.789Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.789Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.789Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.789Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.789Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.789Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.790Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.790Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.790Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.790Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.790Z [-] DAO-TPOVAR - getById
+2024-10-15T13:56:22.790Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.790Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.790Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.791Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.791Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.791Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.791Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.791Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.791Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.791Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.791Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.792Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.792Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.792Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.792Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.792Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.791Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.792Z [-] DAO-SITIO - getById
+2024-10-15T13:56:22.792Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.793Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.793Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.793Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.793Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.793Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.794Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.794Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.794Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.794Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.794Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.794Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.795Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.795Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.795Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.795Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.795Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:22.796Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T13:56:23.173Z [-] TRANS - Archivo escrito correctamente
+2024-10-15T13:56:25.048Z [-] CTRL-EMAIL - Mensaje enviado: %s, Destinatarios: %s,fachada.correo@servicoop.com,["hdonato@servicoop.com"]
+2024-10-15T13:57:02.643Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T13:57:42.653Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T13:58:22.662Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T13:59:02.670Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T13:59:42.680Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:00:22.694Z [-] OBSERV - EXITO: Actual 2024-10-15 14:00:00 ==> Anterior 2024-10-15 13:00:01
+2024-10-15T14:00:22.696Z [-] OBSERV - se leyeron datos desde wizcon
+2024-10-15T14:00:22.711Z [-] OBSERV - se leyeron datos desde citec. %s fila %s,Mar Oct 15 2024 13:59:00 - 3,02,868
+2024-10-15T14:00:22.711Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-15T14:00:22.711Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-15T14:00:22.711Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-15T14:00:22.711Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-15T14:00:22.712Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T14:00:22.712Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T14:00:22.712Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T14:00:22.712Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T14:00:22.712Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T14:00:22.712Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T14:00:22.712Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T14:00:22.713Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T14:00:22.713Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T14:00:22.712Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T14:00:22.713Z [-] DAO-SITIO - getByDescriptor
+2024-10-15T14:00:22.713Z [-] ETL - [TpoVar] creadas=0 existentes=4 [Sitio] creadas=0 existentes=11
+2024-10-15T14:00:22.713Z [-] DAO-HISTORICO-LECTURA - existe
+2024-10-15T14:00:22.715Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-15T14:00:22.715Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.715Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.716Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.716Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.716Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.716Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.716Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.716Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.716Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.716Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.716Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.717Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.717Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.717Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.717Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.717Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.717Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.718Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.718Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.718Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.718Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.718Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.722Z [-] ETL - Insertando historico_lectura {Toma(Rio):Nivel[m]:1.04}
+2024-10-15T14:00:22.735Z [-] ETL - Insertando historico_lectura {L.Maria:Nivel[m]:3.91}
+2024-10-15T14:00:22.747Z [-] ETL - Insertando historico_lectura {KM11:Nivel[m]:3.46}
+2024-10-15T14:00:22.753Z [-] ETL - Insertando historico_lectura {R6000:Nivel[m]:3.2}
+2024-10-15T14:00:22.753Z [-] ETL - Insertando historico_lectura {P.Pot:Nivel[m]:1.86}
+2024-10-15T14:00:22.753Z [-] ETL - Insertando historico_lectura {NUEVA CHUBUT:Nivel[m]:1.8}
+2024-10-15T14:00:22.753Z [-] ETL - Insertando historico_lectura {Toma(Des.):Nivel[m]:2.17}
+2024-10-15T14:00:22.753Z [-] ETL - Insertando historico_lectura {Cota45:Nivel[m]:3.02}
+2024-10-15T14:00:22.753Z [-] ETL - Insertando historico_lectura {B.OESTE(1K):Nivel[m]:3.21}
+2024-10-15T14:00:22.754Z [-] ETL - Insertando historico_lectura {B.SAN MIGUEL:Nivel[m]:2.31}
+2024-10-15T14:00:22.753Z [-] ETL - Insertando historico_lectura {B.PUJOL:Nivel[m]:2.04}
+2024-10-15T14:00:22.754Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-15T14:00:22.754Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.755Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.755Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.755Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.755Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.756Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.756Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.756Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.759Z [-] ETL - Insertando historico_lectura {P.Pot:Cloro[mlg/l]:1.34}
+2024-10-15T14:00:22.769Z [-] ETL - Insertando historico_lectura {L.Maria:Cloro[mlg/l]:1.1}
+2024-10-15T14:00:22.769Z [-] ETL - Insertando historico_lectura {KM11:Cloro[mlg/l]:0.01}
+2024-10-15T14:00:22.769Z [-] ETL - Insertando historico_lectura {R6000:Cloro[mlg/l]:0.59}
+2024-10-15T14:00:22.769Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-15T14:00:22.769Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.769Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.770Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.770Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.773Z [-] ETL - Insertando historico_lectura {Toma(Des.):Turbiedad[UTN]:13.13}
+2024-10-15T14:00:22.776Z [-] ETL - Insertando historico_lectura {P.Pot:Turbiedad[UTN]:0.13}
+2024-10-15T14:00:22.777Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-15T14:00:22.777Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.777Z [-] DAO-HISTORICO-LECTURA - create
+2024-10-15T14:00:22.781Z [-] ETL - Insertando historico_lectura {P.Pot:VOL/DIA[m3/dia]:20940}
+2024-10-15T14:00:22.781Z [-] DAO-SITIO - getTodosDescriptores
+2024-10-15T14:00:22.781Z [-] DAO-SITIO - getByOrden
+2024-10-15T14:00:22.781Z [-] DAO-TPOVAR - getTodosDescriptores
+2024-10-15T14:00:22.781Z [-] DAO-HISTORICO-LECTURA - getMostRecent
+2024-10-15T14:00:22.782Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.783Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.783Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.783Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.783Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.783Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.783Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.783Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.783Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.783Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.783Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.783Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.783Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.783Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.784Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.784Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.784Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.784Z [-] DAO-TPOVAR - getById
+2024-10-15T14:00:22.784Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.784Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.784Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.784Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.785Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.785Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.785Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.785Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.785Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.785Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.785Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.785Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.785Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.785Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.786Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.786Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.785Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.786Z [-] DAO-SITIO - getById
+2024-10-15T14:00:22.786Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.786Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.786Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.787Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.787Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.787Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.787Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.787Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.788Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.788Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.788Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.788Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.788Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.788Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.789Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.789Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.790Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:22.790Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-15T14:00:23.157Z [-] TRANS - Archivo escrito correctamente
+2024-10-15T14:00:24.891Z [-] CTRL-EMAIL - Mensaje enviado: %s, Destinatarios: %s,fachada.correo@servicoop.com,["hdonato@servicoop.com"]
+2024-10-15T14:01:02.708Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:01:42.724Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:02:22.737Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:03:02.742Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:03:42.743Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:04:22.746Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:05:02.761Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:05:42.775Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:06:22.780Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:07:02.791Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:07:42.797Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:08:22.811Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:09:02.822Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:09:42.829Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:10:22.833Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:11:02.844Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-15T14:11:40.487Z [-] OBSERV - deteniendo observador
+2024-10-15T14:11:40.488Z [-] WEBSERV - destruyendo 0 conexion
+2024-10-15T14:11:40.488Z [-] WEBSERV - Server closed
