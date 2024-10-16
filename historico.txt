@@ -182,6 +182,7 @@
 2024-10-15T14:00:22.781Z [-] DAO-SITIO - getByOrden
 2024-10-15T14:00:22.781Z [-] DAO-TPOVAR - getTodosDescriptores
 2024-10-15T14:00:22.781Z [-] DAO-HISTORICO-LECTURA - getMostRecent
+<<<<<<< HEAD
 2024-10-15T14:00:22.782Z [-] DAO-TPOVAR - getById
 2024-10-15T14:00:22.783Z [-] DAO-TPOVAR - getById
 2024-10-15T14:00:22.783Z [-] DAO-TPOVAR - getById
@@ -7309,3 +7310,234 @@
 2024-10-16T12:23:22.411Z [-] OBSERV - deteniendo observador
 2024-10-16T12:23:22.411Z [-] WEBSERV - destruyendo 0 conexion
 2024-10-16T12:23:22.412Z [-] WEBSERV - Server closed
+=======
+2024-10-16T11:25:37.326Z [-] TRANS - Archivo escrito correctamente
+2024-10-16T11:25:39.126Z [-] CTRL-EMAIL - Mensaje enviado: %s, Destinatarios: %s,fachada.correo@servicoop.com,["hdonato@servicoop.com"]
+2024-10-16T11:25:59.586Z [-] WEBSERV - destruyendo 0 conexion
+2024-10-16T11:25:59.586Z [-] OBSERV - deteniendo observador
+2024-10-16T11:25:59.587Z [-] WEBSERV - Server closed
+2024-10-16T11:26:00.220Z [-] LOG - Directorio trabajo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:26:00.221Z [-] LOG - Directorio del archivo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\control
+2024-10-16T11:26:00.810Z [-] CTRL-EMAIL - Directorio trabajo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:26:00.237Z [-] ETL - Directorio del archivo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\etl
+2024-10-16T11:26:00.237Z [-] ETL - Directorio trabajo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:26:00.810Z [-] CTRL-HTML - Directorio trabajo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:26:00.810Z [-] CTRL-EMAIL - Directorio del archivo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\reporte
+2024-10-16T11:26:00.810Z [-] CTRL-HTML - Directorio del archivo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\reporte
+2024-10-16T11:26:00.812Z [-] REPORTE - Directorio trabajo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:26:00.812Z [-] REPORTE - Directorio del archivo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\control
+2024-10-16T11:26:00.813Z [-] OBSERV - Directorio trabajo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:26:00.813Z [-] OBSERV - Directorio del archivo:,C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\etl
+2024-10-16T11:26:00.916Z [-] WEBSERV - Escuchando en p=3000
+2024-10-16T11:26:00.919Z [-] CTRL-EMAIL - post.servicoop.com resuelto correctamente.
+2024-10-16T11:26:00.923Z [-] DB - Conectado a base de datos
+2024-10-16T11:26:00.927Z [-] ESQUEMA - resumen errores ->,
+2024-10-16T11:26:00.927Z [-] OBSERV - No hay direccion en linea de comandos, se utilizara definicion de config.json
+2024-10-16T11:26:00.930Z [-] OBSERV - EXITO: Actual 2024-10-16 11:00:00 ==> Anterior 1969-12-31 21:00:00
+2024-10-16T11:26:00.934Z [-] OBSERV - se leyeron datos desde wizcon
+2024-10-16T11:26:00.942Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-16T11:26:00.941Z [-] OBSERV - se leyeron datos desde citec. %s fila %s,Mie Oct 16 2024 10:59:00 - 3,39,889
+2024-10-16T11:26:00.942Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-16T11:26:00.942Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-16T11:26:00.942Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-16T11:26:00.943Z [-] DAO-SITIO - getByDescriptor
+2024-10-16T11:26:00.943Z [-] DAO-SITIO - getByDescriptor
+2024-10-16T11:26:00.944Z [-] DAO-SITIO - getByDescriptor
+2024-10-16T11:26:00.944Z [-] DAO-SITIO - getByDescriptor
+2024-10-16T11:26:00.944Z [-] DAO-SITIO - getByDescriptor
+2024-10-16T11:26:00.944Z [-] DAO-SITIO - getByDescriptor
+2024-10-16T11:26:00.944Z [-] DAO-SITIO - getByDescriptor
+2024-10-16T11:26:00.945Z [-] DAO-SITIO - getByDescriptor
+2024-10-16T11:26:00.945Z [-] DAO-SITIO - getByDescriptor
+2024-10-16T11:26:00.945Z [-] DAO-SITIO - getByDescriptor
+2024-10-16T11:26:00.945Z [-] DAO-SITIO - getByDescriptor
+2024-10-16T11:26:00.946Z [-] ETL - [TpoVar] creadas=0 existentes=4 [Sitio] creadas=0 existentes=11
+2024-10-16T11:26:00.946Z [-] DAO-HISTORICO-LECTURA - existe
+2024-10-16T11:26:00.947Z [-] DAO-SITIO - getTodosDescriptores
+2024-10-16T11:26:00.948Z [-] DAO-TPOVAR - getTodosDescriptores
+2024-10-16T11:26:00.948Z [-] DAO-SITIO - getByOrden
+2024-10-16T11:26:00.949Z [-] DAO-HISTORICO-LECTURA - getMostRecent
+2024-10-16T11:26:00.950Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.950Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.950Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.951Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.951Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.951Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.951Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.951Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.951Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.951Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.951Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.951Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.951Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.951Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.952Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.952Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.952Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.952Z [-] DAO-TPOVAR - getById
+2024-10-16T11:26:00.952Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.952Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.953Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.953Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.953Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.953Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.953Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.953Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.953Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.954Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.954Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.954Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.955Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.955Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.955Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.955Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.956Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.956Z [-] DAO-SITIO - getById
+2024-10-16T11:26:00.958Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.959Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.959Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.960Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.960Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.960Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.960Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.961Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.961Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.962Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.962Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.962Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.962Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.963Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.963Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.963Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.964Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:00.964Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:26:01.362Z [-] TRANS - Archivo escrito correctamente
+2024-10-16T11:26:03.244Z [-] CTRL-EMAIL - Mensaje enviado: %s, Destinatarios: %s,fachada.correo@servicoop.com,["hdonato@servicoop.com"]
+2024-10-16T11:26:40.824Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-16T11:27:20.838Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-16T11:28:00.845Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-16T11:28:40.857Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-16T11:28:47.379Z [-] OBSERV - deteniendo observador
+2024-10-16T11:28:47.380Z [-] WEBSERV - destruyendo 0 conexion
+2024-10-16T11:28:47.380Z [-] WEBSERV - Server closed
+2024-10-16T11:29:15.949Z [-] LOG - Directorio trabajo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:29:15.950Z [-] LOG - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\control
+2024-10-16T11:29:15.967Z [-] ETL - Directorio trabajo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:29:15.967Z [-] ETL - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\etl
+2024-10-16T11:29:16.579Z [-] CTRL-EMAIL - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\reporte
+2024-10-16T11:29:16.579Z [-] CTRL-EMAIL - Directorio trabajo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:29:16.579Z [-] CTRL-HTML - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\reporte
+2024-10-16T11:29:16.581Z [-] REPORTE - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\control
+2024-10-16T11:29:16.580Z [-] REPORTE - Directorio trabajo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:29:16.579Z [-] CTRL-HTML - Directorio trabajo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:29:16.581Z [-] OBSERV - Directorio trabajo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:29:16.581Z [-] OBSERV - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\etl
+2024-10-16T11:29:16.689Z [-] WEBSERV - Escuchando en p=3000
+2024-10-16T11:29:16.692Z [-] CTRL-EMAIL - post.servicoop.com resuelto correctamente.
+2024-10-16T11:29:16.696Z [-] DB - Conectado a base de datos
+2024-10-16T11:29:16.700Z [-] ESQUEMA - resumen errores -> 
+2024-10-16T11:29:16.700Z [-] OBSERV - No hay direccion en linea de comandos, se utilizara definicion de config.json
+2024-10-16T11:29:16.703Z [-] OBSERV - EXITO: Actual 2024-10-16 11:00:00 ==> Anterior 1969-12-31 21:00:00
+2024-10-16T11:29:16.707Z [-] OBSERV - se leyeron datos desde wizcon
+2024-10-16T11:29:16.721Z [-] OBSERV - se leyeron datos desde citec. %s fila %s Mie Oct 16 2024 10:59:00 - 3,39 889
+2024-10-16T11:29:16.722Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-16T11:29:16.723Z [-] DAO-TPOVAR - getByDescriptor (se omitieron 2 repeticiones)
+2024-10-16T11:29:16.723Z [-] DAO-SITIO - getByDescriptor
+2024-10-16T11:29:16.725Z [-] DAO-SITIO - getByDescriptor (se omitieron 9 repeticiones)
+2024-10-16T11:29:16.725Z [-] ETL - [TpoVar] creadas=0 existentes=4 [Sitio] creadas=0 existentes=11
+2024-10-16T11:29:16.725Z [-] DAO-HISTORICO-LECTURA - existe
+2024-10-16T11:29:16.727Z [-] DAO-SITIO - getTodosDescriptores
+2024-10-16T11:29:16.727Z [-] DAO-SITIO - getByOrden
+2024-10-16T11:29:16.727Z [-] DAO-TPOVAR - getTodosDescriptores
+2024-10-16T11:29:16.728Z [-] DAO-HISTORICO-LECTURA - getMostRecent
+2024-10-16T11:29:16.729Z [-] DAO-TPOVAR - getById
+2024-10-16T11:29:16.731Z [-] DAO-SITIO - getById
+2024-10-16T11:29:16.731Z [-] DAO-TPOVAR - getById (se omitieron 16 repeticiones)
+2024-10-16T11:29:16.733Z [-] DAO-SITIO - getById (se omitieron 16 repeticiones)
+2024-10-16T11:29:16.733Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:29:17.124Z [-] DAO-HISTORICO-LECTURA - getHistorico (se omitieron 16 repeticiones)
+2024-10-16T11:29:17.124Z [-] TRANS - Archivo escrito correctamente
+2024-10-16T11:29:18.892Z [-] CTRL-EMAIL - Mensaje enviado: %s, Destinatarios: %s fachada.correo@servicoop.com ["hdonato@servicoop.com"]
+2024-10-16T11:29:56.585Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-16T11:31:02.082Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura (se omitieron 0 repeticiones)
+2024-10-16T11:31:02.082Z [-] OBSERV - deteniendo observador
+2024-10-16T11:31:02.082Z [-] WEBSERV - destruyendo 0 conexion
+2024-10-16T11:31:02.083Z [-] WEBSERV - Server closed
+2024-10-16T11:32:09.123Z [-] LOG - Directorio trabajo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:32:09.123Z [-] LOG - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\control
+2024-10-16T11:32:09.141Z [-] ETL - Directorio trabajo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:32:09.141Z [-] ETL - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\etl
+2024-10-16T11:32:09.751Z [-] CTRL-EMAIL - Directorio trabajo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:32:09.751Z [-] CTRL-EMAIL - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\reporte
+2024-10-16T11:32:09.751Z [-] CTRL-HTML - Directorio trabajo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:32:09.751Z [-] CTRL-HTML - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\reporte
+2024-10-16T11:32:09.754Z [-] OBSERV - Directorio trabajo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:32:09.753Z [-] REPORTE - Directorio trabajo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:32:09.753Z [-] REPORTE - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\control
+2024-10-16T11:32:09.754Z [-] OBSERV - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\etl
+2024-10-16T11:32:09.907Z [-] WEBSERV - Escuchando en p=3000
+2024-10-16T11:32:09.910Z [-] CTRL-EMAIL - post.servicoop.com resuelto correctamente.
+2024-10-16T11:32:09.914Z [-] DB - Conectado a base de datos
+2024-10-16T11:32:09.918Z [-] OBSERV - No hay direccion en linea de comandos, se utilizara definicion de config.json
+2024-10-16T11:32:09.918Z [-] ESQUEMA - resumen errores -> 
+2024-10-16T11:32:09.921Z [-] OBSERV - EXITO: Actual 2024-10-16 11:00:00 ==> Anterior 1969-12-31 21:00:00
+2024-10-16T11:32:09.925Z [-] OBSERV - se leyeron datos desde wizcon
+2024-10-16T11:32:09.940Z [-] OBSERV - se leyeron datos desde citec. %s fila %s Mie Oct 16 2024 10:59:00 - 3,39 889
+2024-10-16T11:32:09.940Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-16T11:32:09.941Z [-] DAO-TPOVAR - getByDescriptor (se omitieron 2 repeticiones)
+2024-10-16T11:32:09.941Z [-] DAO-SITIO - getByDescriptor
+2024-10-16T11:32:09.944Z [-] DAO-SITIO - getByDescriptor (se omitieron 9 repeticiones)
+2024-10-16T11:32:09.944Z [-] ETL - [TpoVar] creadas=0 existentes=4 [Sitio] creadas=0 existentes=11
+2024-10-16T11:32:09.944Z [-] DAO-HISTORICO-LECTURA - existe
+2024-10-16T11:32:09.946Z [-] DAO-SITIO - getTodosDescriptores
+2024-10-16T11:32:09.946Z [-] DAO-SITIO - getByOrden
+2024-10-16T11:32:09.946Z [-] DAO-TPOVAR - getTodosDescriptores
+2024-10-16T11:32:09.947Z [-] DAO-HISTORICO-LECTURA - getMostRecent
+2024-10-16T11:32:09.948Z [-] DAO-TPOVAR - getById
+2024-10-16T11:32:09.950Z [-] DAO-TPOVAR - getById (se omitieron 16 repeticiones)
+2024-10-16T11:32:09.950Z [-] DAO-SITIO - getById
+2024-10-16T11:32:09.951Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:32:09.951Z [-] DAO-SITIO - getById (se omitieron 16 repeticiones)
+2024-10-16T11:32:10.342Z [-] DAO-HISTORICO-LECTURA - getHistorico (se omitieron 16 repeticiones)
+2024-10-16T11:32:10.342Z [-] TRANS - Archivo escrito correctamente
+2024-10-16T11:32:12.098Z [-] CTRL-EMAIL - Mensaje enviado: %s, Destinatarios: %s fachada.correo@servicoop.com ["hdonato@servicoop.com"]
+2024-10-16T11:32:49.765Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+2024-10-16T11:43:00.847Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura (se omitieron 14 repeticiones)
+2024-10-16T11:43:00.847Z [-] WEBSERV - destruyendo 0 conexion
+2024-10-16T11:43:00.848Z [-] WEBSERV - Server closed
+2024-10-16T11:43:00.847Z [-] OBSERV - deteniendo observador
+2024-10-16T11:44:22.441Z [-] LOG - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\control
+2024-10-16T11:44:22.458Z [-] ETL - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\etl
+2024-10-16T11:44:23.054Z [-] CTRL-EMAIL - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\reporte
+2024-10-16T11:44:23.056Z [-] REPORTE - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\control
+2024-10-16T11:44:23.054Z [-] CTRL-HTML - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\reporte
+2024-10-16T11:44:23.056Z [-] OBSERV - Directorio del archivo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis\src\etl
+2024-10-16T11:44:23.161Z [-] SUPERINDEX - Directorio trabajo: C:\Users\hdonato.SERVICOOP\Documents\hugo\git\reportespiolis
+2024-10-16T11:44:23.161Z [-] WEBSERV - Escuchando en p=3000
+2024-10-16T11:44:23.162Z [-] CTRL-EMAIL - post.servicoop.com resuelto correctamente.
+2024-10-16T11:44:23.166Z [-] DB - Conectado a base de datos
+2024-10-16T11:44:23.170Z [-] ESQUEMA - resumen errores -> 
+2024-10-16T11:44:23.171Z [-] OBSERV - No hay direccion en linea de comandos, se utilizara definicion de config.json
+2024-10-16T11:44:23.174Z [-] OBSERV - EXITO: Actual 2024-10-16 11:00:00 ==> Anterior 1969-12-31 21:00:00
+2024-10-16T11:44:23.178Z [-] OBSERV - se leyeron datos desde wizcon
+2024-10-16T11:44:23.196Z [-] DAO-TPOVAR - getByDescriptor
+2024-10-16T11:44:23.195Z [-] OBSERV - se leyeron datos desde citec. %s fila %s Mie Oct 16 2024 10:59:00 - 3,39 889
+2024-10-16T11:44:23.197Z [-] DAO-TPOVAR - getByDescriptor (se omitieron 2 repeticiones)
+2024-10-16T11:44:23.197Z [-] DAO-SITIO - getByDescriptor
+2024-10-16T11:44:23.199Z [-] DAO-SITIO - getByDescriptor (se omitieron 9 repeticiones)
+2024-10-16T11:44:23.199Z [-] ETL - [TpoVar] creadas=0 existentes=4 [Sitio] creadas=0 existentes=11
+2024-10-16T11:44:23.199Z [-] DAO-HISTORICO-LECTURA - existe
+2024-10-16T11:44:23.201Z [-] DAO-SITIO - getTodosDescriptores
+2024-10-16T11:44:23.201Z [-] DAO-SITIO - getByOrden
+2024-10-16T11:44:23.201Z [-] DAO-TPOVAR - getTodosDescriptores
+2024-10-16T11:44:23.202Z [-] DAO-HISTORICO-LECTURA - getMostRecent
+2024-10-16T11:44:23.203Z [-] DAO-TPOVAR - getById
+2024-10-16T11:44:23.205Z [-] DAO-SITIO - getById
+2024-10-16T11:44:23.205Z [-] DAO-TPOVAR - getById (se omitieron 16 repeticiones)
+2024-10-16T11:44:23.207Z [-] DAO-SITIO - getById (se omitieron 16 repeticiones)
+2024-10-16T11:44:23.207Z [-] DAO-HISTORICO-LECTURA - getHistorico
+2024-10-16T11:44:23.571Z [-] DAO-HISTORICO-LECTURA - getHistorico (se omitieron 16 repeticiones)
+2024-10-16T11:44:23.571Z [-] TRANS - Archivo escrito correctamente
+2024-10-16T11:44:25.320Z [-] CTRL-EMAIL - Mensaje enviado: %s, Destinatarios: %s fachada.correo@servicoop.com ["hdonato@servicoop.com"]
+2024-10-16T11:45:03.060Z [-] OBSERV - El archivo no ha sido modificado desde la última lectura
+>>>>>>> 34dc0090113d48de06214bcc22bdff789fb2da48
